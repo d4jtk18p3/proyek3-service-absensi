@@ -1,7 +1,7 @@
 export default (sequelize, DataTypes) => {
   const DaftarHadirDosen = sequelize.define('daftar_hadir_dosen', {
     id_daftar_hadir_dosen: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       allowNull: false,
       unique: true
@@ -23,10 +23,10 @@ export default (sequelize, DataTypes) => {
       }
     },
     tanggal: {
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     },
     isHadir: {
-      type: Sequelize.BOOLEAN
+      type: DataTypes.BOOLEAN
     }
   })
   return DaftarHadirDosen
