@@ -1,29 +1,36 @@
-import Sequelize from 'sequelize'
-
-import db from '../db'
-
-const DaftarHadirMahasiswa = db.define(
-  'DaftarHadirMahasiswa',
-  {
+export default (sequelize, DataTypes) => {
+  const DaftarHadirMahasiswa = sequelize.define('daftar_hadir_mahasiswa', {
     id_daftar_hadir_mhs: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       allowNull: false,
       unique: true
     },
+    // foreign key
+    id_studi: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'studi',
+        key: 'id_studi'
+      }
+    },
+    // foreign key
+    id_keterangan: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'keterangan',
+        key: 'id_keterangan'
+      }
+    },
     keterlambatan: {
-      type: Sequelize.INTEGER
+      type: DataTypes.INTEGER
     },
     tanggal: {
-      type: Sequelize.DATE
+      type: DataTypes.DATE
     },
     isHadir: {
-      type: Sequelize.BOOLEAN
+      type: DataTypes.BOOLEAN
     }
-  },
-  {
-    tableName: 'DaftarHadirMahasiswa'
-  }
-)
-
-export default DaftarHadirMahasiswa
+  })
+  return DaftarHadirMahasiswa
+}
