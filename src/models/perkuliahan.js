@@ -6,6 +6,11 @@
 
 export default (sequelize, DataTypes) => {
   const perkuliahan = sequelize.define('perkuliahan', {
+    id_perkuliahan: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
     id_mata_kuliah: {
       // (foreign key)
       type: DataTypes.STRING,
