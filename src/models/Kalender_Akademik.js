@@ -10,13 +10,13 @@ const KalenderAkademik = db.define('kalender_akademik', {
     autoIncrement: true
   },
   tahun_ajaran: {
-      type: Sequelize.STRING
+    type: Sequelize.STRING
   },
   tanggal: {
-      type: Sequelize.DATE
+    type: Sequelize.DATE
   },
   event: {
-      type: Sequelize.STRING
+    type: Sequelize.STRING
   }
 })
 

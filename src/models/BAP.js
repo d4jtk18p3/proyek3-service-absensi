@@ -3,7 +3,7 @@ import Sequelize from 'sequelize'
 import db from '../db'
 
 const bap = db.define('bap', {
-  
+
   id_BAP: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -19,7 +19,7 @@ const bap = db.define('bap', {
       key: 'nip'
     }
   },
-  id_studi:{
+  id_studi: {
     // foreign key
     type: Sequelize.INTEGER,
     references: {
@@ -42,7 +42,7 @@ const bap = db.define('bap', {
   jumlah_mhs_hadir: {
     type: Sequelize.INTEGER
   },
-  jumlah_mhs_tidak_hadir:{
+  jumlah_mhs_tidak_hadir: {
     type: Sequelize.INTEGER
   },
   tahun_ajaran: {

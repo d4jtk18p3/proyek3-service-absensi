@@ -6,7 +6,7 @@ const keterangan = db.define('keterangan', {
   id_keterangan: {
     type: Sequelize.INTEGER,
     allowNull: false,
-    primaryKey: true,
+    primaryKey: true
   },
   nim: {
     // foreign key
