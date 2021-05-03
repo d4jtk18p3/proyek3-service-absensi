@@ -1,20 +1,27 @@
-export default (sequelize, DataTypes) => {
-  const kelas = sequelize.define('kelas', {
-    kode_kelas: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: false
-    },
-    kode_program_studi: {
-      // foreign key
-      type: DataTypes.STRING,
-      references: {
-        model: 'program_studi',
-        key: 'kode_program_studi'
-      }
-    },
-    tahun: DataTypes.STRING
-  })
-  return kelas
-}
+import Sequelize from 'sequelize'
+
+import db from '../db'
+
+const Kelas = db.define('Kelas', {
+  kode_kelas: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  kode_program_studi: {
+    type: Sequelize.STRING(15),
+    allowNull: false,
+    unique: true
+  },
+  nip: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  tahun: {
+    type: Sequelize.STRING(9),
+    allowNull: false
+  }
+})
+
+export default Kelas

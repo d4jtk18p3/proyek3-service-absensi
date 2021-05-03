@@ -1,24 +1,31 @@
-export default (sequelize, DataTypes) => {
-  const mataKuliah = sequelize.define('mata_kuliah', {
-    id_mata_kuliah: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: false
-    },
-    kode_program_studi: {
-      // foreign key
-      type: DataTypes.STRING,
-      references: {
-        model: 'program_studi',
-        key: 'kode_program_studi'
-      }
-    },
-    semester: DataTypes.INTEGER,
-    nama_mata_kuliah: DataTypes.STRING,
-    sks_teori: DataTypes.INTEGER,
-    sks_praktek: DataTypes.INTEGER
-  })
+import Sequelize from 'sequelize'
 
-  return mataKuliah
-}
+import db from '../db'
+
+const mataKuliah = db.define('mata_kuliah', {
+  id_mata_kuliah: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  semester: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  nama_mata_kuliah: {
+    type: Sequelize.STRING(50),
+    allowNull: false,
+    unique: true
+  },
+  sks_teori: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  },
+  sks_praktek: {
+    type: Sequelize.INTEGER,
+    allowNull: true
+  }
+})
+
+export default mataKuliah

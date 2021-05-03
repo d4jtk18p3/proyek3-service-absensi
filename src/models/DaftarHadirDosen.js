@@ -1,33 +1,26 @@
-export default (sequelize, DataTypes) => {
-  const DaftarHadirDosen = sequelize.define('daftar_hadir_dosen', {
+import Sequelize from 'sequelize'
+
+import db from '../db'
+
+const DaftarHadirDosen = db.define(
+  'DaftarHadirDosen',
+  {
     id_daftar_hadir_dosen: {
-      type: DataTypes.INTEGER,
+      type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
       unique: true
     },
-    // foreign key
-    id_studi: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'studi',
-        key: 'id_studi'
-      }
-    },
-    // foreign key
-    NIP: {
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'dosen',
-        key: 'NIP'
-      }
-    },
     tanggal: {
-      type: DataTypes.DATE
+      type: Sequelize.DATE
     },
     isHadir: {
-      type: DataTypes.BOOLEAN
+      type: Sequelize.BOOLEAN
     }
-  })
-  return DaftarHadirDosen
-}
+  },
+  {
+    tableName: 'DaftarHadirDosen'
+  }
+)
+
+export default DaftarHadirDosen

@@ -1,25 +1,34 @@
-export default (sequelize, DataTypes) => {
-  const mahasiswa = sequelize.define('mahasiswa', {
-    id_mahasiswa: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: false
-    },
-    kode_kelas: {
-      // foreign key
-      type: DataTypes.INTEGER,
-      references: {
-        model: 'kelas',
-        key: 'kode_kelas'
-      }
-    },
-    nama_mahasiswa: DataTypes.STRING,
-    email: DataTypes.STRING,
-    nomor_hp: DataTypes.STRING,
-    url_foto: DataTypes.STRING,
-    status: DataTypes.STRING
-  })
+import Sequelize from 'sequelize'
 
-  return mahasiswa
-}
+import db from '../db'
+
+const Mahasiswa = db.define('mahasiswa', {
+  nim: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    autoIncrement: true
+  },
+  nama: {
+    type: Sequelize.STRING(30),
+    allowNull: false
+  },
+  kode_kelas: {
+    type: Sequelize.INTEGER,
+    allowNull: false
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false
+  },
+  nomor_ponsel: {
+    type: Sequelize.STRING(13),
+    allowNull: true
+  },
+  url_foto: {
+    type: Sequelize.STRING,
+    allowNull: false
+  }
+})
+
+export default Mahasiswa

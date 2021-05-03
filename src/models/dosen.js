@@ -1,13 +1,15 @@
-export default (sequelize, DataTypes) => {
-  const dosen = sequelize.define('dosen', {
-    NIP: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: false
-    },
-    nama_dosen: DataTypes.STRING,
-    jabatan: DataTypes.STRING
-  })
-  return dosen
-}
+import Sequelize from 'sequelize'
+import db from '../db'
+
+const Dosen = db.define('Dosen', {
+  nip: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true
+  },
+  nama_dosen: {
+    type: Sequelize.STRING(30)
+  }
+})
+
+export default Dosen

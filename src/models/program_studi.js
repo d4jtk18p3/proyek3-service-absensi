@@ -1,18 +1,12 @@
-export default (sequelize, DataTypes) => {
-  const programStudi = sequelize.define('program_studi', {
-    kode_program_studi: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      primaryKey: true,
-      autoIncrement: false
-    },
-    kode_jurusan: {
-      type: DataTypes.STRING,
-      references: {
-        model: 'jurusan',
-        key: 'kode_jurusan'
-      }
-    }
-  })
-  return programStudi
-}
+import Sequelize from 'sequelize'
+import db from '../db'
+
+const Prodi = db.define('Prodi', {
+  kode_prodi: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    primaryKey: true
+  }
+})
+
+export default Prodi
