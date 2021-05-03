@@ -2,6 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
+import * as test from './dao/test'
 
 // import keycloak from './middleware/keycloak'
 // import dosenRouter from './routes/Dosen'
@@ -19,12 +20,10 @@ app.use(morgan('dev'))
 // app.use('/mahasiswa', mahasiswaRouter)
 // app.use('/user', userRouter)
 
-import * as test from './dao/test'
-
 app.get('/jadwalmengajar/:nip', async (req, res) => {
   const nip = parseInt(req.params.nip)
   const jadwal = await test.selectJadwalDosenHariIni(nip)
-  res.json({jadwal})
+  res.json({ jadwal })
 })
 
 // error handling

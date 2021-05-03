@@ -14,7 +14,6 @@ import jadwal from './Jadwal'
 
 const model = {}
 
-
 model.mahasiswa = mahasiswa(sequelize, Sequelize.DataTypes)
 model.kelas = kelas(sequelize, Sequelize.DataTypes)
 model.studi = studi(sequelize, Sequelize.DataTypes)
