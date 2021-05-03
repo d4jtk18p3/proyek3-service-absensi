@@ -4,9 +4,9 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 
 // import keycloak from './middleware/keycloak'
-import dosenRouter from './routes/Dosen'
-import mahasiswaRouter from './routes/Mahasiswa'
-import userRouter from './routes/User'
+// import dosenRouter from './routes/Dosen'
+// import mahasiswaRouter from './routes/Mahasiswa'
+// import userRouter from './routes/User'
 
 const app = express()
 app.use(cors())
@@ -15,9 +15,17 @@ app.use(cors())
 // app.use(keycloak.protect())
 app.use(bodyParser.json())
 app.use(morgan('dev'))
-app.use('/dosen', dosenRouter)
-app.use('/mahasiswa', mahasiswaRouter)
-app.use('/user', userRouter)
+// app.use('/dosen', dosenRouter)
+// app.use('/mahasiswa', mahasiswaRouter)
+// app.use('/user', userRouter)
+
+import * as test from './dao/test'
+
+app.get('/jadwalmengajar/:nip', async (req, res) => {
+  const nip = parseInt(req.params.nip)
+  const jadwal = await test.selectJadwalDosenHariIni(nip)
+  res.json({jadwal})
+})
 
 // error handling
 app.use((error, req, res, next) => {
