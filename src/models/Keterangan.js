@@ -2,7 +2,7 @@ import Sequelize from 'sequelize'
 
 import db from '../db'
 
-const keterangan = db.define('Keterangan', 
+const keterangan = db.define('Keterangan',
   {
     id_keterangan: {
       type: Sequelize.INTEGER,
