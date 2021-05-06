@@ -2,22 +2,17 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
-
-// import keycloak from './middleware/keycloak'
-import dosenRouter from './routes/Dosen'
-import mahasiswaRouter from './routes/Mahasiswa'
-import userRouter from './routes/User'
+import keteranganRoutes from './routes/Keterangan'
 
 const app = express()
+
 app.use(cors())
 // Non aktifkan dulu keycloak agar tidak ada validasi token
 // app.use(keycloak.middleware())
 // app.use(keycloak.protect())
 app.use(bodyParser.json())
 app.use(morgan('dev'))
-app.use('/dosen', dosenRouter)
-app.use('/mahasiswa', mahasiswaRouter)
-app.use('/user', userRouter)
+app.use('/keterangan', keteranganRoutes)
 
 // error handling
 app.use((error, req, res, next) => {
