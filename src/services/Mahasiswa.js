@@ -3,9 +3,9 @@
 */
 import DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
 
-export const melakukanAbsensi = async (id_studi, id_keterangan, keterlambatan, tanggal, isHadir) => {
+export const melakukanAbsensi = async (idStudi, idKeterangan, keterlambatan, tanggal, isHadir) => {
   try {
-    const result = await DaftarHadirMahasiswaDAO.insertOne(id_studi, id_keterangan, keterlambatan, tanggal, isHadir)
+    const result = await DaftarHadirMahasiswaDAO.insertOne(idStudi, idKeterangan, keterlambatan, tanggal, isHadir)
     return result
   } catch (error) {
     return Promise.reject(error)
