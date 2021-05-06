@@ -9,7 +9,8 @@ const DaftarHadirMahasiswa = db.define(
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
-      unique: true
+      unique: true,
+      primaryKey: true
     },
     keterlambatan: {
       type: Sequelize.INTEGER
@@ -20,6 +21,9 @@ const DaftarHadirMahasiswa = db.define(
     isHadir: {
       type: Sequelize.BOOLEAN
     }
+  },
+  {
+    tableName: 'daftar_hadir_mahasiswa'
   }
 )
 
