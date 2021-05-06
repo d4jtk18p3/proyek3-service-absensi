@@ -67,8 +67,8 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('studi');
-    await queryInterface.dropTable('perkuliahan');
+    await queryInterface.dropTable('Studi');
+    await queryInterface.dropTable('Perkuliahan');
     await queryInterface.dropTable('Mata_Kuliah');
   }
 };
