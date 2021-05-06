@@ -2,26 +2,32 @@ import Sequelize from 'sequelize'
 
 import db from '../db'
 
-const keterangan = db.define('keterangan', {
-  id_keterangan: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    primaryKey: true
-  },
-  nim: {
-    // foreign key
-    type: Sequelize.INTEGER,
-    references: {
-      model: 'mahasiswa',
-      key: 'nim'
+const keterangan = db.define('Keterangan', 
+  {
+    id_keterangan: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true
+    },
+    // nim: {
+    //   // foreign key
+    //   type: Sequelize.INTEGER,
+    //   references: {
+    //     model: 'mahasiswa',
+    //     key: 'nim'
+    //   }
+    // },
+    status: {
+      type: Sequelize.STRING
+    },
+    url: {
+      type: Sequelize.STRING
     }
   },
-  status: {
-    type: Sequelize.STRING
-  },
-  url: {
-    type: Sequelize.STRING
+  {
+    tableName: 'Keterangan'
   }
-})
+)
 
 export default keterangan
