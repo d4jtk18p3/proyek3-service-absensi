@@ -9,7 +9,8 @@ const DaftarHadirDosen = db.define(
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
-      unique: true
+      unique: true,
+      primaryKey: true
     },
     tanggal: {
       type: Sequelize.DATE
