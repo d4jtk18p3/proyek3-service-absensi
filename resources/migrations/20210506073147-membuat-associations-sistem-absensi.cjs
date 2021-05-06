@@ -18,7 +18,7 @@ module.exports = {
       onDelete: 'SET NULL'
     })
 
-    await queryInterface.addColumn('daftar_hadir_mahasiswa', 'id', {
+    await queryInterface.addColumn('daftar_hadir_mahasiswa', 'id_studi', {
       type: Sequelize.INTEGER,
       allowNull: false,
       references: {
@@ -50,7 +50,7 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.removeColumn('Keterangan', 'nim')
-    await queryInterface.removeColumn('daftar_hadir_mahasiswa', 'id')
+    await queryInterface.removeColumn('daftar_hadir_mahasiswa', 'id_studi')
     await queryInterface.removeColumn('daftar_hadir_mahasiswa', 'id_keterangan')
   }
 };

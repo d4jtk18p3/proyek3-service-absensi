@@ -35,7 +35,8 @@ module.exports = {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         allowNull: false,
-        unique: true
+        unique: true,
+        primaryKey: true
       },
       // id_studi (fk)
       // id_keterangan (fk)
