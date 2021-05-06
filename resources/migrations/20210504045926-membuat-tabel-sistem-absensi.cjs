@@ -29,6 +29,33 @@ module.exports = {
         type: Sequelize.DATE
       }
     })
+
+    await queryInterface.createTable('daftar_hadir_mahasiswa', {
+      id_daftar_hadir_mhs: {
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+        allowNull: false,
+        unique: true
+      },
+      // id_studi (fk)
+      // id_keterangan (fk)
+      keterlambatan: {
+        type: Sequelize.INTEGER
+      },
+      tanggal: {
+        type: Sequelize.DATE
+      },
+      isHadir: {
+        type: Sequelize.BOOLEAN
+      },
+      createdAt: {
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        type: Sequelize.DATE
+      }
+    }
+    )
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -39,5 +66,6 @@ module.exports = {
      * await queryInterface.dropTable('users');
      */
     await queryInterface.dropTable('Keterangan')
+    await queryInterface.dropTable('daftar_hadir_mahasiswa')
   }
 };

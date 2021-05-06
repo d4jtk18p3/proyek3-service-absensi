@@ -8,7 +8,7 @@ export const getSuratIzin = (req, res) => {
   const fullfilepath = path.join(dirname, 'public/uploads/', filename)
   return res.sendFile(fullfilepath)
 }
-
+// Catatan : gimana cara nya untuk rollback upload file :(
 export const uploadSuratIzin = (req, res) => {
   upload.single('surat-izin')(req, res, async (err) => {
     if (err) {

@@ -3,7 +3,7 @@ import Sequelize from 'sequelize'
 import db from '../db'
 
 const DaftarHadirMahasiswa = db.define(
-  'DaftarHadirMahasiswa',
+  'daftar_hadir_mahasiswa',
   {
     id_daftar_hadir_mhs: {
       type: Sequelize.INTEGER,
@@ -20,9 +20,6 @@ const DaftarHadirMahasiswa = db.define(
     isHadir: {
       type: Sequelize.BOOLEAN
     }
-  },
-  {
-    tableName: 'DaftarHadirMahasiswa'
   }
 )
 
