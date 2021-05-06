@@ -9,7 +9,8 @@ const Jadwal = db.define(
       type: Sequelize.INTEGER,
       autoIncrement: true,
       allowNull: false,
-      unique: true
+      unique: true,
+      primaryKey: true
     },
     waktu_mulai: {
       type: Sequelize.TIME
@@ -19,6 +20,12 @@ const Jadwal = db.define(
     },
     batas_terakhir_absen: {
       type: Sequelize.TIME
+    },
+    hari: {
+      type: Sequelize.INTEGER
+    },
+    jenis: {
+      type: Sequelize.STRING
     }
   },
   {

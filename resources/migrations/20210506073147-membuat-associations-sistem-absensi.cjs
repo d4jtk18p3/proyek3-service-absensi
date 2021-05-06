@@ -40,6 +40,28 @@ module.exports = {
       onDelete: 'SET NULL'
     })
 
+    await queryInterface.addColumn('Jadwal', 'nip', {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Dosen',
+        key: 'nip'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    })
+
+    await queryInterface.addColumn('Jadwal', 'id_perkuliahan', {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Perkuliahan',
+        key: 'id_perkuliahan'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    })
+
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -52,5 +74,7 @@ module.exports = {
     await queryInterface.removeColumn('Keterangan', 'nim')
     await queryInterface.removeColumn('daftar_hadir_mahasiswa', 'id')
     await queryInterface.removeColumn('daftar_hadir_mahasiswa', 'id_keterangan')
+    await queryInterface.removeColumn('Jadwal', 'nip')
+    await queryInterface.removeColumn('Jadwal', 'id_perkuliahan')
   }
 };
