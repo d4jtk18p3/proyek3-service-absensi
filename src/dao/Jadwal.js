@@ -4,8 +4,8 @@ export const findJadwalByHariAndNIP = async (hari, NIP) => {
   try {
     const jadwal = await Jadwal.findAll({
       where: {
-          hari,
-          NIP
+        hari,
+        NIP
       }
     })
     return jadwal
@@ -15,15 +15,15 @@ export const findJadwalByHariAndNIP = async (hari, NIP) => {
 }
 
 export const findJadwalByHariAndNIM = async (hari, NIM) => {
-    try {
-        const jadwal = await Jadwal.findAll({
-        where: {
-            hari,
-            NIM
-        }
-        })
-        return jadwal
-    } catch (error) {
-        return Promise.reject(error)
-    }
+  try {
+    const jadwal = await Jadwal.findAll({
+      where: {
+        hari,
+        NIM
+      }
+    })
+    return jadwal
+  } catch (error) {
+    return Promise.reject(error)
+  }
 }
