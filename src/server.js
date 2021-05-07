@@ -3,6 +3,8 @@ import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import keteranganRoutes from './routes/Keterangan'
+import jadwalRoutes from './routes/Jadwal'
+
 
 const app = express()
 
@@ -13,6 +15,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use('/keterangan', keteranganRoutes)
+app.use('/api/jadwal_perkuliahan', jadwalRoutes)
 
 // error handling
 app.use((error, req, res, next) => {

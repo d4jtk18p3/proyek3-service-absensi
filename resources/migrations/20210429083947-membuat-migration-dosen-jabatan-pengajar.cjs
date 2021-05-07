@@ -10,6 +10,12 @@ module.exports = {
       },
       nama_dosen: {
         type: Sequelize.STRING(30)
+      },
+      createdAt: {
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        type: Sequelize.DATE
       }
     });
     await queryInterface.createTable('Jabatan', {

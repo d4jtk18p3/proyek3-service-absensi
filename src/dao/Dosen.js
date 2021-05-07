@@ -34,7 +34,7 @@ export const findDosenByNIP = async (NIP) => {
   try {
     const dosen = await Dosen.findAll({
       where: {
-        NIP
+        nip: NIP
       }
     })
     return dosen[0]
