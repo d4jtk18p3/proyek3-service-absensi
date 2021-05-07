@@ -66,6 +66,12 @@ module.exports = {
         unique: true,
         primaryKey: true
       },
+      ja:{
+        type: Sequelize.INTEGER
+      },
+      jb:{
+        type: Sequelize.INTEGER
+      },
       waktu_mulai: {
         type: Sequelize.TIME
       },
