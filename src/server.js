@@ -5,7 +5,6 @@ import bodyParser from 'body-parser'
 import keteranganRoutes from './routes/Keterangan'
 import jadwalRoutes from './routes/Jadwal'
 
-
 const app = express()
 
 app.use(cors())
