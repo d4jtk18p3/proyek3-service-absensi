@@ -7,14 +7,18 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true
-      }
+      },
+      createdAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE
     });
     await queryInterface.createTable('Jurusan', {
       kode_jurusan: {
         type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true
-      }
+      },
+      createdAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE
     });
   },
 

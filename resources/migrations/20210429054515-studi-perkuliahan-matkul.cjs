@@ -45,8 +45,8 @@ module.exports = {
         references: {
           model: 'Mata_Kuliah', 
           key: 'id_mata_kuliah', 
-        },
-        unique: true
+        }
+        // unique: true
       },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
