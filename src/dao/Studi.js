@@ -1,19 +1,19 @@
 import Studi from '../models/Studi'
 
-export const findStudiByIdStudi = async (id_studi) => {
+export const findStudiByIdStudi = async (idStudi) => {
   try {
-    const studi = await Studi.findByPk(id_studi)
+    const studi = await Studi.findByPk(idStudi)
     return studi
   } catch (error) {
     return Promise.reject(error)
   }
 }
 
-export const findStudiByIdPerkuliahan = async (id_perkuliahan) => {
+export const findStudiByIdPerkuliahan = async (idPerkuliahan) => {
   try {
     const studi = await Studi.findAll({
       where: {
-        id_perkuliahan,
+        idPerkuliahan
       }
     })
     return studi

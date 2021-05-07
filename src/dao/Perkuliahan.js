@@ -1,20 +1,20 @@
 import Perkuliahan from '../models/Perkuliahan'
 
-export const findPerkuliahanByIdPerkuliahan = async (id_perkuliahan) => {
+export const findPerkuliahanByIdPerkuliahan = async (idPerkuliahan) => {
   try {
-    const perkuliahan = await Perkuliahan.findByPk(id_perkuliahan)
+    const perkuliahan = await Perkuliahan.findByPk(idPerkuliahan)
     return perkuliahan
   } catch (error) {
     return Promise.reject(error)
   }
 }
 
-export const findPerkuliahanByIdMatkulAndKodeKelas = async (id_mata_kuliah, kode_kelas) => {
+export const findPerkuliahanByIdMatkulAndKodeKelas = async (idMataKuliah, kodeKelas) => {
   try {
     const perkuliahan = await Perkuliahan.findAll({
       where: {
-        id_mata_kuliah,
-        kode_kelas
+        idMataKuliah,
+        kodeKelas
       }
     })
     return perkuliahan

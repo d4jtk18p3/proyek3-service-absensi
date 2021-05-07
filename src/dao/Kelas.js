@@ -1,8 +1,8 @@
 import Kelas from '../models/Kelas'
 
-export const findKelasByKodeKelas = async (kode_kelas) => {
+export const findKelasByKodeKelas = async (kodeKelas) => {
   try {
-    const kelas = await Kelas.findByPk(kode_kelas)
+    const kelas = await Kelas.findByPk(kodeKelas)
     return kelas
   } catch (error) {
     return Promise.reject(error)
