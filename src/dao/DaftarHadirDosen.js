@@ -14,3 +14,17 @@ export const insertOne = async (nip, idStudi, tanggal, isHadir) => {
     return Promise.reject(error)
   }
 }
+
+export const findDaftarHadirDosenByNIPAndIdStudi = async (nip, id_studi) => {
+  try {
+    const daftar_hadir_dosen = await DaftarHadirDosen.findAll({
+      where: {
+        nip,
+        id_studi
+      }
+    })
+    return daftar_hadir_dosen
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
