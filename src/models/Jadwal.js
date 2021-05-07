@@ -12,10 +12,10 @@ const Jadwal = db.define(
       unique: true,
       primaryKey: true
     },
-    ja:{
+    ja: {
       type: Sequelize.INTEGER
     },
-    jb:{
+    jb: {
       type: Sequelize.INTEGER
     },
     waktu_mulai: {
