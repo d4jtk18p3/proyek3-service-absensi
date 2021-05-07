@@ -15,3 +15,17 @@ export const insertOne = async (idStudi, idKeterangan, keterlambatan, tanggal, i
     return Promise.reject(error)
   }
 }
+
+export const findDaftarHadirMahasiswaByNIMAndIdStudi = async (nim, idStudi) => {
+  try {
+    const daftarHadirMahasiswa = await DaftarHadirMahasiswa.findAll({
+      where: {
+        nim,
+        idStudi
+      }
+    })
+    return daftarHadirMahasiswa
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
