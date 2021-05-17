@@ -4,13 +4,14 @@ export const insertOne = async (idStudi, idKeterangan, keterlambatan, tanggal, i
   // Belum melibatkan db common
   try {
     const result = await DaftarHadirMahasiswa.create({
-      // id_studi,
-      // id_keterangan,
+      id_studi: idStudi,
+      id_keterangan: idKeterangan,
       keterlambatan,
       tanggal,
       isHadir
     })
-    return result
+  
+    return result.dataValues
   } catch (error) {
     return Promise.reject(error)
   }
