@@ -20,6 +20,21 @@ const DaftarHadirMahasiswa = db.define(
     },
     isHadir: {
       type: Sequelize.BOOLEAN
+    },
+    id_studi: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Studi',
+        key: 'id'
+      }
+    },
+    id_keterangan: {
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'Keterangan',
+        key: 'id_keterangan'
+      }
     }
   },
   {

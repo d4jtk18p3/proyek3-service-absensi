@@ -1,6 +1,6 @@
 import path from 'path'
 import upload from '../middleware/upload'
-import * as KeteranganDAO from '../dao/Keterangan'
+import * as AbsensiMahasiswaServices from '../services/AbsensiMahasiswa'
 
 export const getSuratIzin = (req, res) => {
   const { filename } = req.params
@@ -27,15 +27,14 @@ export const uploadSuratIzin = (req, res) => {
       })
     }
 
+    const { idStudies, status } = req.body
+
     try {
-      const keteragan = await KeteranganDAO.insertKeterangan(req.body.status, req.file.path)
-      res.status(200).json({
-        data: keteragan
-      })
+      const url = req.file.path
+      const results = await AbsensiMahasiswaServices.ajukanIzin(idStudies, status, url)
+      res.json({ results })
     } catch (error) {
-      res.status(500).json({
-        error
-      })
+      res.status(500).json({ error })
     }
   })
 }

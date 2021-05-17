@@ -10,14 +10,14 @@ const keterangan = db.define('Keterangan',
       autoIncrement: true,
       primaryKey: true
     },
-    // nim: {
-    //   // foreign key
-    //   type: Sequelize.INTEGER,
-    //   references: {
-    //     model: 'mahasiswa',
-    //     key: 'nim'
-    //   }
-    // },
+    nim: {
+      // foreign key
+      type: Sequelize.INTEGER,
+      references: {
+        model: 'mahasiswa',
+        key: 'nim'
+      }
+    },
     status: {
       type: Sequelize.STRING
     },
