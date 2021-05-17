@@ -1,8 +1,9 @@
 import Keterangan from '../models/Keterangan'
 
-export const insertKeterangan = async (status, url) => {
+export const insertKeterangan = async (nim, status, url) => {
   try {
     const keterangan = await Keterangan.create({
+      nim,
       status,
       url
     })
