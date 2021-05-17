@@ -10,7 +10,7 @@ export const insertOne = async (idStudi, idKeterangan, keterlambatan, tanggal, i
       tanggal,
       isHadir
     })
-  
+
     return result.dataValues
   } catch (error) {
     return Promise.reject(error)

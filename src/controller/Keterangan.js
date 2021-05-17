@@ -1,6 +1,5 @@
 import path from 'path'
 import upload from '../middleware/upload'
-import * as KeteranganDAO from '../dao/Keterangan'
 import * as AbsensiMahasiswaServices from '../services/AbsensiMahasiswa'
 
 export const getSuratIzin = (req, res) => {
@@ -28,12 +27,12 @@ export const uploadSuratIzin = (req, res) => {
       })
     }
 
-    const { id_studies, status } = req.body
-        
+    const { idStudies, status } = req.body
+
     try {
       const url = req.file.path
-      const results = await AbsensiMahasiswaServices.ajukanIzin(id_studies, status, url)
-      res.json({results})
+      const results = await AbsensiMahasiswaServices.ajukanIzin(idStudies, status, url)
+      res.json({ results })
     } catch (error) {
       res.status(500).json({ error })
     }
