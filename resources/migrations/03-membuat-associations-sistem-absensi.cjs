@@ -9,7 +9,7 @@ module.exports = {
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
     await queryInterface.addColumn('Keterangan', 'nim', {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING(15),
       references: {
         model: 'Mahasiswa',
         key: 'nim'
@@ -41,7 +41,7 @@ module.exports = {
     })
 
     await queryInterface.addColumn('Jadwal', 'nip', {
-      type: Sequelize.INTEGER,
+      type: Sequelize.STRING(30),
       allowNull: true,
       references: {
         model: 'Dosen',
@@ -56,7 +56,7 @@ module.exports = {
       allowNull: true,
       references: {
         model: 'Perkuliahan',
-        key: 'id_perkuliahan'
+        key: 'id'
       },
       onUpdate: 'CASCADE',
       onDelete: 'SET NULL'
