@@ -18,7 +18,6 @@ export const ajukanIzin = async (idStudies, status, url) => {
 
   try {
     const nim = (await StudiDAO.findStudiByIdStudi(idStudies[0])).dataValues.id_mahasiswa
-    console.log("NIM : ", nim)
     const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url)
     const date = new Date()
     const results = await Promise.all(

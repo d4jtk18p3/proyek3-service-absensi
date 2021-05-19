@@ -14,7 +14,7 @@ const Studi = db.define('Studi', {
     references: {
       model: 'Perkuliahan',
       key: 'id'
-    },
+    }
   },
   id_mahasiswa: {
     type: Sequelize.STRING(15),
