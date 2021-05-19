@@ -18,7 +18,12 @@ export const postNewDosen = [
   body('namaDosen', 'Nama dosen wajib diisi').exists(),
   body('email', 'format email tidak valid').isEmail(),
   body('permission', 'permission wajib diisi').exists(),
-  body('jabatan', 'format jabatan tidak valid atau jabatan tidak ada').isIn(['wali-kelas', 'kajur', 'kaprodi', 'dosen-pengampu'])
+  body('jabatan', 'format jabatan tidak valid atau jabatan tidak ada').isIn([
+    'wali-kelas',
+    'kajur',
+    'kaprodi',
+    'dosen-pengampu'
+  ])
 ]
 
 /* Validator dan Sanitizer untuk Mahasiswa */
@@ -40,20 +45,27 @@ export const postNewMahasiswa = [
   // body('nomorHp', 'Nomor Hp tidak valid').isLength({ min: 11 })
 ]
 
+export const updateNomorHpMahasiswa = [
+  body('nomorHP', 'Nomor HP wajib diisi').exists()
+  // body('nomorHP', 'Nomor HP harus maksimal 13 angka').isLength({ max: 13}),
+  // body('nomorHP', 'Nomor HP harus numerik').isNumeric(),
+]
+
 export const createUser = [
   body('noInduk', 'No induk wajib diisi').exists().bail(),
   body('jenisNoInduk', 'Jenis no iduk wajib diisi').exists(),
   body('nama', 'Nama wajib diisi').exists(),
   body('email', 'Format email tidak valid').isEmail(),
-  body('role', 'Role wajib diisi').exists(),
-  body('permissions', 'Permission wajib diisi').exists()
+  body('role', 'Role wajib diisi').exists()
 ]
 
 export const deleteDosenByNIP = [
   param('NIP').custom((value) => {
     return DosenDAO.findDosenByNIP(value).then((dosen) => {
       if (dosen) {
-        return Promise.reject(new Error('Dosen dengan NIP tersebut tidak ditemukan'))
+        return Promise.reject(
+          new Error('Dosen dengan NIP tersebut tidak ditemukan')
+        )
       }
     })
   })
