@@ -4,6 +4,8 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import keteranganRoutes from './routes/Keterangan'
 import jadwalRoutes from './routes/Jadwal'
+import * as KeteranganDAO from './dao/Keterangan'
+import * as DaftarHadirMahasiswaDAO from './dao/DaftarHadirMahasiswa'
 
 const app = express()
 
@@ -27,6 +29,26 @@ app.use((error, req, res, next) => {
     error: status,
     cause: cause
   })
+})
+
+app.post('/keterangan', async (req, res) => {
+  const { nim, status, url } = req.body
+  try {
+    const result = await KeteranganDAO.insertKeterangan(nim, status, url)
+    res.json({result})
+  } catch (error) {
+    res.json({error})
+  } 
+})
+
+app.post('/daftarhadirmhs', async (req, res) => {
+  const { id_studies, status, url } = req.body
+  try {
+    res.json({ results })
+
+  } catch (error) {
+    res.json(error)
+  }
 })
 
 export default app

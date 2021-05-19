@@ -1,13 +1,15 @@
 import Sequelize from 'sequelize'
-
 import db from '../db'
 
-const TataUsaha = db.define('tata_usaha', {
-  id_tata_usaha: {
-    type: Sequelize.INTEGER,
+const TataUsaha = db.define('Tata_Usaha', {
+  nip: {
+    type: Sequelize.STRING(30),
     allowNull: false,
-    primaryKey: true,
-    autoIncrement: true
+    primaryKey: true
+  },
+  nama_staff: {
+    type: Sequelize.STRING(30),
+    allowNull: false
   }
 })
 
