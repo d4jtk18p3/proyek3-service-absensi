@@ -72,6 +72,9 @@ module.exports = {
       isHadir: {
         type: Sequelize.BOOLEAN
       },
+      createdAt: {
+        type: Sequelize.DATE
+      },
       updatedAt: {
         type: Sequelize.DATE
       }
@@ -126,7 +129,7 @@ module.exports = {
      */
     await queryInterface.dropTable('Keterangan')
     await queryInterface.dropTable('daftar_hadir_mahasiswa')
-    await queryInterface.dropTable('daftar_hadir_mahasiswa')
+    await queryInterface.dropTable('daftar_hadir_dosen')
     await queryInterface.dropTable('Jadwal')
   }
 };

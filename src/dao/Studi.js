@@ -13,7 +13,7 @@ export const findStudiByIdPerkuliahan = async (idPerkuliahan) => {
   try {
     const studi = await Studi.findAll({
       where: {
-        idPerkuliahan
+        id_perkuliahan: idPerkuliahan
       }
     })
     return studi

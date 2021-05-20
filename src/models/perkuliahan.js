@@ -12,7 +12,22 @@ const Perkuliahan = db.define('Perkuliahan', {
   tahun_akademik: {
     type: Sequelize.INTEGER,
     allowNull: false
-  }
+  },
+  id_mata_kuliah: {
+    type: Sequelize.INTEGER,
+    references: {
+      model: 'Mata_Kuliah',
+      key: 'id'
+    },
+  },
+  kode_kelas: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Kelas',
+      key: 'kode_kelas'
+    }
+  },
 })
 
 export default Perkuliahan

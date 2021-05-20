@@ -32,6 +32,22 @@ const Jadwal = db.define(
     },
     jenis: {
       type: Sequelize.STRING
+    },
+    id_perkuliahan: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Perkuliahan',
+        key: 'id'
+      },
+    },
+    nip: {
+      type: Sequelize.STRING(30),
+      allowNull: true,
+      references: {
+        model: 'Dosen',
+        key: 'nip'
+      }
     }
   },
   {

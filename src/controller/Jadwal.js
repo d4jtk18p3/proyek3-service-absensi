@@ -11,30 +11,37 @@ import * as DaftarHadirMahasiswa from '../dao/DaftarHadirMahasiswa'
 export const getJadwalDosenByHariAndNIP = async (req, res) => {
   try {
     const hari = parseInt(req.query.hari)
-    const NIP = parseInt(req.query.nip)
+    const NIP = req.query.nip
     const dosen = await DosenDAO.findDosenByNIP(NIP)
     const listJadwal = await JadwalDAO.findJadwalByHariAndNIP(hari, NIP)
+
+    console.log(listJadwal)
+    console.log(dosen)
 
     var i
     var listJadwalPerkuliahan = []
     for (i = 0; i < listJadwal.length; i++) {
       var perkuliahan = await PerkuliahanDAO.findPerkuliahanByIdPerkuliahan(listJadwal[i].id_perkuliahan)
+      console.log(perkuliahan)
       var kelas = await Kelas.findKelasByKodeKelas(perkuliahan.kode_kelas)
+      console.log(kelas)
       var mataKuliah = await MataKuliah.findMataKuliahByIdMatkul(perkuliahan.id_mata_kuliah)
-      var studi = await Studi.findStudiByIdPerkuliahan(perkuliahan.id_perkuliahan)
+      console.log(mataKuliah)
+      var studi = await Studi.findStudiByIdPerkuliahan(perkuliahan.id)
+      console.log(studi)
 
-      var j
-      var listDaftarHadirDosen = []
-      for (j = 0; j < studi.length; j++) {
-        var daftarHadirDosen = await DaftarHadirDosen.findDaftarHadirDosenByNIPAndIdStudi(NIP, studi[j].id_studi)
-        listDaftarHadirDosen.push(daftarHadirDosen)
-      }
+      // var j
+      // var listDaftarHadirDosen = []
+      // for (j = 0; j < studi.length; j++) {
+      //   var daftarHadirDosen = await DaftarHadirDosen.findDaftarHadirDosenByNIPAndIdStudi(NIP, studi[j].id)
+      //   listDaftarHadirDosen.push(daftarHadirDosen)
+      // }
 
       const jadwalPerkuliahan = {
         jadwal: listJadwal[i],
         kelas: kelas,
         mata_kuliah: mataKuliah,
-        daftarHadirDosen: listDaftarHadirDosen,
+        // daftarHadirDosen: listDaftarHadirDosen,
         dosen: dosen
       }
 
