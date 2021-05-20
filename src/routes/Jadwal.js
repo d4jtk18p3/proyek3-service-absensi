@@ -7,5 +7,4 @@ router.get('/dosen', JadwalController.getJadwalDosenByHariAndNIP)
 // router.get('/mahasiswa', JadwalController.getJadwalMahasiswaByHariAndNIM)
 router.get('/mahasiswa', JadwalController.getJadwalMhsHrTertentuHandler)
 
-
 export default router
