@@ -14,7 +14,7 @@ app.use(cors())
 app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use('/keterangan', keteranganRoutes)
-app.use('/api/jadwal_perkuliahan', jadwalRoutes)
+app.use('/api/jadwal-perkuliahan', jadwalRoutes)
 
 // error handling
 app.use((error, req, res, next) => {
