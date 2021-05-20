@@ -28,11 +28,9 @@ export const findJadwalByHari = async (hari) => {
   }
 }
 
-export const getJadwalMhsHariIni = async (nim) => {
+export const getJadwalMhsHrTertentu = async (nim, hari) => {
   // Input : nim
-  // output : jadwal kuliah mahasiswa hari ini
-
-  const date = new Date()
+  // output : jadwal kuliah mahasiswa hari tertentu
 
   try {
     const result = await db.query(`
@@ -41,7 +39,7 @@ export const getJadwalMhsHariIni = async (nim) => {
     INNER JOIN "Perkuliahan" p ON p.id = s.id_perkuliahan
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
     INNER JOIN "Dosen" d ON d.nip = j.nip
-    WHERE j.hari=${date.getDay()} AND m.nim='${nim}';
+    WHERE j.hari=${hari} AND m.nim='${nim}';
     `)
 
     const jadwalMap = new Map()
