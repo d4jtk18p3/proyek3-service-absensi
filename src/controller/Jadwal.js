@@ -103,3 +103,14 @@ export const getJadwalMahasiswaByHariAndNIM = async (req, res) => {
     })
   }
 }
+
+export const getJadwalMhsHrTertentuHandler = async (req, res) => {
+  const nim = req.query.nim
+  const hari = req.query.hari
+  try {
+    const result = await JadwalDAO.getJadwalMhsHrTertentu(nim, hari)
+    res.json({ result })
+  } catch (error) {
+    res.status(error.status).json({ error })
+  }
+}
