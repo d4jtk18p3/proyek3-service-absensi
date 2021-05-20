@@ -29,11 +29,14 @@ export const findJadwalByHari = async (hari) => {
 }
 
 export const getJadwalMhsHariIni = async (nim) => {
+  // Input : nim
+  // output : jadwal kuliah mahasiswa hari ini
+  
   const date = new Date()
-  const tgl = 1
+  const tgl = 1 
   try {
     const result = await db.query(`
-    SELECT j.*, d.nama_dosen FROM "Mahasiswa" m
+    SELECT j.*, s.id AS id_studi, d.nama_dosen FROM "Mahasiswa" m
     INNER JOIN "Studi" s ON m.nim = s.id_mahasiswa
     INNER JOIN "Perkuliahan" p ON p.id = s.id_perkuliahan
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
@@ -70,7 +73,8 @@ export const getJadwalMhsHariIni = async (nim) => {
               nama: jadwal.nama_dosen
             }
           ],
-          id_perkuliahan: jadwal.id_perkuliahan
+          id_perkuliahan: jadwal.id_perkuliahan,
+          id_studi: jadwal.id_studi
         }
         jadwalMap.set(jadwal.id_perkuliahan, prettyJadwal)
       }
@@ -83,7 +87,6 @@ export const getJadwalMhsHariIni = async (nim) => {
       prettyJadwals.push(value)
     }
 
-    // console.log("YEEE BERHASIL ", prettyJadwals)
     return prettyJadwals
   } catch (error) {
     console.log("ERROR NAON ANJIM", error)
