@@ -31,9 +31,9 @@ export const findJadwalByHari = async (hari) => {
 export const getJadwalMhsHariIni = async (nim) => {
   // Input : nim
   // output : jadwal kuliah mahasiswa hari ini
-  
+
   const date = new Date()
-  const tgl = 1 
+
   try {
     const result = await db.query(`
     SELECT j.*, s.id AS id_studi, d.nama_dosen FROM "Mahasiswa" m
@@ -41,22 +41,22 @@ export const getJadwalMhsHariIni = async (nim) => {
     INNER JOIN "Perkuliahan" p ON p.id = s.id_perkuliahan
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
     INNER JOIN "Dosen" d ON d.nip = j.nip
-    WHERE j.hari=1 AND m.nim='${nim}';
+    WHERE j.hari=${date.getDay()} AND m.nim='${nim}';
     `)
-    
-    let jadwalMap = new Map()
+
+    const jadwalMap = new Map()
     const jadwals = result[0]
     jadwals.forEach(jadwal => {
-      if(jadwalMap.has(jadwal.id_perkuliahan)){
+      if (jadwalMap.has(jadwal.id_perkuliahan)) {
         // perkuliahan sudah tersimpan di map
         // tambahkan dosen yang mengajar
-        let prettyJadwalUpdated = jadwalMap.get(jadwal.id_perkuliahan)
+        const prettyJadwalUpdated = jadwalMap.get(jadwal.id_perkuliahan)
         prettyJadwalUpdated.dosens.push({
           nip: jadwal.nip,
           nama: jadwal.nama_dosen
         })
         jadwalMap.set(jadwal.id_perkuliahan, prettyJadwalUpdated)
-      }else{
+      } else {
         // perkuliahan belum tersimpan di map
         const prettyJadwal = {
           id_jadwal: jadwal.id_jadwal,
@@ -80,16 +80,13 @@ export const getJadwalMhsHariIni = async (nim) => {
       }
     })
 
-    console.log("MAP JADWAL LLL ", jadwalMap)
-
-    let prettyJadwals = []
-    for(let [key, value] of jadwalMap){
+    const prettyJadwals = []
+    for (const value of jadwalMap.values()) {
       prettyJadwals.push(value)
     }
 
     return prettyJadwals
   } catch (error) {
-    console.log("ERROR NAON ANJIM", error)
-    return Promise.reject({ error })
+    return Promise.reject(error)
   }
 }
