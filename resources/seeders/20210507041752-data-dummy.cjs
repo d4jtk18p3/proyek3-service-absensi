@@ -366,7 +366,7 @@ module.exports = {
       },
       {
         // hari senin (1)
-        // ada matkul proyek3 (Teori)
+        // ada matkul Sistem Terdistribusi (Teori)
         // dosennya adul (11112)
         // di kelas 123
         nip: 11112,
@@ -397,6 +397,40 @@ module.exports = {
         jenis: 'Teori',
         createdAt: new Date(),
        updatedAt: new Date()
+      },
+      {
+        // hari senin (1)
+        // ada matkul sw testing (Teori)
+        // dosennya Om fullstack (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 3,
+        ja: 5,
+        jb: 6,
+        waktu_mulai: '09:00',
+        waktu_selesai: '10:10',
+        batas_terakhir_absen: '09:15',
+        hari: 1,
+        jenis: 'Teori',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari senin (1)
+        // ada matkul sw testing (Teori)
+        // dosennya Komeng (11111)
+        // di kelas 123
+        nip: '11111',
+        id_perkuliahan: 3,
+        ja: 5,
+        jb: 6,
+        waktu_mulai: '09:00',
+        waktu_selesai: '10:10',
+        batas_terakhir_absen: '09:15',
+        hari: 1,
+        jenis: 'Teori',
+        createdAt: new Date(),
+        updatedAt: new Date()
       },
       {
         // hari selasa (2)
@@ -443,6 +477,7 @@ module.exports = {
      * Example:
      * await queryInterface.bulkDelete('People', null, {});
      */
+    await queryInterface.bulkDelete('daftar_hadir_mahasiswa', null, {})
     await queryInterface.bulkDelete('Studi', null, {})
     await queryInterface.bulkDelete('Jadwal', null, {})
     await queryInterface.bulkDelete('Mahasiswa', null, {})
