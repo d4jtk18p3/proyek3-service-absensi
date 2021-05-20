@@ -39,7 +39,7 @@ const Jadwal = db.define(
       references: {
         model: 'Perkuliahan',
         key: 'id'
-      },
+      }
     },
     nip: {
       type: Sequelize.STRING(30),

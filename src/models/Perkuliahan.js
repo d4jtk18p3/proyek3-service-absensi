@@ -18,7 +18,7 @@ const Perkuliahan = db.define('Perkuliahan', {
     references: {
       model: 'Mata_Kuliah',
       key: 'id'
-    },
+    }
   },
   kode_kelas: {
     type: Sequelize.INTEGER,
@@ -27,7 +27,7 @@ const Perkuliahan = db.define('Perkuliahan', {
       model: 'Kelas',
       key: 'kode_kelas'
     }
-  },
+  }
 })
 
 export default Perkuliahan
