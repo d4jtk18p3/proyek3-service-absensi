@@ -34,11 +34,12 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
 
   try {
     const result = await db.query(`
-    SELECT j.*, s.id AS id_studi, d.nama_dosen FROM "Mahasiswa" m
+    SELECT j.*, s.id AS id_studi, d.nama_dosen, k.nama_mata_kuliah FROM "Mahasiswa" m
     INNER JOIN "Studi" s ON m.nim = s.id_mahasiswa
     INNER JOIN "Perkuliahan" p ON p.id = s.id_perkuliahan
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
     INNER JOIN "Dosen" d ON d.nip = j.nip
+    INNER JOIN "Mata_Kuliah" k ON k.id = p.id_mata_kuliah
     WHERE j.hari=${hari} AND m.nim='${nim}';
     `)
 
@@ -72,7 +73,8 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
             }
           ],
           id_perkuliahan: jadwal.id_perkuliahan,
-          id_studi: jadwal.id_studi
+          id_studi: jadwal.id_studi,
+          nama_mata_kuliah: jadwal.nama_mata_kuliah,
         }
         jadwalMap.set(jadwal.id_perkuliahan, prettyJadwal)
       }
