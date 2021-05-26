@@ -87,6 +87,7 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
           id_perkuliahan: jadwal.id_perkuliahan,
           id_studi: jadwal.id_studi
         }
+        // temporary comment
         jadwalMap.set(jadwal.id_perkuliahan, prettyJadwal)
       }
     })
