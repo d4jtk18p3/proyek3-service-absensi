@@ -7,7 +7,7 @@ export const presensiMhsHandler = async (req, res, next) => {
     res.json({
       message: `Mengisi presensi pada idStudi ${idStudi} dan idJadwal ${idJadwal}`,
       data: {
-        presensi : result
+        presensi: result
       }
     })
   } catch (error) {
