@@ -3,7 +3,7 @@ import * as JadwalController from '../controller/Jadwal'
 
 const router = express.Router()
 
-router.get('/dosen', JadwalController.getJadwalDosenByHariAndNIP)
+router.get('/dosen', JadwalController.getJadwalDosenHrTertentuHandler)
 // router.get('/mahasiswa', JadwalController.getJadwalMahasiswaByHariAndNIM)
 router.get('/mahasiswa', JadwalController.getJadwalMhsHrTertentuHandler)
 

@@ -114,3 +114,14 @@ export const getJadwalMhsHrTertentuHandler = async (req, res) => {
     res.status(error.status).json({ error })
   }
 }
+
+export const getJadwalDosenHrTertentuHandler = async (req, res) => {
+  const nip = req.query.nip
+  const hari = req.query.hari
+  try {
+    const result = await JadwalDAO.getJadwalDosenHrTertentu(nip, hari)
+    res.json({ result })
+  } catch (error) {
+    res.status(error.status).json({ error })
+  }
+}
