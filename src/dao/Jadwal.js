@@ -1,6 +1,19 @@
 import Jadwal from '../models/Jadwal'
 import db from '../db'
 
+export const findJadwalById = async (idJadwal) => {
+  try {
+    const jadwal = await Jadwal.findAll({
+      where: {
+        id_jadwal: idJadwal
+      }
+    })
+    return jadwal
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const findJadwalByHariAndNIP = async (hari, NIP) => {
   try {
     const jadwal = await Jadwal.findAll({
