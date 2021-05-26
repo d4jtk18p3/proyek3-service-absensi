@@ -44,7 +44,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       tanggal: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       isHadir: {
         type: Sequelize.BOOLEAN

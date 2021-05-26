@@ -62,6 +62,12 @@ module.exports = {
       onDelete: 'SET NULL'
     })
 
+    await queryInterface.addConstraint('daftar_hadir_mahasiswa', {
+      fields: ['id_studi', 'tanggal'],
+      type: 'Unique',
+      name: 'presensi_hari_tertentu'
+    })
+
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -71,6 +77,7 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
+    await queryInterface.removeConstraint('daftar_hadir_mahasiswa', 'presensi_hari_tertentu')
     await queryInterface.removeColumn('Keterangan', 'nim')
     await queryInterface.removeColumn('daftar_hadir_mahasiswa', 'id_studi')
     await queryInterface.removeColumn('daftar_hadir_mahasiswa', 'id_keterangan')
