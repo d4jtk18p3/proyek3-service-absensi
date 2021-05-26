@@ -4,7 +4,7 @@
 import * as JadwalDAO from '../dao/Jadwal'
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
 
-const hitungKeterlambatan =  (batasAbsen, absenDilakukan) => {
+const hitungKeterlambatan = (batasAbsen, absenDilakukan) => {
   // Output : selisih antara absenDilakukan dan batasAbsen (dalam menit)
 
   let temp = batasAbsen.split(':')
@@ -31,7 +31,7 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     const keterlambatan = Math.round(hitungKeterlambatan(batasAbsen, absenDilakukan))
 
     const result = await DaftarHadirMahasiswaDAO.insertOne(idStudi, null, keterlambatan, tglHariIni, true)
-     
+
     return result
   } catch (error) {
     return Promise.reject(error)
