@@ -109,7 +109,12 @@ export const getJadwalMhsHrTertentuHandler = async (req, res) => {
   const hari = req.query.hari
   try {
     const result = await JadwalDAO.getJadwalMhsHrTertentu(nim, hari)
-    res.json({ result })
+    res.json({
+      message: `Jadwal kuliah nim ${nim} pada hari ${hari}`,
+      data: {
+        jadwal: result
+      }
+    })
   } catch (error) {
     res.status(error.status).json({ error })
   }
