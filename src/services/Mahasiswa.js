@@ -4,7 +4,7 @@
 import * as JadwalDAO from '../dao/Jadwal'
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
 
-const hitungKeterlambatan =  (batasAbsen, absenDilakukan) => {
+const hitungKeterlambatan = (batasAbsen, absenDilakukan) => {
   // Output : selisih antara absenDilakukan dan batasAbsen (dalam menit)
 
   let temp = batasAbsen.split(':')

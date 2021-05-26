@@ -5,5 +5,4 @@ const router = express.Router()
 
 router.post('/mhs-kehadiran', DaftarHadirMahasiswaController.presensiMhsHandler)
 
-
 export default router
