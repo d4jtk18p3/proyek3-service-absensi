@@ -4,6 +4,7 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import keteranganRoutes from './routes/Keterangan'
 import jadwalRoutes from './routes/Jadwal'
+import daftarHadirMahasiswaRoutes from './routes/DaftarHadirMahasiswa'
 
 const app = express()
 
@@ -15,6 +16,7 @@ app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use('/keterangan', keteranganRoutes)
 app.use('/api/jadwal-perkuliahan', jadwalRoutes)
+app.use('/api/daftar-hadir-mahasiswa', daftarHadirMahasiswaRoutes)
 
 // error handling
 app.use((error, req, res, next) => {
