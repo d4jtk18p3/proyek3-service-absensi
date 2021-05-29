@@ -49,6 +49,12 @@ module.exports = {
       isHadir: {
         type: Sequelize.BOOLEAN
       },
+      minggu: {
+        type: Sequelize.INTEGER
+      },
+      bulan: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         type: Sequelize.DATE
       },
