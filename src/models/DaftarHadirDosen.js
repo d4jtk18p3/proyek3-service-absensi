@@ -12,12 +12,31 @@ const DaftarHadirDosen = db.define(
       unique: true,
       primaryKey: true
     },
+    nip: {
+      type: Sequelize.STRING(30),
+      allowNull: false,
+      references: {
+        model: 'Dosen',
+        key: 'nip'
+      }
+    },
+    id_studi: {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Studi',
+        key: 'id'
+      }
+    },
     tanggal: {
       type: Sequelize.DATE
     },
     isHadir: {
       type: Sequelize.BOOLEAN
     }
+  },
+  {
+    tableName: 'daftar_hadir_dosen'
   }
 )
 

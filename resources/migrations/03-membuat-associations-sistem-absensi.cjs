@@ -62,6 +62,28 @@ module.exports = {
       onDelete: 'SET NULL'
     })
 
+    await queryInterface.addColumn('daftar_hadir_dosen', 'nip', {
+      type: Sequelize.STRING(30),
+      allowNull: true,
+      references: {
+        model: 'Dosen',
+        key: 'nip'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    })
+    
+    await queryInterface.addColumn('daftar_hadir_dosen', 'id_studi', {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Studi',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    })
+
     await queryInterface.addConstraint('daftar_hadir_mahasiswa', {
       fields: ['id_studi', 'tanggal'],
       type: 'Unique',
