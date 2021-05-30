@@ -35,6 +35,12 @@ const DaftarHadirMahasiswa = db.define(
         model: 'Keterangan',
         key: 'id_keterangan'
       }
+    },
+    minggu: {
+      type: Sequelize.INTEGER
+    },
+    bulan: {
+      type: Sequelize.INTEGER
     }
   },
   {
