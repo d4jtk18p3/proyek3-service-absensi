@@ -55,6 +55,12 @@ module.exports = {
       bulan: {
         type: Sequelize.INTEGER
       },
+      ja: {
+        type: Sequelize.INTEGER
+      },
+      jb: {
+        type: Sequelize.INTEGER
+      },
       createdAt: {
         type: Sequelize.DATE
       },
