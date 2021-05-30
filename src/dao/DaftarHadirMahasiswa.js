@@ -3,7 +3,7 @@ import * as MahasiswaDAO from './Mahasiswa'
 import * as JadwalDAO from './Jadwal'
 import db from '../db'
 
-export const insertOne = async (idStudi, idKeterangan, keterlambatan, tanggal, isHadir, minggu, bulan) => {
+export const insertOne = async (idStudi, idKeterangan, keterlambatan, tanggal, isHadir, minggu, bulan, ja, jb) => {
   // Belum melibatkan db common
   try {
     const result = await DaftarHadirMahasiswa.create({
@@ -13,7 +13,9 @@ export const insertOne = async (idStudi, idKeterangan, keterlambatan, tanggal, i
       tanggal,
       isHadir,
       minggu,
-      bulan
+      bulan,
+      ja,
+      jb
     })
 
     return result
@@ -46,18 +48,21 @@ export const bikinDaftarHadirSeluruhMhsHariIni = async () => {
   // Fungsi ini harus dipanggil satu kali sehari
   // untuk inisiasi daftar hadir mahasiswa
   
+  // Bikin daftar hadirnya jadngan berdasarkan matkul, tapi berdasarkan jadwal ngab
   try {
     const date = new Date()
     const allMhs = await MahasiswaDAO.findAllMahasiswa()
     allMhs.forEach(async (mhs) => {
       const matkulHariIni = await JadwalDAO.getJadwalMhsHrTertentu(mhs.nim, 1)
+      console.log("MATKUL HARI INI MAU DIBUAT", matkulHariIni)
       await Promise.all(matkulHariIni.map(async (matkul) => {
           // bikin daftar hadir untuk setiap matkul hari ini
-          const result = await insertOne(matkul.id_studi, null, 0, `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`, false, calculateWeekOfMonth(date.getDate()), date.getMonth() + 1)
+          const result = await insertOne(matkul.id_studi, null, 0, `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`, false, calculateWeekOfMonth(date.getDate()), date.getMonth() + 1, matkul.ja, matkul.jb)
           console.log(result)
         })
       )
     })
+    
     return true
   } catch (error) {
     return Promise.reject(error)
@@ -127,16 +132,16 @@ export const updateStatusKehadiranMhsByID = async (idDaftarHadirMhs, isHadir) =>
   }
 }
 
-export const updateStatusKehadiranMhsByStudiAndTanggal = async (idStudi, tanggal, isHadir) => {
+export const updateStatusKehadiranMhs = async (idStudi, keterlambatan, tanggal, isHadir, ja, jb) => {
   
   // Author : Hafiz
-  // param : idStudi (int), tanggal (string : 'yyyy-mm-dd'), isHadir (boolean)
+  // param : idStudi (int), tanggal (string : 'yyyy-mm-dd'), isHadir (boolean), ja (int), jb(int)
   // Output : nilai field isHadir pada tabel daftar_hadir_mahasiswa terupdate
   // return : rows yang telah diupdated
   
   try {
     const result = await db.query(`
-    UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir} WHERE id_studi=${idStudi} AND tanggal='${tanggal}' RETURNING *
+    UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir}, keterlambatan = ${keterlambatan} WHERE (id_studi=${idStudi} AND tanggal='${tanggal}' AND ja=${ja} AND jb=${jb}) RETURNING *;
     `)
     const rows = result[0]
     return rows
@@ -145,20 +150,20 @@ export const updateStatusKehadiranMhsByStudiAndTanggal = async (idStudi, tanggal
   }
 }
 
-export const updateKehadiranDanKeterlambatan = async (isHadir, keterlambatan, idStudi, tanggal) => {
+// export const updateKehadiranDanKeterlambatan = async (isHadir, keterlambatan, idStudi, tanggal) => {
   
-  // Author : hafizmfadli
-  // param: isHadir (boolean), keterlambatan (int), idStudi (int), tanggal (string : 'yyyy-mm-dd')
-  // Output : nilai isHadir dan keterlambatan diperbarui
-  // return : rows yang telah diupdate
+//   // Author : hafizmfadli
+//   // param: isHadir (boolean), keterlambatan (int), idStudi (int), tanggal (string : 'yyyy-mm-dd')
+//   // Output : nilai isHadir dan keterlambatan diperbarui
+//   // return : rows yang telah diupdate
   
-  try {
-    const result = await db.query(`
-    UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir}, keterlambatan = ${keterlambatan} WHERE id_studi=${idStudi} AND tanggal='${tanggal}' RETURNING *
-    `)
-    const rows = result[0]
-    return rows
-  } catch (error) {
-    return Promise.reject(error)
-  }
-}
+//   try {
+//     const result = await db.query(`
+//     UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir}, keterlambatan = ${keterlambatan} WHERE id_studi=${idStudi} AND tanggal='${tanggal}' RETURNING *
+//     `)
+//     const rows = result[0]
+//     return rows
+//   } catch (error) {
+//     return Promise.reject(error)
+//   }
+// }
