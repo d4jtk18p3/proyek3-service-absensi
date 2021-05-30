@@ -3,12 +3,12 @@
 */
 import * as DaftarHadirDosenDAO from '../dao/DaftarHadirDosen'
 
-export const melakukanAbsensi = async (nip, idStudi) => {
+export const melakukanAbsensi = async (nip, idStudi, idJadwal) => {
   try {
     const d = new Date()
-    const tglHariIni = `${d.getFullYear()}:${d.getMonth()}:${d.getDate()}`
+    const tglHariIni = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
 
-    const result = await DaftarHadirDosenDAO.insertOne(nip, idStudi, tglHariIni, true)
+    const result = await DaftarHadirDosenDAO.updateStatusKehadiranDosen(nip, idStudi, tglHariIni, true, idJadwal)
     return result
   } catch (error) {
     return Promise.reject(error)

@@ -33,6 +33,9 @@ const DaftarHadirDosen = db.define(
     },
     isHadir: {
       type: Sequelize.BOOLEAN
+    },
+    idJadwal: {
+      type: Sequelize.INTEGER
     }
   },
   {
