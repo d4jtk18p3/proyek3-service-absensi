@@ -6,7 +6,7 @@ import keteranganRoutes from './routes/Keterangan'
 import jadwalRoutes from './routes/Jadwal'
 import daftarHadirMahasiswaRoutes from './routes/DaftarHadirMahasiswa'
 import * as testDAO from './dao/DaftarHadirMahasiswa'
-
+import daftarHadirDosenRoutes from './routes/DaftarHadirDosen'
 
 const app = express()
 
@@ -19,6 +19,7 @@ app.use(morgan('dev'))
 app.use('/keterangan', keteranganRoutes)
 app.use('/api/jadwal-perkuliahan', jadwalRoutes)
 app.use('/api/daftar-hadir-mahasiswa', daftarHadirMahasiswaRoutes)
+app.use('/api/daftar-hadir-dosen', daftarHadirDosenRoutes)
 
 // error handling
 app.use((error, req, res, next) => {
