@@ -4,8 +4,6 @@
 import * as JadwalDAO from '../dao/Jadwal'
 import * as KeteranganDAO from '../dao/Keterangan'
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
-import * as StudiDAO from '../dao/Studi'
-
 
 const hitungKeterlambatan = (batasAbsen, absenDilakukan) => {
   // Output : selisih antara absenDilakukan dan batasAbsen (dalam menit)
@@ -21,7 +19,6 @@ const hitungKeterlambatan = (batasAbsen, absenDilakukan) => {
 }
 
 export const melakukanAbsensi = async (idStudi, idJadwal) => {
-
   // Author : hafizmfadli
   // param : idStudi (int), idJadwal (int)
   // Output : Mahasiswa dianggap hadir dengan keterlambatannya telah dihitung
@@ -29,7 +26,7 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
 
   try {
     const d = new Date()
-    const tglHariIni = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
+    const tglHariIni = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
     const jadwal = await JadwalDAO.findJadwalById(idJadwal)
     const batasAbsen = jadwal[0].batas_terakhir_absen
     const absenDilakukan = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
@@ -40,7 +37,6 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     return Promise.reject(error)
   }
 }
-
 
 export const ajukanIzin = async (idJadwals, status, url, nim) => {
   // ide :
@@ -57,23 +53,20 @@ export const ajukanIzin = async (idJadwals, status, url, nim) => {
   // return daftar daftar hadir mahasiswa yang mengajukan izin
 
   try {
-    console.log("JADDWAL YANG MAU IJIN ", idJadwals)
     const d = new Date()
-    const tglHariIni = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
+    const tglHariIni = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
     const jadwals = await JadwalDAO.getJadwalMhsHrTertentu(nim, d.getDay())
     const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url)
-    
-    let results = []
-    await Promise.all( jadwals.map(async (jadwal) => {
-      if(idJadwals.includes(`${jadwal.id_jadwal}`)){
-        const result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(jadwal.id_studi, 0, tglHariIni, false, jadwal.ja, jadwal.jb, keterangan.dataValues.id_keterangan)        
+
+    const results = []
+    await Promise.all(jadwals.map(async (jadwal) => {
+      if (idJadwals.includes(`${jadwal.id_jadwal}`)) {
+        const result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(jadwal.id_studi, 0, tglHariIni, false, jadwal.ja, jadwal.jb, keterangan.dataValues.id_keterangan)
         results.push(result[0])
         return result
       }
     })
     )
-    
-    console.log("RESULT BARU", results)
     return results
   } catch (error) {
     return Promise.reject(error)

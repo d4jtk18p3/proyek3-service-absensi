@@ -34,7 +34,7 @@ export const uploadSuratIzin = (req, res) => {
 
       // pastikan idStudies adalah array
       let idJadwalArr = idJadwals
-      if(!Array.isArray(idJadwals)){
+      if (!Array.isArray(idJadwals)) {
         idJadwalArr = [idJadwals]
       }
 

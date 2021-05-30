@@ -126,7 +126,7 @@ export const getSeluruhStudiMilikSuatuMhs = async (nim) => {
     INNER JOIN "Studi" s ON s.id_mahasiswa = mhs.nim
     WHERE mhs.nim='${nim}';
     `)
-    return result[0]   
+    return result[0]
   } catch (error) {
     return Promise.reject(error)
   }

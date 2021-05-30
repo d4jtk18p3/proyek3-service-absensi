@@ -33,10 +33,9 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
     const jadwals = result[0]
     console.log(jadwals)
     jadwals.forEach(jadwal => {
-
       // jadwal dianggap sama jika id_studi, hari, ja, dan jb nya sama
       const jadwalIdentifier = `${jadwal.id_studi}${jadwal.hari}${jadwal.ja}${jadwal.jb}`
-      
+
       if (jadwalMap.has(jadwalIdentifier)) {
         // jadwal sudah tersimpan di map
         // tambahkan dosen yang mengajar
@@ -65,8 +64,7 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
             }
           ],
           id_perkuliahan: jadwal.id_perkuliahan,
-          id_studi: jadwal.id_studi,
-          nama_mata_kuliah: jadwal.nama_mata_kuliah
+          id_studi: jadwal.id_studi
         }
         jadwalMap.set(jadwalIdentifier, prettyJadwal)
       }
@@ -127,10 +125,9 @@ export const getJadwalDosenHrTertentu = async (nip, hari) => {
             nama_mata_kuliah: jadwal.nama_mata_kuliah
           }
         }
-        jadwalMap.set(jadwalIdentifier, prettyJadwal)
+        jadwalMap.set(jadwal.id_perkuliahan, prettyJadwal)
       }
     })
-    console.log("MAP JADWAL", jadwalMap)
     const prettyJadwals = []
     for (const value of jadwalMap.values()) {
       prettyJadwals.push(value)
