@@ -132,7 +132,7 @@ export const updateStatusKehadiranMhsByID = async (idDaftarHadirMhs, isHadir) =>
   }
 }
 
-export const updateStatusKehadiranMhs = async (idStudi, keterlambatan, tanggal, isHadir, ja, jb) => {
+export const updateStatusKehadiranMhs = async (idStudi, keterlambatan, tanggal, isHadir, ja, jb, idKeterangan) => {
   
   // Author : Hafiz
   // param : idStudi (int), tanggal (string : 'yyyy-mm-dd'), isHadir (boolean), ja (int), jb(int)
@@ -141,7 +141,7 @@ export const updateStatusKehadiranMhs = async (idStudi, keterlambatan, tanggal, 
   
   try {
     const result = await db.query(`
-    UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir}, keterlambatan = ${keterlambatan} WHERE (id_studi=${idStudi} AND tanggal='${tanggal}' AND ja=${ja} AND jb=${jb}) RETURNING *;
+    UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir}, keterlambatan = ${keterlambatan}, id_keterangan = ${idKeterangan} WHERE (id_studi=${idStudi} AND tanggal='${tanggal}' AND ja=${ja} AND jb=${jb}) RETURNING *;
     `)
     const rows = result[0]
     return rows
