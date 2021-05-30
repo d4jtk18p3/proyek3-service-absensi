@@ -62,39 +62,17 @@ export const ajukanIzin = async (idJadwals, status, url, nim) => {
     const tglHariIni = `${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}`
     const jadwals = await JadwalDAO.getJadwalMhsHrTertentu(nim, d.getDay())
     const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url)
-    console.log("JADWAL AYEUNANE ANJENG", jadwals)
-    console.log("KETERANGAN AING ", keterangan)
-    // OK !
-
+    
     let results = []
     await Promise.all( jadwals.map(async (jadwal) => {
-      console.log("ITERASI JADWAL BGST ", jadwal)
       if(idJadwals.includes(`${jadwal.id_jadwal}`)){
-        console.log("masuk pa eko")
         const result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(jadwal.id_studi, 0, tglHariIni, false, jadwal.ja, jadwal.jb, keterangan.dataValues.id_keterangan)        
         results.push(result[0])
+        return result
       }
     })
     )
     
-    
-    // const results = await Promise.all(
-    //   idStudies.map(async (idStudi) =>
-    //     // await DaftarHadirMahasiswaDAO.insertOne(idStudi, keterangan.id_keterangan, -1, `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`, false)
-    //       // ubah isHadir menjadi false dan kasih id keterangan untuk seluruh matkul yang diajukan izin
-    //       jadwals.forEach(async (jadwal) => {
-    //         if(jadwal.id_studi === idStudi){
-    //           await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(idStudi, 0, tglHariIni, false, jadwal.ja, jadwal.jb, keterangan.id_keterangan)
-    //         }
-    //       })
-    //     )
-    // )
-    // const results = await Promise.all(idJadwals.map(async (idJadwal) => {
-    //     const jadwal = (await JadwalDAO.findJadwalById(idJadwal))[0]
-    //     console.log("DETAIL SUATU JADWAL", jadwal)
-    //     await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(jadwal.id_studi, 0, tglHariIni, false, jadwal.ja, jadwal.jb, keterangan.id_keterangan)
-    //   })
-    // )
     console.log("RESULT BARU", results)
     return results
   } catch (error) {
