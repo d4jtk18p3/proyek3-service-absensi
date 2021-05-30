@@ -3,6 +3,6 @@ import * as DaftarHadirMahasiswaController from '../controller/DaftarHadirMahasi
 
 const router = express.Router()
 
-router.post('/mhs-kehadiran', DaftarHadirMahasiswaController.presensiMhsHandler)
+router.put('/presensi', DaftarHadirMahasiswaController.presensiMhsHandler)
 
 export default router
