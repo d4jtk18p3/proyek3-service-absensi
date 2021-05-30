@@ -68,7 +68,7 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
           id_studi: jadwal.id_studi,
           nama_mata_kuliah: jadwal.nama_mata_kuliah
         }
-        jadwalMap.set(jadwal.id_perkuliahan, prettyJadwal)
+        jadwalMap.set(jadwalIdentifier, prettyJadwal)
       }
     })
 
@@ -76,7 +76,6 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
     for (const value of jadwalMap.values()) {
       prettyJadwals.push(value)
     }
-
     return prettyJadwals
   } catch (error) {
     return Promise.reject(error)
