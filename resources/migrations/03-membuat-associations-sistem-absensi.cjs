@@ -63,7 +63,7 @@ module.exports = {
     })
 
     await queryInterface.addConstraint('daftar_hadir_mahasiswa', {
-      fields: ['id_studi', 'tanggal'],
+      fields: ['id_studi', 'tanggal', 'ja', 'jb'],
       type: 'Unique',
       name: 'presensi_hari_tertentu'
     })
