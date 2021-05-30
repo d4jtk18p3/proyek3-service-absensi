@@ -267,16 +267,16 @@ module.exports = {
       type: 'Unique',
       name: 'c_unique0_studi'
     })
-    await queryInterface.addConstraint('Perkuliahan', {
-      fields: ['id_mata_kuliah', 'kode_kelas'],
-      type: 'Unique',
-      name: 'c_unique0_perkuliahan'
-    })
+    // await queryInterface.addConstraint('Perkuliahan', {
+    //   fields: ['id_mata_kuliah', 'kode_kelas'],
+    //   type: 'Unique',
+    //   name: 'c_unique0_perkuliahan'
+    // })
 
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.removeConstraint('Perkuliahan', 'c_unique0_perkuliahan')
+    // await queryInterface.removeConstraint('Perkuliahan', 'c_unique0_perkuliahan')
     await queryInterface.removeConstraint('Studi', 'c_unique0_studi')
     await queryInterface.dropTable('Pengajar')
     await queryInterface.dropTable('Studi')

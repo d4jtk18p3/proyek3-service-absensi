@@ -20,31 +20,36 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
 
   try {
     const result = await db.query(`
-    SELECT j.*, s.id AS id_studi, d.nama_dosen, k.nama_mata_kuliah FROM "Mahasiswa" m
+    SELECT j.*, mk.nama_mata_kuliah, s.id AS id_studi, d.nama_dosen FROM "Mahasiswa" m
     INNER JOIN "Studi" s ON m.nim = s.id_mahasiswa
     INNER JOIN "Perkuliahan" p ON p.id = s.id_perkuliahan
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
     INNER JOIN "Dosen" d ON d.nip = j.nip
-    INNER JOIN "Mata_Kuliah" k ON k.id = p.id_mata_kuliah
+    INNER JOIN "Mata_Kuliah" mk ON mk.id = p.id_mata_kuliah
     WHERE j.hari=${hari} AND m.nim='${nim}';
     `)
 
     const jadwalMap = new Map()
     const jadwals = result[0]
+    console.log(jadwals)
     jadwals.forEach(jadwal => {
-      if (jadwalMap.has(jadwal.id_perkuliahan)) {
-        // perkuliahan sudah tersimpan di map
+      // jadwal dianggap sama jika id_studi, hari, ja, dan jb nya sama
+      const jadwalIdentifier = `${jadwal.id_studi}${jadwal.hari}${jadwal.ja}${jadwal.jb}`
+
+      if (jadwalMap.has(jadwalIdentifier)) {
+        // jadwal sudah tersimpan di map
         // tambahkan dosen yang mengajar
-        const prettyJadwalUpdated = jadwalMap.get(jadwal.id_perkuliahan)
+        const prettyJadwalUpdated = jadwalMap.get(jadwalIdentifier)
         prettyJadwalUpdated.dosens.push({
           nip: jadwal.nip,
           nama: jadwal.nama_dosen
         })
-        jadwalMap.set(jadwal.id_perkuliahan, prettyJadwalUpdated)
+        jadwalMap.set(jadwalIdentifier, prettyJadwalUpdated)
       } else {
-        // perkuliahan belum tersimpan di map
+        // jadwal belum tersimpan di map
         const prettyJadwal = {
           id_jadwal: jadwal.id_jadwal,
+          nama_mata_kuliah: jadwal.nama_mata_kuliah,
           ja: jadwal.ja,
           jb: jadwal.jb,
           waktu_mulai: jadwal.waktu_mulai,
@@ -59,10 +64,9 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
             }
           ],
           id_perkuliahan: jadwal.id_perkuliahan,
-          id_studi: jadwal.id_studi,
-          nama_mata_kuliah: jadwal.nama_mata_kuliah
+          id_studi: jadwal.id_studi
         }
-        jadwalMap.set(jadwal.id_perkuliahan, prettyJadwal)
+        jadwalMap.set(jadwalIdentifier, prettyJadwal)
       }
     })
 
@@ -70,7 +74,6 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
     for (const value of jadwalMap.values()) {
       prettyJadwals.push(value)
     }
-
     return prettyJadwals
   } catch (error) {
     return Promise.reject(error)
@@ -125,7 +128,6 @@ export const getJadwalDosenHrTertentu = async (nip, hari) => {
         jadwalMap.set(jadwal.id_perkuliahan, prettyJadwal)
       }
     })
-
     const prettyJadwals = []
     for (const value of jadwalMap.values()) {
       prettyJadwals.push(value)

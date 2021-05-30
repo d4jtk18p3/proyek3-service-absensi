@@ -5,6 +5,7 @@ import bodyParser from 'body-parser'
 import keteranganRoutes from './routes/Keterangan'
 import jadwalRoutes from './routes/Jadwal'
 import daftarHadirMahasiswaRoutes from './routes/DaftarHadirMahasiswa'
+import * as testDAO from './dao/DaftarHadirMahasiswa'
 import daftarHadirDosenRoutes from './routes/DaftarHadirDosen'
 
 const app = express()
@@ -15,7 +16,7 @@ app.use(cors())
 // app.use(keycloak.protect())
 app.use(bodyParser.json())
 app.use(morgan('dev'))
-app.use('/keterangan', keteranganRoutes)
+app.use('/api/keterangan', keteranganRoutes)
 app.use('/api/jadwal-perkuliahan', jadwalRoutes)
 app.use('/api/daftar-hadir-mahasiswa', daftarHadirMahasiswaRoutes)
 app.use('/api/daftar-hadir-dosen', daftarHadirDosenRoutes)
@@ -31,6 +32,16 @@ app.use((error, req, res, next) => {
     error: status,
     cause: cause
   })
+})
+
+app.get('/generate-daftar-hadir', async (req, res, next) => {
+  // harus dijlankan satu kali sehari
+  try {
+    const result = await testDAO.bikinDaftarHadirSeluruhMhsHariIni()
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
 })
 
 export default app

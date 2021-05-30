@@ -465,8 +465,214 @@ module.exports = {
         jenis: 'Praktek',
         createdAt: new Date(),
        updatedAt: new Date()
+      },
+      {
+        // hari rabu (3)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 1,
+        jb: 2,
+        waktu_mulai: '07:00',
+        waktu_selesai: '08:10',
+        batas_terakhir_absen: '07:15',
+        hari: 3,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari rabu (3)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 5,
+        jb: 6,
+        waktu_mulai: '14:00',
+        waktu_selesai: '15:10',
+        batas_terakhir_absen: '14:30',
+        hari: 3,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari kamis (4)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 1,
+        jb: 2,
+        waktu_mulai: '07:00',
+        waktu_selesai: '08:10',
+        batas_terakhir_absen: '07:15',
+        hari: 4,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari kamis (4)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 5,
+        jb: 6,
+        waktu_mulai: '14:00',
+        waktu_selesai: '15:10',
+        batas_terakhir_absen: '14:30',
+        hari: 4,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari jumat (5)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 1,
+        jb: 2,
+        waktu_mulai: '07:00',
+        waktu_selesai: '08:10',
+        batas_terakhir_absen: '07:15',
+        hari: 5,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari jumat (5)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 5,
+        jb: 6,
+        waktu_mulai: '14:00',
+        waktu_selesai: '15:10',
+        batas_terakhir_absen: '14:15',
+        hari: 5,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari sabtu (6)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 1,
+        jb: 2,
+        waktu_mulai: '07:00',
+        waktu_selesai: '08:10',
+        batas_terakhir_absen: '07:15',
+        hari: 6,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari sabtu (6)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 5,
+        jb: 6,
+        waktu_mulai: '14:00',
+        waktu_selesai: '15:10',
+        batas_terakhir_absen: '14:15',
+        hari: 4,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari minggu (0)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 1,
+        jb: 2,
+        waktu_mulai: '07:00',
+        waktu_selesai: '08:10',
+        batas_terakhir_absen: '07:15',
+        hari: 0,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
+      },
+      {
+        // hari minggu (0)
+        // ada matkul pengantar akuntansi (Teori)
+        // dosennya adul (11113)
+        // di kelas 123
+        nip: '11113',
+        id_perkuliahan: 4,
+        ja: 5,
+        jb: 6,
+        waktu_mulai: '14:00',
+        waktu_selesai: '15:10',
+        batas_terakhir_absen: '14:15',
+        hari: 0,
+        jenis: 'Praktek',
+        createdAt: new Date(),
+       updatedAt: new Date()
       }
     ])
+
+    // await queryInterface.bulkInsert('daftar_hadir_mahasiswa', [
+    //   {
+    //     id_studi: 1,
+    //     keterlambatan: 0,
+    //     tanggal: '2021-05-28',
+    //     isHadir: false,
+    //     minggu: 4,
+    //     bulan: 5,
+    //     id_keterangan: null,
+    //     createdAt: new Date(),
+    //    updatedAt: new Date()
+    //   },
+    //   {
+    //     id_studi: 2,
+    //     keterlambatan: 0,
+    //     tanggal: '2021-05-28',
+    //     isHadir: false,
+    //     minggu: 4,
+    //     bulan: 5,
+    //     id_keterangan: null,
+    //     createdAt: new Date(),
+    //    updatedAt: new Date()
+    //   },
+    //   {
+    //     id_studi: 3,
+    //     keterlambatan: 0,
+    //     tanggal: '2021-05-28',
+    //     isHadir: false,
+    //     minggu: 4,
+    //     bulan: 5,
+    //     id_keterangan: null,
+    //     createdAt: new Date(),
+    //    updatedAt: new Date()
+    //   }
+    // ])
 
   },
 

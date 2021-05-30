@@ -17,7 +17,7 @@ export const findOneMahasiswaByNIM = async (NIM) => {
 export const findAllMahasiswa = async () => {
   try {
     const mahasiswa = await Mahasiswa.findAll({
-      order: [['NIM', 'ASC']]
+      order: [['nim', 'ASC']]
     })
     return mahasiswa
   } catch (error) {
@@ -113,5 +113,21 @@ export const deleteMahasiswabyId = async (nim) => {
     return result
   } catch (error) {
     return Promise.reject(new Error('Delete mahasiswa by NIM gagal'))
+  }
+}
+
+export const getSeluruhStudiMilikSuatuMhs = async (nim) => {
+  // Author : hafiz
+  // Param : nim (string)
+  // Output : seluruh studi milik suatu mahasiswa
+  try {
+    const result = await sequelize.query(`
+    SELECT mhs.nim, s.id AS id_studi, s.id_perkuliahan FROM "Mahasiswa" mhs
+    INNER JOIN "Studi" s ON s.id_mahasiswa = mhs.nim
+    WHERE mhs.nim='${nim}';
+    `)
+    return result[0]
+  } catch (error) {
+    return Promise.reject(error)
   }
 }
