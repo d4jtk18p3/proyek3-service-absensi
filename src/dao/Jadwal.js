@@ -47,16 +47,18 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
 
   try {
     const result = await db.query(`
-    SELECT j.*, s.id AS id_studi, d.nama_dosen FROM "Mahasiswa" m
+    SELECT j.*, mk.nama_mata_kuliah, s.id AS id_studi, d.nama_dosen FROM "Mahasiswa" m
     INNER JOIN "Studi" s ON m.nim = s.id_mahasiswa
     INNER JOIN "Perkuliahan" p ON p.id = s.id_perkuliahan
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
     INNER JOIN "Dosen" d ON d.nip = j.nip
+    INNER JOIN "Mata_Kuliah" mk ON mk.id = p.id_mata_kuliah
     WHERE j.hari=${hari} AND m.nim='${nim}';
     `)
 
     const jadwalMap = new Map()
     const jadwals = result[0]
+    console.log(jadwals)
     jadwals.forEach(jadwal => {
       if (jadwalMap.has(jadwal.id_perkuliahan)) {
         // perkuliahan sudah tersimpan di map
@@ -71,6 +73,7 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
         // perkuliahan belum tersimpan di map
         const prettyJadwal = {
           id_jadwal: jadwal.id_jadwal,
+          nama_mata_kuliah: jadwal.nama_mata_kuliah,
           ja: jadwal.ja,
           jb: jadwal.jb,
           waktu_mulai: jadwal.waktu_mulai,
