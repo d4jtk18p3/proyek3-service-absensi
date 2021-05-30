@@ -1,6 +1,6 @@
 import path from 'path'
 import upload from '../middleware/upload'
-import * as AbsensiMahasiswaServices from '../services/AbsensiMahasiswa'
+import * as MahasiswaServices from '../services/Mahasiswa'
 
 export const getSuratIzin = (req, res) => {
   const { filename } = req.params
@@ -27,11 +27,18 @@ export const uploadSuratIzin = (req, res) => {
       })
     }
 
-    const { idStudies, status } = req.body
+    const { idJadwals, status, nim } = req.body
 
     try {
       const url = req.file.path
-      const results = await AbsensiMahasiswaServices.ajukanIzin(idStudies, status, url)
+
+      // pastikan idStudies adalah array
+      let idJadwalArr = idJadwals
+      if(!Array.isArray(idJadwals)){
+        idJadwalArr = [idJadwals]
+      }
+
+      const results = await MahasiswaServices.ajukanIzin(idJadwalArr, status, url, nim)
       res.json({ results })
     } catch (error) {
       res.status(500).json({ error })
