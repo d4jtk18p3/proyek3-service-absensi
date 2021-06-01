@@ -4,6 +4,28 @@
 import * as JadwalDAO from '../dao/Jadwal'
 import * as KeteranganDAO from '../dao/Keterangan'
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
+import schedule from 'node-schedule'
+
+export const generateDaftarHadirMahasiswa = async () => {
+  // Author : hafizmfadli
+  // param: -
+  // Output: daftar hadir hari ini untuk seluruh mahasiswa digenerate
+  
+  try {
+    // hanya dijalankan ketika pertama kali app di run
+    await DaftarHadirMahasiswaDAO.bikinDaftarHadirSeluruhMhsHariIni()
+  } catch (error) {
+    return Promise.reject(error)
+  }
+  schedule.scheduleJob('0 0 * * *', async () => {
+    // akan dijalankan once a day jam 00:00
+    try {
+      await DaftarHadirMahasiswaDAO.bikinDaftarHadirSeluruhMhsHariIni()
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  })
+}
 
 const hitungKeterlambatan = (batasAbsen, absenDilakukan) => {
   // Output : selisih antara absenDilakukan dan batasAbsen (dalam menit)
