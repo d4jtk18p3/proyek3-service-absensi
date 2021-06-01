@@ -35,11 +35,11 @@ app.use((error, req, res, next) => {
 })
 
 MahasiswaService.generateDaftarHadirMahasiswa()
-.then((value) => {
-  console.log(value)
-})
-.catch(err => {
-  console.error(err)
-})
+  .then((value) => {
+    console.log(value)
+  })
+  .catch(err => {
+    console.error(err)
+  })
 
 export default app

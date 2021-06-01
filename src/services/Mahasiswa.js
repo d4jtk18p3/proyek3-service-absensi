@@ -10,7 +10,7 @@ export const generateDaftarHadirMahasiswa = async () => {
   // Author : hafizmfadli
   // param: -
   // Output: daftar hadir hari ini untuk seluruh mahasiswa digenerate
-  
+
   try {
     // hanya dijalankan ketika pertama kali app di run
     await DaftarHadirMahasiswaDAO.bikinDaftarHadirSeluruhMhsHariIni()

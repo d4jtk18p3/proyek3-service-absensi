@@ -44,7 +44,7 @@ export const isSudahPunyaDaftarHadir = async (idStudi, tanggal, ja, jb) => {
     SELECT * FROM "daftar_hadir_mahasiswa" WHERE id_studi=${idStudi} AND ja=${ja} AND jb=${jb} AND tanggal='${tanggal}';
     `)
     const rows = result[0]
-    return rows.length > 0 ? true : false 
+    return rows.length > 0
   } catch (error) {
     return Promise.reject(error)
   }
@@ -69,7 +69,7 @@ export const bikinDaftarHadirSeluruhMhsHariIni = async () => {
       const matkulHariIni = await JadwalDAO.getJadwalMhsHrTertentu(mhs.nim, 1)
       await Promise.all(matkulHariIni.map(async (matkul) => {
         const isPunya = await isSudahPunyaDaftarHadir(matkul.id_studi, tglHariIni, matkul.ja, matkul.jb)
-        if(!isPunya){
+        if (!isPunya) {
           // bikin daftar hadir untuk setiap matkul hari ini
           const result = await insertOne(matkul.id_studi, null, 0, tglHariIni, false, calculateWeekOfMonth(date.getDate()), date.getMonth() + 1, matkul.ja, matkul.jb)
           console.log(result)
