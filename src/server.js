@@ -5,8 +5,8 @@ import bodyParser from 'body-parser'
 import keteranganRoutes from './routes/Keterangan'
 import jadwalRoutes from './routes/Jadwal'
 import daftarHadirMahasiswaRoutes from './routes/DaftarHadirMahasiswa'
-import * as testDAO from './dao/DaftarHadirMahasiswa'
 import daftarHadirDosenRoutes from './routes/DaftarHadirDosen'
+import * as MahasiswaService from './services/Mahasiswa'
 
 const app = express()
 
@@ -34,14 +34,12 @@ app.use((error, req, res, next) => {
   })
 })
 
-app.get('/generate-daftar-hadir', async (req, res, next) => {
-  // harus dijlankan satu kali sehari
-  try {
-    const result = await testDAO.bikinDaftarHadirSeluruhMhsHariIni()
-    res.json(result)
-  } catch (error) {
-    next(error)
-  }
+MahasiswaService.generateDaftarHadirMahasiswa()
+.then((value) => {
+  console.log(value)
+})
+.catch(err => {
+  console.error(err)
 })
 
 export default app
