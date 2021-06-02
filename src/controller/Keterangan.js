@@ -27,7 +27,7 @@ export const uploadSuratIzin = (req, res) => {
       })
     }
 
-    const { idJadwals, status, nim } = req.body
+    const { idJadwals, status, nim, tglIzin } = req.body
 
     try {
       const url = req.file.path
@@ -37,8 +37,8 @@ export const uploadSuratIzin = (req, res) => {
       if (!Array.isArray(idJadwals)) {
         idJadwalArr = [idJadwals]
       }
-
-      const results = await MahasiswaServices.ajukanIzin(idJadwalArr, status, url, nim)
+      console.log("TGL IZIN TIPE DATA ", tglIzin, typeof tglIzin)
+      const results = await MahasiswaServices.ajukanIzin(idJadwalArr, status, url, nim, tglIzin)
       res.json({ results })
     } catch (error) {
       res.status(500).json({ error })
