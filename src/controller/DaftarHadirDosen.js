@@ -17,11 +17,10 @@ export const presensiDosenHandler = async (req, res, next) => {
 }
 
 export const bikinDaftarHadirDosenHandler = async (req, res, next) => {
-  const { nip, idStudi, idJadwal } = req.query
   try {
     const result = await DaftarHadirDosenDAO.bikinDaftarHadirSeluruhDosenHariIni()
     res.json({
-      message: `Generate seluruh daftar hadir dosen hari ini`,
+      message: 'Generate seluruh daftar hadir dosen hari ini',
       data: {
         presensi: result
       }
