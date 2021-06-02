@@ -79,10 +79,13 @@ module.exports = {
         primaryKey: true
       },
       tanggal: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       isHadir: {
         type: Sequelize.BOOLEAN
+      },
+      idJadwal: {
+        type: Sequelize.INTEGER
       },
       createdAt: {
         type: Sequelize.DATE
