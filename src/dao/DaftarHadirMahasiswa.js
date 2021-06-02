@@ -98,7 +98,7 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) =>
     const date = new Date(tanggal)
     const hari = date.getDay()
     const result = await db.query(`
-    SELECT mhs.nim, mhs.nama, mhs.kode_kelas, mk.id, j.id_jadwal, mk.nama_mata_kuliah, d.nama_dosen, dhm.tanggal, j.batas_terakhir_absen, j.id_jadwal, dhm."isHadir",
+    SELECT mhs.nim, mhs.nama, mhs.kode_kelas, mk.id, s.id AS id_studi, j.id_jadwal, mk.nama_mata_kuliah, d.nama_dosen, dhm.tanggal, j.batas_terakhir_absen, j.id_jadwal, dhm."isHadir",
     dhm.id_daftar_hadir_mhs FROM "Jadwal" j
     INNER JOIN "Perkuliahan" p ON p.id = j.id_perkuliahan
     INNER JOIN "Studi" s ON p.id = s.id_perkuliahan
@@ -112,6 +112,7 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) =>
     const mahasiswa = resultRow.map(mhs => {
       // ambil informasti ttg status hadir mahasiswa saja
       return {
+        id_studi: mhs.id_studi,
         nim: mhs.nim,
         nama: mhs.nama,
         isHadir: mhs.isHadir,
@@ -161,6 +162,18 @@ export const updateStatusKehadiranMhs = async (idStudi, keterlambatan, tanggal, 
     return rows
   } catch (error) {
     return Promise.reject(error)
+  }
+}
+
+export const updateIsHadirMhs = async (idStudi, tanggal, ja, jb, isHadir) => {
+  try {
+    const result = await db.query(`
+    UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir} WHERE (id_studi=${idStudi} AND tanggal='${tanggal}' AND ja=${ja} AND jb=${jb}) RETURNING *;
+    `)
+    const rows = result[0]
+    return rows
+  } catch (error) {
+    return Promise.reject(error) 
   }
 }
 
