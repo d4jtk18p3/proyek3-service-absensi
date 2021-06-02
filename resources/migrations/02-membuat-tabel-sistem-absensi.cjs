@@ -79,7 +79,7 @@ module.exports = {
         primaryKey: true
       },
       tanggal: {
-        type: Sequelize.DATE
+        type: Sequelize.DATEONLY
       },
       isHadir: {
         type: Sequelize.BOOLEAN

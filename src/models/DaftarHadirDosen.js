@@ -29,7 +29,7 @@ const DaftarHadirDosen = db.define(
       }
     },
     tanggal: {
-      type: Sequelize.DATE
+      type: Sequelize.DATEONLY
     },
     isHadir: {
       type: Sequelize.BOOLEAN
