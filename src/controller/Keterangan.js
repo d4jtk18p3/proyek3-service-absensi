@@ -39,7 +39,11 @@ export const uploadSuratIzin = (req, res) => {
       }
       console.log("TGL IZIN TIPE DATA ", tglIzin, typeof tglIzin)
       const results = await MahasiswaServices.ajukanIzin(idJadwalArr, status, url, nim, tglIzin)
-      res.json({ results })
+      const rows = results[0]
+      res.json({
+        message: `mahasiswa nim ${ nim } mengajukan izin dengan status ${status} untuk tanggal ${tglIzin}`,
+        data: rows
+      })
     } catch (error) {
       res.status(500).json({ error })
     }
