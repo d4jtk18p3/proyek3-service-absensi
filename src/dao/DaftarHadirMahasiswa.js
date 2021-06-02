@@ -173,7 +173,7 @@ export const updateIsHadirMhs = async (idStudi, tanggal, ja, jb, isHadir) => {
     const rows = result[0]
     return rows
   } catch (error) {
-    return Promise.reject(error) 
+    return Promise.reject(error)
   }
 }
 
@@ -181,7 +181,7 @@ export const getByNimJadwalTgl = async (nim, idJadwal, tanggal) => {
   // Author : hafizmfadli
   // param : nim (string), idJadwal (int), tanggal (yyyy-mm-dd : string)
   // return : daftar hadir mhs dgn nim, idJadwal, tanggal ybs
-  
+
   try {
     const result = await db.query(`
     SELECT mhs.nim, mhs.nama, dhm.* FROM "daftar_hadir_mahasiswa" dhm

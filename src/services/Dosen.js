@@ -18,6 +18,8 @@ export const melakukanAbsensi = async (nip, idStudi) => {
 }
 
 export const updateKehadiranMahasiswa = async (idStudi, idJadwal, tanggal, isHadir) => {
+  // author : hafizmfadli
+  // return : rows daftar mahasiswa yang sudah update
   try {
     const jadwal = await JadwalDAO.findJadwalById(idJadwal)
     const jadwalRow = jadwal[0]

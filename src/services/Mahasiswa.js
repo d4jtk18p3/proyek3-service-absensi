@@ -54,14 +54,14 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     const absenDilakukan = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
     const keterlambatan = Math.round(hitungKeterlambatan(batasAbsen, absenDilakukan))
 
-    let result;
+    let result
     // presensi dapat dilakukan ketika
     // 30 menit sebelum perkuliaham dimulai
     // sampai batas akhir waktu perkuliahan
-    
-    if(absenDilakukan <= jadwal[0].waktu_selesai){
+
+    if (absenDilakukan <= jadwal[0].waktu_selesai) {
       result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(idStudi, keterlambatan, tglHariIni, true, jadwal[0].ja, jadwal[0].jb, null)
-    }else{
+    } else {
       const error = new Error('Daftar hadir tidak bisa diubah')
       error.statusCode = 400
       error.cause = 'Waktu perkuliahan telah selesai'
@@ -89,16 +89,13 @@ export const ajukanIzin = async (idJadwals, status, url, nim, tglIzin) => {
   // return daftar daftar hadir mahasiswa yang mengajukan izin
 
   try {
-
     const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url)
     const tglIzinDate = new Date(tglIzin)
     const minggu = DaftarHadirMahasiswaDAO.calculateWeekOfMonth(tglIzinDate.getDate())
     const bulan = tglIzinDate.getMonth() + 1
 
     // get seluruh jadwal pada hari yang diajukan izin
-    console.log("TANGGAL IZIN DATE ", tglIzinDate, tglIzinDate.getDay())
     const jadwals = await JadwalDAO.getJadwalMhsHrTertentu(nim, tglIzinDate.getDay())
-    console.log("JADWAL SAYANG", jadwals)
 
     const results = []
     await Promise.all(jadwals.map(async (jadwal) => {
@@ -106,18 +103,15 @@ export const ajukanIzin = async (idJadwals, status, url, nim, tglIzin) => {
         // cek apakah sudah punya daftar hadir
         const isPunya = await DaftarHadirMahasiswaDAO.isSudahPunyaDaftarHadir(jadwal.id_studi, tglIzin, jadwal.ja, jadwal.jb)
 
-        let result;
-        if(isPunya){
+        let result
+        if (isPunya) {
           // kalo udah punya artinya dia izin untuk hari ini, cukup update yg sudah ada
           result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(jadwal.id_studi, 0, tglIzin, false, jadwal.ja, jadwal.jb, keterangan.dataValues.id_keterangan)
-          
-        }else{
+        } else {
           // kalo belum punya artinya dia izin dihari yg akan datang, insert row baru
           result = await DaftarHadirMahasiswaDAO.insertOne(jadwal.id_studi, keterangan.dataValues.id_keterangan, 0, tglIzin, false, minggu, bulan, jadwal.ja, jadwal.jb)
           result = [result.dataValues]
-          console.log("IZIN MASA DEPAN CERAH", result)
         }
-        console.log("HASIL RESULT NOL ", result[0])
         results.push(result[0])
         return result
       }

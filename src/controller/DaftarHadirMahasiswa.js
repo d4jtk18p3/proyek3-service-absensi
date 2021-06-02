@@ -57,6 +57,6 @@ export const updateStatusKehadiran = async (req, res, next) => {
       data: result
     })
   } catch (error) {
-    
+
   }
 }
