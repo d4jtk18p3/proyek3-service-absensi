@@ -98,7 +98,7 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) =>
     const date = new Date(tanggal)
     const hari = date.getDay()
     const result = await db.query(`
-    SELECT mhs.nim, mhs.nama, mhs.kode_kelas, mk.id, mk.nama_mata_kuliah, d.nama_dosen, dhm.tanggal, j.batas_terakhir_absen, j.id_jadwal, dhm."isHadir",
+    SELECT mhs.nim, mhs.nama, mhs.kode_kelas, mk.id, j.id_jadwal, mk.nama_mata_kuliah, d.nama_dosen, dhm.tanggal, j.batas_terakhir_absen, j.id_jadwal, dhm."isHadir",
     dhm.id_daftar_hadir_mhs FROM "Jadwal" j
     INNER JOIN "Perkuliahan" p ON p.id = j.id_perkuliahan
     INNER JOIN "Studi" s ON p.id = s.id_perkuliahan
@@ -121,6 +121,7 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) =>
 
     const resultPretty = {
       // rapihin dulu
+      id_jadwal: resultRow[0].id_jadwal,
       nama_mata_kuliah: resultRow[0].nama_mata_kuliah,
       kode_kelas: resultRow[0].kode_kelas,
       dosen: resultRow[0].nama_dosen,
@@ -155,6 +156,27 @@ export const updateStatusKehadiranMhs = async (idStudi, keterlambatan, tanggal, 
   try {
     const result = await db.query(`
     UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir}, keterlambatan = ${keterlambatan}, id_keterangan = ${idKeterangan} WHERE (id_studi=${idStudi} AND tanggal='${tanggal}' AND ja=${ja} AND jb=${jb}) RETURNING *;
+    `)
+    const rows = result[0]
+    return rows
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const getByNimJadwalTgl = async (nim, idJadwal, tanggal) => {
+  // Author : hafizmfadli
+  // param : nim (string), idJadwal (int), tanggal (yyyy-mm-dd : string)
+  // return : daftar hadir mhs dgn nim, idJadwal, tanggal ybs
+  
+  try {
+    const result = await db.query(`
+    SELECT mhs.nim, mhs.nama, dhm.* FROM "daftar_hadir_mahasiswa" dhm
+    INNER JOIN "Studi" s ON s.id = dhm.id_studi
+    INNER JOIN "Perkuliahan" p ON p.id= s.id_perkuliahan
+    INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id AND dhm.ja = j.ja AND dhm.jb = j.jb
+    INNER JOIN "Mahasiswa" mhs ON mhs.nim = s.id_mahasiswa
+    WHERE dhm.tanggal='${tanggal}' AND mhs.nim='${nim}' AND j.id_jadwal=${idJadwal}
     `)
     const rows = result[0]
     return rows
