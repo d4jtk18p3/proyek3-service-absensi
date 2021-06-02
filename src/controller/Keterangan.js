@@ -27,7 +27,7 @@ export const uploadSuratIzin = (req, res) => {
       })
     }
 
-    const { idJadwals, status, nim } = req.body
+    const { idJadwals, status, nim, tglIzin } = req.body
 
     try {
       const url = req.file.path
@@ -37,9 +37,12 @@ export const uploadSuratIzin = (req, res) => {
       if (!Array.isArray(idJadwals)) {
         idJadwalArr = [idJadwals]
       }
-
-      const results = await MahasiswaServices.ajukanIzin(idJadwalArr, status, url, nim)
-      res.json({ results })
+      const results = await MahasiswaServices.ajukanIzin(idJadwalArr, status, url, nim, tglIzin)
+      const rows = results[0]
+      res.json({
+        message: `mahasiswa nim ${nim} mengajukan izin dengan status ${status} untuk tanggal ${tglIzin}`,
+        data: rows
+      })
     } catch (error) {
       res.status(500).json({ error })
     }

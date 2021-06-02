@@ -66,7 +66,7 @@ export const bikinDaftarHadirSeluruhMhsHariIni = async () => {
     const tglHariIni = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     const allMhs = await MahasiswaDAO.findAllMahasiswa()
     allMhs.forEach(async (mhs) => {
-      const matkulHariIni = await JadwalDAO.getJadwalMhsHrTertentu(mhs.nim, 1)
+      const matkulHariIni = await JadwalDAO.getJadwalMhsHrTertentu(mhs.nim, date.getDay())
       await Promise.all(matkulHariIni.map(async (matkul) => {
         const isPunya = await isSudahPunyaDaftarHadir(matkul.id_studi, tglHariIni, matkul.ja, matkul.jb)
         if (!isPunya) {
@@ -83,33 +83,36 @@ export const bikinDaftarHadirSeluruhMhsHariIni = async () => {
   }
 }
 
-const calculateWeekOfMonth = (tgl) => {
+export const calculateWeekOfMonth = (tgl) => {
   const week = Math.ceil(tgl / 7)
   return week > 4 ? 4 : week
 }
 
-export const getDaftarHadirKelasJadwal = async (kodeKelas, hari, idJadwal) => {
+export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) => {
   // Author : hafizmfadli
   // Fungsi ini digunakan oleh dosen pengampu ketika mau liat daftar hadir pada matkul yang sedang dia ajar
-  // Param : kodeKelas, hari, idJadwal
+  // Param : kodeKelas, hari, idJadwal, tanggal (yyyy-mm-dd)
   // return : daftar hadir mhs pada suatu kelas, jadwal, dan hari tertentu
 
   try {
+    const date = new Date(tanggal)
+    const hari = date.getDay()
     const result = await db.query(`
-    SELECT mhs.nim, mhs.nama, mhs.kode_kelas, mk.id, mk.nama_mata_kuliah, d.nama_dosen, dhm.tanggal, j.batas_terakhir_absen, j.id_jadwal, dhm."isHadir",
+    SELECT mhs.nim, mhs.nama, mhs.kode_kelas, mk.id, s.id AS id_studi, j.id_jadwal, mk.nama_mata_kuliah, d.nama_dosen, dhm.tanggal, j.batas_terakhir_absen, j.id_jadwal, dhm."isHadir",
     dhm.id_daftar_hadir_mhs FROM "Jadwal" j
     INNER JOIN "Perkuliahan" p ON p.id = j.id_perkuliahan
     INNER JOIN "Studi" s ON p.id = s.id_perkuliahan
-    INNER JOIN "daftar_hadir_mahasiswa" dhm ON dhm.id_studi = s.id
+    INNER JOIN "daftar_hadir_mahasiswa" dhm ON dhm.id_studi = s.id AND dhm.ja = j.ja AND dhm.jb = j.jb
     INNER JOIN "Mahasiswa" mhs ON mhs.nim = s.id_mahasiswa
     INNER JOIN "Mata_Kuliah" mk ON mk.id = p.id_mata_kuliah
     INNER JOIN "Dosen" d ON d.nip = j.nip
-    WHERE j.hari=${hari} AND p.kode_kelas=${kodeKelas} AND j.id_jadwal=${idJadwal};
+    WHERE j.hari=${hari} AND p.kode_kelas=${kodeKelas} AND j.id_jadwal=${idJadwal} AND dhm.tanggal='${tanggal}';
     `)
     const resultRow = result[0]
     const mahasiswa = resultRow.map(mhs => {
       // ambil informasti ttg status hadir mahasiswa saja
       return {
+        id_studi: mhs.id_studi,
         nim: mhs.nim,
         nama: mhs.nama,
         isHadir: mhs.isHadir,
@@ -119,6 +122,7 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, hari, idJadwal) => {
 
     const resultPretty = {
       // rapihin dulu
+      id_jadwal: resultRow[0].id_jadwal,
       nama_mata_kuliah: resultRow[0].nama_mata_kuliah,
       kode_kelas: resultRow[0].kode_kelas,
       dosen: resultRow[0].nama_dosen,
@@ -153,6 +157,39 @@ export const updateStatusKehadiranMhs = async (idStudi, keterlambatan, tanggal, 
   try {
     const result = await db.query(`
     UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir}, keterlambatan = ${keterlambatan}, id_keterangan = ${idKeterangan} WHERE (id_studi=${idStudi} AND tanggal='${tanggal}' AND ja=${ja} AND jb=${jb}) RETURNING *;
+    `)
+    const rows = result[0]
+    return rows
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const updateIsHadirMhs = async (idStudi, tanggal, ja, jb, isHadir) => {
+  try {
+    const result = await db.query(`
+    UPDATE "daftar_hadir_mahasiswa" SET "isHadir" = ${isHadir} WHERE (id_studi=${idStudi} AND tanggal='${tanggal}' AND ja=${ja} AND jb=${jb}) RETURNING *;
+    `)
+    const rows = result[0]
+    return rows
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const getByNimJadwalTgl = async (nim, idJadwal, tanggal) => {
+  // Author : hafizmfadli
+  // param : nim (string), idJadwal (int), tanggal (yyyy-mm-dd : string)
+  // return : daftar hadir mhs dgn nim, idJadwal, tanggal ybs
+
+  try {
+    const result = await db.query(`
+    SELECT mhs.nim, mhs.nama, dhm.* FROM "daftar_hadir_mahasiswa" dhm
+    INNER JOIN "Studi" s ON s.id = dhm.id_studi
+    INNER JOIN "Perkuliahan" p ON p.id= s.id_perkuliahan
+    INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id AND dhm.ja = j.ja AND dhm.jb = j.jb
+    INNER JOIN "Mahasiswa" mhs ON mhs.nim = s.id_mahasiswa
+    WHERE dhm.tanggal='${tanggal}' AND mhs.nim='${nim}' AND j.id_jadwal=${idJadwal}
     `)
     const rows = result[0]
     return rows
