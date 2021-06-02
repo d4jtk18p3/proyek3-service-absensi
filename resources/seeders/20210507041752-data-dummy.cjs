@@ -263,6 +263,28 @@ module.exports = {
         updatedAt: new Date()
       },
       {
+        // ceritanya mahasiswa tingkat 3
+        nim: '181524011',
+        nama: 'Naruto',
+        kode_kelas: 123,
+        email: 'naruto@gmail.com',
+        nomor_ponsel: '081209876789',
+        url_foto: 'public/folder/mhs2.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        // ceritanya mahasiswa tingkat 3
+        nim: '181524012',
+        nama: 'Eren',
+        kode_kelas: 123,
+        email: 'eren@gmail.com',
+        nomor_ponsel: '081309876788',
+        url_foto: 'public/folder/mhs3.png',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
         // ceritanya mahasiswa tingkat 2
         nim: '181524013',
         nama: 'Itachi',
@@ -332,11 +354,67 @@ module.exports = {
         updatedAt: new Date()
 
       },
+      // u mhs 181524011
+      {
+        // Mahasiswa 181524011
+        // dari kelas 123
+        // ambil matkul proyek3
+        id: 6,
+        id_perkuliahan: 1,
+        id_mahasiswa: 181524011,
+        createdAt: new Date(),
+        updatedAt: new Date()
+
+      },
+      {
+        // Mahasiswa 181524011
+        // dari kelas 123
+        // ambil matkul sistem terdistribusi
+        id: 7,
+        id_perkuliahan: 2,
+        id_mahasiswa: 181524011,
+        createdAt: new Date(),
+        updatedAt: new Date()
+
+      },
+      {
+        // Mahasiswa 181524011
+        // dari kelas 123
+        // ambil matkul software testing
+        id: 8,
+        id_perkuliahan: 3,
+        id_mahasiswa: 181524011,
+        createdAt: new Date(),
+        updatedAt: new Date()
+
+      },
+      {
+        // Mahasiswa 181524011
+        // dari kelas 123
+        // ambil matkul pengantar akuntansi
+        id: 9,
+        id_perkuliahan: 4,
+        id_mahasiswa: 181524011,
+        createdAt: new Date(),
+        updatedAt: new Date()
+
+      },
+      {
+        // Mahasiswa 181524011
+        // dari kelas 123
+        // ambil matkul metodologi penelitian
+        id: 10,
+        id_perkuliahan: 5,
+        id_mahasiswa: 181524011,
+        createdAt: new Date(),
+        updatedAt: new Date()
+
+      },
       {
         // Mahasiswa 181524013
         // dari kelas 124
         // ambil matkul SDA
-        id: 6,
+        id: 11,
         id_perkuliahan: 6,
         id_mahasiswa: 181524013,
         createdAt: new Date(),
