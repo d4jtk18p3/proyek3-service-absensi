@@ -1,5 +1,6 @@
 import * as MahasiswaService from '../services/Mahasiswa'
 import * as DaftarHadirMahasiswaService from '../services/DaftarHadirMahasiswa'
+import * as DosenService from '../services/Dosen'
 
 export const presensiMhsHandler = async (req, res, next) => {
   // Author : hafizmfadli
@@ -44,5 +45,18 @@ export const getDaftarHadirNimJadwalTgl = async (req, res, next) => {
     })
   } catch (error) {
     next(error)
+  }
+}
+
+export const updateStatusKehadiran = async (req, res, next) => {
+  const { idStudi, idJadwal, tanggal, isHadir } = req.query
+  try {
+    const result = await DosenService.updateKehadiranMahasiswa(idStudi, idJadwal, tanggal, isHadir)
+    res.json({
+      message: `update kehadiran mhs dengan idStudi ${idStudi} pada  jadwal ${idJadwal} dan tanggal ${tanggal} menjadi ${isHadir}`,
+      data: result
+    })
+  } catch (error) {
+    
   }
 }
