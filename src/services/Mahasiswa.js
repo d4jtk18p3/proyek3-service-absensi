@@ -5,6 +5,7 @@ import * as JadwalDAO from '../dao/Jadwal'
 import * as KeteranganDAO from '../dao/Keterangan'
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
 import schedule from 'node-schedule'
+import { DateTime } from 'luxon'
 
 export const generateDaftarHadirMahasiswa = async () => {
   // Author : hafizmfadli
@@ -47,26 +48,44 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
   // return : rows updated
 
   try {
-    const d = new Date()
-    const tglHariIni = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
+    
     const jadwal = await JadwalDAO.findJadwalById(idJadwal)
-    const batasAbsen = jadwal[0].batas_terakhir_absen
-    const absenDilakukan = `${d.getHours()}:${d.getMinutes()}:${d.getSeconds()}`
-    const keterlambatan = Math.round(hitungKeterlambatan(batasAbsen, absenDilakukan))
 
-    let result
     // presensi dapat dilakukan ketika
     // 30 menit sebelum perkuliaham dimulai
     // sampai batas akhir waktu perkuliahan
-
-    if (absenDilakukan <= jadwal[0].waktu_selesai) {
-      result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(idStudi, keterlambatan, tglHariIni, true, jadwal[0].ja, jadwal[0].jb, null)
-    } else {
-      const error = new Error('Daftar hadir tidak bisa diubah')
+    const now = DateTime.now()
+    const tglHariIni = now.toISODate()
+    const pembukaanPreseni = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_mulai}`).minus({ minutes: 30})
+    const batasAkhirPresensi = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_selesai}`)
+    let result
+    if(now >= pembukaanPreseni){
+      // presensi sudah dibuka
+      if(now <= batasAkhirPresensi){
+        let keterlambatan = 0
+        const toleransiKeterlambatan = DateTime.fromISO(`${tglHariIni}T${jadwal[0].batas_terakhir_absen}`)
+        if(now > toleransiKeterlambatan){
+          // terlambat melakukan presensi
+          const keterlambatanInMs = now.diff(toleransiKeterlambatan).toObject().milliseconds
+          keterlambatan = Math.round((keterlambatanInMs / 1000) / 60) // convert ke menit
+        }
+        // update kehadiran
+        result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(idStudi, keterlambatan, tglHariIni, true, jadwal[0].ja, jadwal[0].jb, null)
+      }else{
+        // sudah melewati jam matkul
+        const error = new Error('Presensi sudah ditutup')
+        error.statusCode = 400
+        error.cause = 'Perkuliahan telah selesai'
+        throw error  
+      }
+    }else{
+      // presensi belum boleh dilakukan
+      const error = new Error('Presensi belum bisa dilakukan')
       error.statusCode = 400
-      error.cause = 'Waktu perkuliahan telah selesai'
+      error.cause = 'Presensi dibuka 30 menit sebelum perkuliahan dimulai'
       throw error
     }
+
     return result
   } catch (error) {
     return Promise.reject(error)
