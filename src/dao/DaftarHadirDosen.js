@@ -72,11 +72,8 @@ export const bikinDaftarHadirSeluruhDosenHariIni = async () => {
     const date = new Date()
     const tglHariIni = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     const allDosen = await DosenDAO.findAllDosen()
-    console.log(allDosen)
     allDosen.forEach(async (dosen) => {
       const jadwalHariIni = await JadwalDAO.getJadwalDosenHrTertentu(dosen.nip, date.getDay())
-      console.log("JADWAL DOSEN HARI INI NGAB")
-      console.log(jadwalHariIni)
       await Promise.all(jadwalHariIni.map(async (jadwal) => {
         const isPunya = await isSudahPunyaDaftarHadir(dosen.nip, tglHariIni, jadwal.id_jadwal)
         if (!isPunya) {
@@ -88,6 +85,28 @@ export const bikinDaftarHadirSeluruhDosenHariIni = async () => {
       )
     })
     return true
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const getByNipJadwalTgl = async (nip, idJadwal, tanggal) => {
+  // Author : raihanibrhm
+  // param : nip (string), idJadwal (int), tanggal (yyyy-mm-dd : string)
+  // return : daftar hadir dosen dgn nip, idJadwal, tanggal ybs
+
+  try {
+    const result = await db.query(`
+    SELECT dosen.nip, dosen.nama_dosen, dhd.* FROM "daftar_hadir_dosen" dhd
+    INNER JOIN "Studi" s ON s.id = dhd.id_studi
+    INNER JOIN "Perkuliahan" p ON p.id= s.id_perkuliahan
+    INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
+    INNER JOIN "Dosen" dosen ON dosen.nip = j.nip
+    WHERE dhd.tanggal='${tanggal}' AND dosen.nip='${nip}' AND j.id_jadwal=${idJadwal}
+	  ORDER BY id_daftar_hadir_dosen ASC
+    `)
+    const rows = result[0]
+    return rows
   } catch (error) {
     return Promise.reject(error)
   }
