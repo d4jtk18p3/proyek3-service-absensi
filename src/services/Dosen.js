@@ -5,7 +5,7 @@ import * as DaftarHadirDosenDAO from '../dao/DaftarHadirDosen'
 import * as JadwalDAO from '../dao/Jadwal'
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
 import schedule from 'node-schedule'
-
+import { DateTime } from 'luxon'
 
 export const generateDaftarHadirDosen = async () => {
   try {
@@ -26,10 +26,36 @@ export const generateDaftarHadirDosen = async () => {
 
 export const melakukanAbsensi = async (nip, idStudi, idJadwal) => {
   try {
-    const d = new Date()
-    const tglHariIni = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
+    const jadwal = await JadwalDAO.findJadwalById(idJadwal)
+    // presensi dapat dilakukan ketika
+    // 30 menit sebelum perkuliaham dimulai
+    // sampai batas akhir waktu perkuliahan
+    const now = DateTime.now()
+    const tglHariIni = now.toISODate()
+    const pembukaanPreseni = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_mulai}`).minus({ minutes: 30 })
+    const batasAkhirPresensi = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_selesai}`)
 
-    const result = await DaftarHadirDosenDAO.updateStatusKehadiranDosen(nip, idStudi, tglHariIni, true, idJadwal)
+    let result
+    if (now >= pembukaanPreseni) {
+      // presensi sudah dibuka
+      if (now <= batasAkhirPresensi) {
+        // update kehadiran
+        result = await DaftarHadirDosenDAO.updateStatusKehadiranDosen(nip, idStudi, tglHariIni, true, idJadwal)
+      } else {
+        // sudah melewati jam matkul
+        const error = new Error('Presensi sudah ditutup')
+        error.statusCode = 400
+        error.cause = 'Perkuliahan telah selesai'
+        throw error
+      }
+    } else {
+      // presensi belum boleh dilakukan
+      const error = new Error('Presensi belum bisa dilakukan')
+      error.statusCode = 400
+      error.cause = 'Presensi dibuka 30 menit sebelum perkuliahan dimulai'
+      throw error
+    }
+
     return result
   } catch (error) {
     return Promise.reject(error)

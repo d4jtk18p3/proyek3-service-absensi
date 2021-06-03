@@ -23,6 +23,9 @@ const keterangan = db.define('Keterangan',
     },
     url: {
       type: Sequelize.STRING
+    },
+    isAccepted: {
+      type: Sequelize.BOOLEAN
     }
   },
   {

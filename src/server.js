@@ -44,11 +44,11 @@ MahasiswaService.generateDaftarHadirMahasiswa()
   })
 
 DosenService.generateDaftarHadirDosen()
-.then((value) => {
-  console.log(value)
-})
-.catch(err => {
-  console.error(err)
-})
+  .then((value) => {
+    console.log(value)
+  })
+  .catch(err => {
+    console.error(err)
+  })
 
 export default app

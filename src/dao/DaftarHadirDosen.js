@@ -102,8 +102,7 @@ export const getByNipJadwalTgl = async (nip, idJadwal, tanggal) => {
     INNER JOIN "Perkuliahan" p ON p.id= s.id_perkuliahan
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
     INNER JOIN "Dosen" dosen ON dosen.nip = j.nip
-    WHERE dhd.tanggal='${tanggal}' AND dosen.nip='${nip}' AND j.id_jadwal=${idJadwal}
-	  ORDER BY id_daftar_hadir_dosen ASC
+    WHERE dhd.tanggal='${tanggal}' AND dosen.nip='${nip}' AND j.id_jadwal=${idJadwal} ORDER BY id_daftar_hadir_dosen ASC
     `)
     const rows = result[0]
     return rows
