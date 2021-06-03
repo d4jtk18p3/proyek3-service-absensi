@@ -45,6 +45,18 @@ export const updateStatusKehadiranDosen = async (nip, idStudi, tanggal, isHadir,
   }
 }
 
+export const isSudahPunyaDaftarHadir = async (nip, tanggal, idJadwal) => {
+  try {
+    const result = await db.query(`
+    SELECT * FROM "daftar_hadir_dosen" WHERE nip='${nip}' AND tanggal='${tanggal}' AND "idJadwal"=${idJadwal};
+    `)
+    const rows = result[0]
+    return rows.length > 0
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const bikinDaftarHadirSeluruhDosenHariIni = async () => {
   // Author : hafizmfadli
   // param : -
@@ -58,13 +70,20 @@ export const bikinDaftarHadirSeluruhDosenHariIni = async () => {
   // Bikin daftar hadirnya jadngan berdasarkan matkul, tapi berdasarkan jadwal ngab
   try {
     const date = new Date()
+    const tglHariIni = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     const allDosen = await DosenDAO.findAllDosen()
+    console.log(allDosen)
     allDosen.forEach(async (dosen) => {
-      const jadwalHariIni = await JadwalDAO.getJadwalDosenHrTertentu(dosen.nip, 1)
+      const jadwalHariIni = await JadwalDAO.getJadwalDosenHrTertentu(dosen.nip, date.getDay())
+      console.log("JADWAL DOSEN HARI INI NGAB")
+      console.log(jadwalHariIni)
       await Promise.all(jadwalHariIni.map(async (jadwal) => {
-        // bikin daftar hadir untuk setiap matkul hari ini
-        const result = await insertOne(dosen.nip, jadwal.id_studi, `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`, false, jadwal.id_jadwal)
-        console.log(result)
+        const isPunya = await isSudahPunyaDaftarHadir(dosen.nip, tglHariIni, jadwal.id_jadwal)
+        if (!isPunya) {
+          // bikin daftar hadir untuk setiap jadwal hari ini
+          const result = await insertOne(dosen.nip, jadwal.id_studi, tglHariIni, false, jadwal.id_jadwal)
+          console.log(result)
+        }
       })
       )
     })
