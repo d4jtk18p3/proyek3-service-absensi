@@ -7,6 +7,7 @@ import jadwalRoutes from './routes/Jadwal'
 import daftarHadirMahasiswaRoutes from './routes/DaftarHadirMahasiswa'
 import daftarHadirDosenRoutes from './routes/DaftarHadirDosen'
 import * as MahasiswaService from './services/Mahasiswa'
+import * as DosenService from './services/Dosen'
 
 const app = express()
 
@@ -35,6 +36,14 @@ app.use((error, req, res, next) => {
 })
 
 MahasiswaService.generateDaftarHadirMahasiswa()
+  .then((value) => {
+    console.log(value)
+  })
+  .catch(err => {
+    console.error(err)
+  })
+
+DosenService.generateDaftarHadirDosen()
   .then((value) => {
     console.log(value)
   })

@@ -22,6 +22,9 @@ module.exports = {
       url: {
         type: Sequelize.STRING
       },
+      isAccepted: {
+        type: Sequelize.BOOLEAN
+      },
       createdAt: {
         type: Sequelize.DATE
       },

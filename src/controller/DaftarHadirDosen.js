@@ -1,5 +1,6 @@
 import * as DosenService from '../services/Dosen'
-import * as DaftarHadirDosenDAO from '../dao/DaftarHadirDosen'
+// import * as DaftarHadirDosenDAO from '../dao/DaftarHadirDosen'
+import * as DaftarHadirDosenService from '../services/DaftarHadirDosen'
 
 export const presensiDosenHandler = async (req, res, next) => {
   const { nip, idStudi, idJadwal } = req.query
@@ -16,14 +17,28 @@ export const presensiDosenHandler = async (req, res, next) => {
   }
 }
 
-export const bikinDaftarHadirDosenHandler = async (req, res, next) => {
+// export const bikinDaftarHadirDosenHandler = async (req, res, next) => {
+//   try {
+//     const result = await DaftarHadirDosenDAO.bikinDaftarHadirSeluruhDosenHariIni()
+//     res.json({
+//       message: 'Generate seluruh daftar hadir dosen hari ini',
+//       data: {
+//         presensi: result
+//       }
+//     })
+//   } catch (error) {
+//     next(error)
+//   }
+// }
+
+export const getDaftarHadirNipJadwalTgl = async (req, res, next) => {
+  const { nip, idJadwal, tanggal } = req.query
+
   try {
-    const result = await DaftarHadirDosenDAO.bikinDaftarHadirSeluruhDosenHariIni()
+    const result = await DaftarHadirDosenService.getDaftarHadirNipJadwalTanggal(nip, idJadwal, tanggal)
     res.json({
-      message: 'Generate seluruh daftar hadir dosen hari ini',
-      data: {
-        presensi: result
-      }
+      message: `daftar hadir ${nip} pada jadwal ${idJadwal} pada tanggal ${tanggal}`,
+      data: result
     })
   } catch (error) {
     next(error)

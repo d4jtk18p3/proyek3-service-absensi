@@ -97,13 +97,12 @@ export const getJadwalDosenHrTertentu = async (nip, hari) => {
     const jadwalMap = new Map()
     const jadwals = result[0]
     jadwals.forEach(jadwal => {
-      if (jadwalMap.has(jadwal.id_perkuliahan)) {
-        // perkuliahan sudah tersimpan di map
-        // tambahkan dosen yang mengajar
-        const prettyJadwalUpdated = jadwalMap.get(jadwal.id_perkuliahan)
-        jadwalMap.set(jadwal.id_perkuliahan, prettyJadwalUpdated)
+      if (jadwalMap.has(jadwal.id_jadwal)) {
+        // jadwal sudah tersimpan di map
+        const prettyJadwalUpdated = jadwalMap.get(jadwal.id_jadwal)
+        jadwalMap.set(jadwal.id_jadwal, prettyJadwalUpdated)
       } else {
-        // perkuliahan belum tersimpan di map
+        // jadwal belum tersimpan di map
         const prettyJadwal = {
           id_jadwal: jadwal.id_jadwal,
           ja: jadwal.ja,
@@ -125,7 +124,7 @@ export const getJadwalDosenHrTertentu = async (nip, hari) => {
             nama_mata_kuliah: jadwal.nama_mata_kuliah
           }
         }
-        jadwalMap.set(jadwal.id_perkuliahan, prettyJadwal)
+        jadwalMap.set(jadwal.id_jadwal, prettyJadwal)
       }
     })
     const prettyJadwals = []
