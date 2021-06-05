@@ -97,7 +97,6 @@ export const getDataBAP = async (idPerkuliahan, idJadwal, tanggal) => {
       jumlah_mhs_hadir: nHadir,
       jumlah_mhs_tidak_hadir: nTidakHadir.length
     }
-    console.log("DATA BAP", dataBap)
     return dataBap
   } catch (error) {
     return Promise.reject(error)
@@ -106,7 +105,7 @@ export const getDataBAP = async (idPerkuliahan, idJadwal, tanggal) => {
 
 export const uploadBAP = async (nip, materi, kegiatan, bukti, tanggal, idPerkuliahan, idJadwal) => {
   // author : hafizmfadli
-  // params : nip (string), materi (string), kegiatan (string), bukti (string), 
+  // params : nip (string), materi (string), kegiatan (string), bukti (string),
   //          tanggal (yyyy-mm-dd : string), idPerkuliahan (int), idJadwal (int)
   // return : bap yang disubmit
   try {

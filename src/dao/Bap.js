@@ -9,6 +9,6 @@ export const insertOne = async (materi, kegiatan, minggu, bukti, jumlahMhsHadir,
     const rows = result[0]
     return rows
   } catch (error) {
-      return Promise.reject(error)
+    return Promise.reject(error)
   }
 }

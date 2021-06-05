@@ -1,7 +1,6 @@
 import * as DosenService from '../services/Dosen'
 import upload from '../middleware/upload'
 
-
 export const getDataBAP = async (req, res, next) => {
   const { idPerkuliahan, idJadwal, tanggal } = req.query
   try {
@@ -39,7 +38,6 @@ export const uploadBAP = async (req, res, next) => {
       const url = req.file.path
       const results = await DosenService.uploadBAP(nip, materi, kegiatan, url, tanggal, idPerkuliahan, idJadwal)
       const rows = results[0]
-      console.log("UPLOAD CONTROLLER DATA ", rows)
       res.json({
         message: `Dosen dengan nip ${nip} mengupload bap pada tgl ${tanggal} untuk idPerkuliahan ${idPerkuliahan} dan idJadwal ${idJadwal}`,
         data: rows
