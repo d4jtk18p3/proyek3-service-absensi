@@ -1,11 +1,12 @@
 import Keterangan from '../models/Keterangan'
 
-export const insertKeterangan = async (nim, status, url) => {
+export const insertKeterangan = async (nim, status, url, isAccepted) => {
   try {
     const keterangan = await Keterangan.create({
       nim,
       status,
-      url
+      url,
+      isAccepted
     })
     return keterangan
   } catch (error) {

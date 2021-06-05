@@ -1,6 +1,7 @@
 import * as MahasiswaService from '../services/Mahasiswa'
 import * as DaftarHadirMahasiswaService from '../services/DaftarHadirMahasiswa'
 import * as DosenService from '../services/Dosen'
+import * as KeteranganService from '../services/Keterangan'
 
 export const presensiMhsHandler = async (req, res, next) => {
   // Author : hafizmfadli
@@ -58,5 +59,19 @@ export const updateStatusKehadiran = async (req, res, next) => {
     })
   } catch (error) {
 
+  }
+}
+
+export const dashboardMahasiswaHandler = async (req, res, next) => {
+  const { nim } = req.query
+
+  try {
+    const result = await DaftarHadirMahasiswaService.getDashboardNim(nim)
+    res.json({
+      message: `dashboard ${nim}`,
+      data: result
+    })
+  } catch (error) {
+    next(error)
   }
 }
