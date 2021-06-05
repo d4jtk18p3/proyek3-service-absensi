@@ -98,7 +98,7 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) =>
     const date = new Date(tanggal)
     const hari = date.getDay()
     const result = await db.query(`
-    SELECT mhs.nim, mhs.nama, mhs.kode_kelas, mk.id, s.id AS id_studi, j.id_jadwal, mk.nama_mata_kuliah, d.nama_dosen, dhm.tanggal, j.batas_terakhir_absen, j.id_jadwal, dhm."isHadir",
+    SELECT mhs.nim, mhs.nama, mhs.kode_kelas, p.id AS id_perkuliahan, mk.id, s.id AS id_studi, j.id_jadwal, mk.nama_mata_kuliah, d.nama_dosen, dhm.tanggal, j.batas_terakhir_absen, j.id_jadwal, dhm."isHadir",
     dhm.id_daftar_hadir_mhs FROM "Jadwal" j
     INNER JOIN "Perkuliahan" p ON p.id = j.id_perkuliahan
     INNER JOIN "Studi" s ON p.id = s.id_perkuliahan
@@ -123,6 +123,7 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) =>
     const resultPretty = {
       // rapihin dulu
       id_jadwal: resultRow[0].id_jadwal,
+      id_perkuliahan: resultRow[0].id_perkuliahan,
       nama_mata_kuliah: resultRow[0].nama_mata_kuliah,
       kode_kelas: resultRow[0].kode_kelas,
       dosen: resultRow[0].nama_dosen,
