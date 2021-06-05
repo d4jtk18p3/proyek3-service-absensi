@@ -93,7 +93,7 @@ export const ajukanIzin = async (idJadwals, status, url, nim, tglIzin) => {
   // return daftar daftar hadir mahasiswa yang mengajukan izin
 
   try {
-    const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url)
+    const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url, false)
     const tglIzinDate = new Date(tglIzin)
     const minggu = DaftarHadirMahasiswaDAO.calculateWeekOfMonth(tglIzinDate.getDate())
     const bulan = tglIzinDate.getMonth() + 1

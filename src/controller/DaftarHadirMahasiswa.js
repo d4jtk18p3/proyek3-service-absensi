@@ -60,3 +60,17 @@ export const updateStatusKehadiran = async (req, res, next) => {
 
   }
 }
+
+export const dashboardMahasiswaHandler = async (req, res, next) => {
+  const { nim } = req.query
+
+  try {
+    const result = await DaftarHadirMahasiswaService.getDashboardNim(nim)
+    res.json({
+      message: `dashboard ${nim}`,
+      data: result
+    })
+  } catch (error) {
+    next(error)
+  }
+}
