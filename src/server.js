@@ -6,6 +6,7 @@ import keteranganRoutes from './routes/Keterangan'
 import jadwalRoutes from './routes/Jadwal'
 import daftarHadirMahasiswaRoutes from './routes/DaftarHadirMahasiswa'
 import daftarHadirDosenRoutes from './routes/DaftarHadirDosen'
+import bapRoutes from './routes/Bap'
 import * as MahasiswaService from './services/Mahasiswa'
 import * as DosenService from './services/Dosen'
 
@@ -21,6 +22,7 @@ app.use('/api/keterangan', keteranganRoutes)
 app.use('/api/jadwal-perkuliahan', jadwalRoutes)
 app.use('/api/daftar-hadir-mahasiswa', daftarHadirMahasiswaRoutes)
 app.use('/api/daftar-hadir-dosen', daftarHadirDosenRoutes)
+app.use('/api/bap', bapRoutes)
 
 // error handling
 app.use((error, req, res, next) => {

@@ -3,7 +3,10 @@
 */
 import * as DaftarHadirDosenDAO from '../dao/DaftarHadirDosen'
 import * as JadwalDAO from '../dao/Jadwal'
+import * as PerkuliahanDAO from '../dao/Perkuliahan'
+import * as CommonDAO from '../dao/Common'
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
+import * as BapDAO from '../dao/Bap'
 import schedule from 'node-schedule'
 import { DateTime } from 'luxon'
 
@@ -70,6 +73,45 @@ export const updateKehadiranMahasiswa = async (idStudi, idJadwal, tanggal, isHad
     const jadwalRow = jadwal[0]
     const daftarHadirMhs = await DaftarHadirMahasiswaDAO.updateIsHadirMhs(idStudi, tanggal, jadwalRow.ja, jadwalRow.jb, isHadir)
     return daftarHadirMhs
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const getDataBAP = async (idPerkuliahan, idJadwal, tanggal) => {
+  // author : hafizmfadli
+  // params : idPerkuliahan (int), idJadwal (int), tanggal (yyyy-mm-dd : string)
+  // return : data yang dibutuhkan untuk mengisi bap
+  try {
+    const date = new Date(tanggal)
+    const minggu = CommonDAO.calculateWeekOfMonth(date.getDate())
+    const perkuliahan = await PerkuliahanDAO.findPerkuliahanByIdPerkuliahan(idPerkuliahan)
+    const perkuliahanRows = perkuliahan[0][0]
+    const daftarHadirMhs = await DaftarHadirMahasiswaDAO.getDaftarHadirKelasJadwal(perkuliahanRows.kode_kelas, idJadwal, tanggal)
+
+    // hitung jumlah mhs yang tidak hadir dan hadir
+    const nTidakHadir = daftarHadirMhs.mahasiswa.filter((mhs) => mhs.isHadir === false)
+    const nHadir = daftarHadirMhs.mahasiswa.length - nTidakHadir.length
+    const dataBap = {
+      minggu,
+      jumlah_mhs_hadir: nHadir,
+      jumlah_mhs_tidak_hadir: nTidakHadir.length
+    }
+    return dataBap
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const uploadBAP = async (nip, materi, kegiatan, bukti, tanggal, idPerkuliahan, idJadwal) => {
+  // author : hafizmfadli
+  // params : nip (string), materi (string), kegiatan (string), bukti (string),
+  //          tanggal (yyyy-mm-dd : string), idPerkuliahan (int), idJadwal (int)
+  // return : bap yang disubmit
+  try {
+    const dataBap = await getDataBAP(idPerkuliahan, idJadwal, tanggal)
+    const bap = await BapDAO.insertOne(materi, kegiatan, dataBap.minggu, bukti, dataBap.jumlah_mhs_hadir, dataBap.jumlah_mhs_tidak_hadir, tanggal, nip, idPerkuliahan)
+    return bap
   } catch (error) {
     return Promise.reject(error)
   }
