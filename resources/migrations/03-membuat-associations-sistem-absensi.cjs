@@ -84,10 +84,38 @@ module.exports = {
       onDelete: 'SET NULL'
     })
 
+    await queryInterface.addColumn('Bap', 'nip', {
+      type: Sequelize.STRING(30),
+      allowNull: true,
+      references: {
+        model: 'Dosen',
+        key: 'nip'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    })
+
+    await queryInterface.addColumn('Bap', 'id_perkuliahan', {
+      type: Sequelize.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Perkuliahan',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    })
+
     await queryInterface.addConstraint('daftar_hadir_mahasiswa', {
       fields: ['id_studi', 'tanggal', 'ja', 'jb'],
       type: 'Unique',
       name: 'presensi_hari_tertentu'
+    })
+
+    await queryInterface.addConstraint('Bap', {
+      fields: ['id_perkuliahan', 'tanggal'],
+      type: 'Unique',
+      name: 'bap_hari_tertentu'
     })
 
   },
@@ -99,7 +127,10 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
+    await queryInterface.removeConstraint('Bap', 'bap_hari_tertentu')
     await queryInterface.removeConstraint('daftar_hadir_mahasiswa', 'presensi_hari_tertentu')
+    await queryInterface.removeColumn('Bap', 'nip')
+    await queryInterface.removeColumn('Bap', 'id_perkuliahan')
     await queryInterface.removeColumn('Keterangan', 'nim')
     await queryInterface.removeColumn('daftar_hadir_mahasiswa', 'id_studi')
     await queryInterface.removeColumn('daftar_hadir_mahasiswa', 'id_keterangan')

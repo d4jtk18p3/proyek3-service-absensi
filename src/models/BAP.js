@@ -2,8 +2,7 @@ import Sequelize from 'sequelize'
 
 import db from '../db'
 
-const bap = db.define('bap', {
-
+const bap = db.define('Bap', {
   id_BAP: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -13,18 +12,18 @@ const bap = db.define('bap', {
   },
   nip: {
     // foreign key
-    type: Sequelize.INTEGER,
+    type: Sequelize.STRING(30),
     references: {
-      model: 'dosen',
+      model: 'Dosen',
       key: 'nip'
     }
   },
-  id_studi: {
+  id_perkuliahan: {
     // foreign key
     type: Sequelize.INTEGER,
     references: {
-      model: 'studi',
-      key: 'id_studi'
+      model: 'Perkuliahan',
+      key: 'id'
     }
   },
   materi: {
@@ -37,6 +36,7 @@ const bap = db.define('bap', {
     type: Sequelize.INTEGER
   },
   bukti: {
+    // url dari location foto
     type: Sequelize.STRING
   },
   jumlah_mhs_hadir: {
@@ -45,14 +45,8 @@ const bap = db.define('bap', {
   jumlah_mhs_tidak_hadir: {
     type: Sequelize.INTEGER
   },
-  tahun_ajaran: {
-    type: Sequelize.STRING
-  },
   tanggal: {
-    type: Sequelize.DATE
-  },
-  event: {
-    type: Sequelize.STRING
+    type: Sequelize.DATEONLY
   }
 })
 

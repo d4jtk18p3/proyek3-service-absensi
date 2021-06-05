@@ -136,6 +136,38 @@ module.exports = {
       }
     }
     )
+
+    await queryInterface.createTable('Bap', {
+      id_BAP: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+    
+      },
+      materi: {
+        type: Sequelize.TEXT
+      },
+      kegiatan: {
+        type: Sequelize.TEXT
+      },
+      minggu: {
+        type: Sequelize.INTEGER
+      },
+      bukti: {
+        // url dari location foto
+        type: Sequelize.STRING
+      },
+      jumlah_mhs_hadir: {
+        type: Sequelize.INTEGER
+      },
+      jumlah_mhs_tidak_hadir: {
+        type: Sequelize.INTEGER
+      },
+      tanggal: {
+        type: Sequelize.DATEONLY
+      }
+    })
   },
 
   down: async (queryInterface, Sequelize) => {
@@ -145,6 +177,7 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
+    await queryInterface.dropTable('Bap')
     await queryInterface.dropTable('Keterangan')
     await queryInterface.dropTable('daftar_hadir_mahasiswa')
     await queryInterface.dropTable('daftar_hadir_dosen')
