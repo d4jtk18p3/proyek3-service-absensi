@@ -1,7 +1,6 @@
 import * as MahasiswaService from '../services/Mahasiswa'
 import * as DaftarHadirMahasiswaService from '../services/DaftarHadirMahasiswa'
 import * as DosenService from '../services/Dosen'
-import * as KeteranganService from '../services/Keterangan'
 
 export const presensiMhsHandler = async (req, res, next) => {
   // Author : hafizmfadli

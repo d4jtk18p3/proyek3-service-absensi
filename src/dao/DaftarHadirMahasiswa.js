@@ -220,13 +220,13 @@ export const getKeteranganSakitByNim = async (nim) => {
   try {
     const queryResult = await db.query(`
     SELECT k.*, dhm.ja, dhm.jb FROM "daftar_hadir_mahasiswa" dhm
-	  INNER JOIN "Keterangan" k ON k.id_keterangan = dhm.id_keterangan
+INNER JOIN "Keterangan" k ON k.id_keterangan = dhm.id_keterangan
     WHERE dhm."isHadir"='false' AND k.nim='${nim}' AND k.status='sakit' AND k."isAccepted"='true'
     `)
     const rows = queryResult[0]
     let i
     let result = 0
-    for(i = 0;i < rows.length;i++) {
+    for (i = 0; i < rows.length; i++) {
       result += rows[i].jb - rows[i].ja
     }
 
@@ -240,13 +240,13 @@ export const getKeteranganIzinByNim = async (nim) => {
   try {
     const queryResult = await db.query(`
     SELECT k.*, dhm.ja, dhm.jb FROM "daftar_hadir_mahasiswa" dhm
-	  INNER JOIN "Keterangan" k ON k.id_keterangan = dhm.id_keterangan
+INNER JOIN "Keterangan" k ON k.id_keterangan = dhm.id_keterangan
     WHERE dhm."isHadir"='false' AND k.nim='${nim}' AND k.status='izin' AND k."isAccepted"='true'
     `)
     const rows = queryResult[0]
     let i
     let result = 0
-    for(i = 0;i < rows.length;i++) {
+    for (i = 0; i < rows.length; i++) {
       result += rows[i].jb - rows[i].ja
     }
 
@@ -265,7 +265,7 @@ export const getKeteranganAlfaByNim = async (nim) => {
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id AND dhm.ja = j.ja AND dhm.jb = j.jb
     INNER JOIN "Mahasiswa" mhs ON mhs.nim = s.id_mahasiswa
     WHERE dhm."isHadir"='false' AND dhm.id_keterangan IS NULL AND mhs.nim='${nim}'
-	  ORDER BY id_daftar_hadir_mhs ASC 
+ORDER BY id_daftar_hadir_mhs ASC 
     `)
 
     const queryResult2 = await db.query(`
@@ -277,10 +277,10 @@ export const getKeteranganAlfaByNim = async (nim) => {
     const rows2 = queryResult2[0]
     let i
     let result = 0
-    for(i = 0;i < rows1.length;i++) {
+    for (i = 0; i < rows1.length; i++) {
       result += rows1[i].jb - rows1[i].ja
     }
-    for(i = 0;i < rows2.length;i++) {
+    for (i = 0; i < rows2.length; i++) {
       result += rows2[i].jb - rows2[i].ja
     }
 
@@ -299,7 +299,7 @@ export const getPersentaseKehadiranByNim = async (nim) => {
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id AND dhm.ja = j.ja AND dhm.jb = j.jb
     INNER JOIN "Mahasiswa" mhs ON mhs.nim = s.id_mahasiswa
     WHERE dhm."isHadir"='true' AND mhs.nim='${nim}'
-	  ORDER BY id_daftar_hadir_mhs ASC
+ORDER BY id_daftar_hadir_mhs ASC
     `)
 
     const queryResult2 = await db.query(`
@@ -309,18 +309,17 @@ export const getPersentaseKehadiranByNim = async (nim) => {
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id AND dhm.ja = j.ja AND dhm.jb = j.jb
     INNER JOIN "Mahasiswa" mhs ON mhs.nim = s.id_mahasiswa
     WHERE mhs.nim='${nim}'
-	  ORDER BY id_daftar_hadir_mhs ASC
+ORDER BY id_daftar_hadir_mhs ASC
     `)
     const result1 = queryResult1[0].length
     const result2 = queryResult2[0].length
-    
     const rows1 = queryResult1[0]
     let i
     let jumlahJamHadir = 0
-    for(i = 0;i < rows1.length;i++) {
+    for (i = 0; i < rows1.length; i++) {
       jumlahJamHadir += rows1[i].jb - rows1[i].ja
     }
-    const persentaseKehadiran = (result1/result2)*100
+    const persentaseKehadiran = (result1 / result2) * 100
     const result = {
       persentaseKehadiran: persentaseKehadiran,
       jumlahJamHadir: jumlahJamHadir
