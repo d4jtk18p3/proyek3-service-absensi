@@ -6,6 +6,7 @@ import * as KeteranganDAO from '../dao/Keterangan'
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
 import schedule from 'node-schedule'
 import { DateTime } from 'luxon'
+import holiday from '../const/Liburan'
 
 export const generateDaftarHadirMahasiswa = async () => {
   // Author : hafizmfadli
@@ -93,7 +94,7 @@ export const ajukanIzin = async (idJadwals, status, url, nim, tglIzin) => {
   // return daftar daftar hadir mahasiswa yang mengajukan izin
 
   try {
-    const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url, false)
+    const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url, -1)
     const tglIzinDate = new Date(tglIzin)
     const minggu = DaftarHadirMahasiswaDAO.calculateWeekOfMonth(tglIzinDate.getDate())
     const bulan = tglIzinDate.getMonth() + 1
