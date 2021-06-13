@@ -44,7 +44,10 @@ export const uploadSuratIzin = (req, res) => {
         data: rows
       })
     } catch (error) {
-      res.status(500).json({ error })
+      if(error.statusCode){
+        return res.status(error.statusCode).json({ error })
+      }
+      res.json({ error })
     }
   })
 }
