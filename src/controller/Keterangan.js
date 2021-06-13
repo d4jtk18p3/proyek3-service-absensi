@@ -44,7 +44,7 @@ export const uploadSuratIzin = (req, res) => {
         data: rows
       })
     } catch (error) {
-      if(error.statusCode){
+      if (error.statusCode) {
         return res.status(error.statusCode).json({ error })
       }
       res.json({ error })

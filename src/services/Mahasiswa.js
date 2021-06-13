@@ -114,11 +114,9 @@ export const ajukanIzin = async (idJadwals, status, url, nim, tglIzin) => {
   // return daftar daftar hadir mahasiswa yang mengajukan izin
 
   try {
-
-    if(isLiburan(tglIzin)){
+    if (isLiburan(tglIzin)) {
       const ket = keteranganLibur(tglIzin)
-      console.log("LIBUR PAAN NIH", ket)
-      const error = new Error(`Tanggal tidak valid`)
+      const error = new Error('Tanggal tidak valid')
       error.statusCode = 400
       error.cause = `${tglIzin} adalah hari libur, ${ket}`
       throw error
