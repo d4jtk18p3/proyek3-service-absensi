@@ -78,6 +78,26 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
   }
 }
 
+const isLiburan = (tgl) => {
+  // author : hafizmfadli
+  // params : tgl (yyyy-mm-dd : string)
+
+  const liburgaknih = holiday.filter(date => {
+    return date.tanggal === tgl
+  })
+  return liburgaknih.length > 0
+}
+
+const keteranganLibur = (tgl) => {
+  // author : hafizmfadli
+  // params : tgl (yyyy-mm-dd : string)
+
+  const liburgaknih = holiday.filter(date => {
+    return date.tanggal === tgl
+  })
+  return liburgaknih[0].keterangan
+}
+
 export const ajukanIzin = async (idJadwals, status, url, nim, tglIzin) => {
   // ide :
   // insert keterangan terlebih dahulu (karena kita butuh id nya)
@@ -94,6 +114,16 @@ export const ajukanIzin = async (idJadwals, status, url, nim, tglIzin) => {
   // return daftar daftar hadir mahasiswa yang mengajukan izin
 
   try {
+
+    if(isLiburan(tglIzin)){
+      const ket = keteranganLibur(tglIzin)
+      console.log("LIBUR PAAN NIH", ket)
+      const error = new Error(`Tanggal tidak valid`)
+      error.statusCode = 400
+      error.cause = `${tglIzin} adalah hari libur, ${ket}`
+      throw error
+    }
+
     const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url, -1)
     const tglIzinDate = new Date(tglIzin)
     const minggu = DaftarHadirMahasiswaDAO.calculateWeekOfMonth(tglIzinDate.getDate())
