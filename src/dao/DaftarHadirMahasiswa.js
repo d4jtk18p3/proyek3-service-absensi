@@ -99,24 +99,42 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) =>
     const hari = date.getDay()
     const result = await db.query(`
     SELECT mhs.nim, mhs.nama, mhs.kode_kelas, p.id AS id_perkuliahan, mk.id, s.id AS id_studi, j.id_jadwal, mk.nama_mata_kuliah, d.nama_dosen, dhm.tanggal, j.batas_terakhir_absen, j.id_jadwal, dhm."isHadir",
-    dhm.id_daftar_hadir_mhs FROM "Jadwal" j
+    dhm.id_daftar_hadir_mhs, dhm.keterlambatan, dhm.id_keterangan, ket.status, ket."isAccepted" FROM "Jadwal" j
     INNER JOIN "Perkuliahan" p ON p.id = j.id_perkuliahan
     INNER JOIN "Studi" s ON p.id = s.id_perkuliahan
     INNER JOIN "daftar_hadir_mahasiswa" dhm ON dhm.id_studi = s.id AND dhm.ja = j.ja AND dhm.jb = j.jb
     INNER JOIN "Mahasiswa" mhs ON mhs.nim = s.id_mahasiswa
     INNER JOIN "Mata_Kuliah" mk ON mk.id = p.id_mata_kuliah
     INNER JOIN "Dosen" d ON d.nip = j.nip
+    LEFT JOIN "Keterangan" ket ON ket.id_keterangan = dhm.id_keterangan
     WHERE j.hari=${hari} AND p.kode_kelas=${kodeKelas} AND j.id_jadwal=${idJadwal} AND dhm.tanggal='${tanggal}';
     `)
     const resultRow = result[0]
     const mahasiswa = resultRow.map(mhs => {
       // ambil informasti ttg status hadir mahasiswa saja
+      let status = 'Belum absen'
+
+      // sudah mengajukan izin namun belum di acc
+      if (!mhs.isHadir && mhs.id_keterangan && mhs.isAccepted === -1) {
+        status = 'Izin yang diajukan sedang diperiksa waldos'
+      }
+      // sudah mengajukan izin dan sudah di acc oleh waldos
+      if (!mhs.isHadir && mhs.id_keterangan && mhs.isAccepted === 1) {
+        status = mhs.status
+      }
+      // sudah mengajukan izin namun tidak di acc oleh waldos
+      if (!mhs.isHadir && mhs.id_keterangan && mhs.isAccepted === 0) {
+        status = 'Tidak Hadir'
+      }
+
       return {
         id_studi: mhs.id_studi,
         nim: mhs.nim,
         nama: mhs.nama,
         isHadir: mhs.isHadir,
-        id_daftar_hadir: mhs.id_daftar_hadir_mhs
+        status,
+        id_daftar_hadir: mhs.id_daftar_hadir_mhs,
+        keterlambatan: mhs.keterlambatan
       }
     })
 
