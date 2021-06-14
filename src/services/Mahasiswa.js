@@ -82,7 +82,7 @@ const isLiburan = (tgl) => {
   // author : hafizmfadli
   // params : tgl (yyyy-mm-dd : string)
   const date = new Date(tgl)
-  if(date.getDay() === 0 || date.getDay() === 6){
+  if (date.getDay() === 0 || date.getDay() === 6) {
     // sabtu - minggu libur sayang
     return true
   }
@@ -98,7 +98,7 @@ const keteranganLibur = (tgl) => {
   // params : tgl (yyyy-mm-dd : string)
   // return : keterangan libur
   const date = new Date(tgl)
-  if(date.getDay() === 0 || date.getDay() === 6){
+  if (date.getDay() === 0 || date.getDay() === 6) {
     // sabtu - minggu libur sayang
     return 'hari libur kuliah'
   }
