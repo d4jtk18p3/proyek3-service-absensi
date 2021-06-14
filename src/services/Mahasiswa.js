@@ -81,6 +81,11 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
 const isLiburan = (tgl) => {
   // author : hafizmfadli
   // params : tgl (yyyy-mm-dd : string)
+  const date = new Date(tgl)
+  if(date.getDay() === 0 || date.getDay() === 6){
+    // sabtu - minggu libur sayang
+    return true
+  }
 
   const liburgaknih = holiday.filter(date => {
     return date.tanggal === tgl
@@ -91,6 +96,12 @@ const isLiburan = (tgl) => {
 const keteranganLibur = (tgl) => {
   // author : hafizmfadli
   // params : tgl (yyyy-mm-dd : string)
+  // return : keterangan libur
+  const date = new Date(tgl)
+  if(date.getDay() === 0 || date.getDay() === 6){
+    // sabtu - minggu libur sayang
+    return 'hari libur kuliah'
+  }
 
   const liburgaknih = holiday.filter(date => {
     return date.tanggal === tgl
