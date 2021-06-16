@@ -148,7 +148,7 @@ export const getAllJadwal = async () => {
     INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
     INNER JOIN "Dosen" d ON d.nip = j.nip
     INNER JOIN "Mata_Kuliah" mk ON mk.id = p.id_mata_kuliah
-	ORDER BY id_jadwal ASC
+ORDER BY id_jadwal ASC
     `)
 
     const jadwalMap = new Map()

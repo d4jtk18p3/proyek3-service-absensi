@@ -33,7 +33,7 @@ export const getAllJadwal = async (req, res) => {
   try {
     const result = await JadwalDAO.getAllJadwal()
     res.json({
-      message: `Semua jadwal kuliah`,
+      message: 'Semua jadwal kuliah',
       data: {
         jadwal: result
       }
