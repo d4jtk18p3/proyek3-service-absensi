@@ -28,3 +28,17 @@ export const getJadwalDosenHrTertentuHandler = async (req, res) => {
     res.status(error.status).json({ error })
   }
 }
+
+export const getAllJadwal = async (req, res) => {
+  try {
+    const result = await JadwalDAO.getAllJadwal()
+    res.json({
+      message: 'Semua jadwal kuliah',
+      data: {
+        jadwal: result
+      }
+    })
+  } catch (error) {
+    res.status(error.status).json({ error })
+  }
+}

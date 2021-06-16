@@ -240,7 +240,7 @@ export const getKeteranganSakitByNim = async (nim) => {
     const queryResult = await db.query(`
     SELECT k.*, dhm.ja, dhm.jb FROM "daftar_hadir_mahasiswa" dhm
 INNER JOIN "Keterangan" k ON k.id_keterangan = dhm.id_keterangan
-    WHERE dhm."isHadir"='false' AND k.nim='${nim}' AND k.status='sakit' AND k."isAccepted"='true'
+    WHERE dhm."isHadir"='false' AND k.nim='${nim}' AND k.status='sakit' AND k."isAccepted"=1
     `)
     const rows = queryResult[0]
     let i
@@ -260,7 +260,7 @@ export const getKeteranganIzinByNim = async (nim) => {
     const queryResult = await db.query(`
     SELECT k.*, dhm.ja, dhm.jb FROM "daftar_hadir_mahasiswa" dhm
 INNER JOIN "Keterangan" k ON k.id_keterangan = dhm.id_keterangan
-    WHERE dhm."isHadir"='false' AND k.nim='${nim}' AND k.status='izin' AND k."isAccepted"='true'
+    WHERE dhm."isHadir"='false' AND k.nim='${nim}' AND k.status='izin' AND k."isAccepted"=1
     `)
     const rows = queryResult[0]
     let i
@@ -290,7 +290,7 @@ ORDER BY id_daftar_hadir_mhs ASC
     const queryResult2 = await db.query(`
     SELECT k.*, dhm.ja, dhm.jb FROM "daftar_hadir_mahasiswa" dhm
     INNER JOIN "Keterangan" k ON k.id_keterangan = dhm.id_keterangan
-    WHERE k.nim='${nim}' AND k."isAccepted"='false'
+    WHERE k.nim='${nim}' AND k."isAccepted"!=1
     `)
     const rows1 = queryResult1[0]
     const rows2 = queryResult2[0]

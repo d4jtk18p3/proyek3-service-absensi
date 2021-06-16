@@ -7,6 +7,7 @@ import * as PerkuliahanDAO from '../dao/Perkuliahan'
 import * as CommonDAO from '../dao/Common'
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
 import * as BapDAO from '../dao/Bap'
+import * as KeteranganDAO from '../dao/Keterangan'
 import schedule from 'node-schedule'
 import { DateTime } from 'luxon'
 
@@ -112,6 +113,15 @@ export const uploadBAP = async (nip, materi, kegiatan, bukti, tanggal, idPerkuli
     const dataBap = await getDataBAP(idPerkuliahan, idJadwal, tanggal)
     const bap = await BapDAO.insertOne(materi, kegiatan, dataBap.minggu, bukti, dataBap.jumlah_mhs_hadir, dataBap.jumlah_mhs_tidak_hadir, tanggal, nip, idPerkuliahan)
     return bap
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const validasiKetidakhadiran = async (idKeterangan, isAccepted) => {
+  try {
+    const keterangan = await KeteranganDAO.updateIsAcceptedKeterangan(idKeterangan, isAccepted)
+    return keterangan
   } catch (error) {
     return Promise.reject(error)
   }
