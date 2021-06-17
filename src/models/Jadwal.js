@@ -32,6 +32,27 @@ const Jadwal = db.define(
     },
     jenis: {
       type: Sequelize.STRING
+    },
+    nip: {
+      // foreign key
+      type: Sequelize.STRING(30),
+      allowNull: true,
+      references: {
+        model: 'Dosen',
+        key: 'nip'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
+    },
+    id_perkuliahan: {
+      type: Sequelize.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'Perkuliahan',
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     }
   },
   {

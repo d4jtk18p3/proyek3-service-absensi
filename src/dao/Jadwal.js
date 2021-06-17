@@ -200,3 +200,22 @@ ORDER BY id_jadwal ASC
     return Promise.reject(error)
   }
 }
+
+export const insertJadwal = async (ja, jb, waktuMulai, waktuSelesai, batasTerakhirAbsen, hari, jenis, nip, idPerkuliahan) => {
+  try {
+    const jadwal = await Jadwal.create({
+      ja,
+      jb,
+      waktu_mulai: waktuMulai,
+      waktu_selesai: waktuSelesai,
+      batas_terakhir_absen: batasTerakhirAbsen,
+      hari,
+      jenis,
+      nip,
+      id_perkuliahan: idPerkuliahan
+    })
+    return jadwal
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
