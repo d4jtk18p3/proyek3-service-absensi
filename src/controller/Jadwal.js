@@ -42,3 +42,75 @@ export const getAllJadwal = async (req, res) => {
     res.status(error.status).json({ error })
   }
 }
+
+export const postNewJadwal = async (req, res, next) => {
+  try {
+    const {
+      ja,
+      jb,
+      waktuMulai,
+      waktuSelesai,
+      hari,
+      jenis,
+      nip,
+      idPerkuliahan
+    } = req.body
+
+    // set default batas terakhir absen
+    const arrayWaktuMulai = waktuMulai.split(':')
+    const detik = parseInt(arrayWaktuMulai[2]) + 0
+    let menit = parseInt(arrayWaktuMulai[1]) + 30
+    let jam = parseInt(arrayWaktuMulai[0]) + 0
+    if (menit >= 60) {
+      jam += 1
+      menit -= 60
+    }
+
+    // detik
+    let stringDetik
+    if (detik > 9) {
+      stringDetik = detik.toString()
+    } else {
+      stringDetik = '0' + detik.toString()
+    }
+
+    // menit
+    let stringMenit
+    if (menit > 9) {
+      stringMenit = menit.toString()
+    } else {
+      stringMenit = '0' + menit.toString()
+    }
+
+    // jam
+    let stringJam
+    if (jam > 9) {
+      stringJam = jam.toString()
+    } else {
+      stringJam = '0' + jam.toString()
+    }
+
+    const batasTerakhirAbsen = stringJam + ':' + stringMenit + ':' + stringDetik
+
+    const jadwal = await JadwalDAO.insertJadwal(
+      parseInt(ja),
+      parseInt(jb),
+      waktuMulai,
+      waktuSelesai,
+      batasTerakhirAbsen,
+      parseInt(hari),
+      jenis,
+      nip,
+      parseInt(idPerkuliahan)
+    )
+
+    res.status(200).json({
+      message: 'insert jadwal sukses',
+      data: {
+        jadwal
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
+}
