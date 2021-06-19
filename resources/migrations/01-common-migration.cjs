@@ -4,16 +4,21 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Jabatan', {
       id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true
+      },
+      nama_jabatan: {
         type: Sequelize.STRING,
         allowNull: false,
-        primaryKey: true
       },
       createdAt: Sequelize.DATE,
       updatedAt: Sequelize.DATE
     })
     await queryInterface.createTable('Tata_Usaha', {
       nip: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true
       },
@@ -26,7 +31,7 @@ module.exports = {
     })
     await queryInterface.createTable('Dosen', {
       nip: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true
       },
@@ -34,8 +39,21 @@ module.exports = {
         type: Sequelize.STRING(30),
         allowNull: false
       },
-      id_jabatan: {
+      createdAt: Sequelize.DATE,
+      updatedAt: Sequelize.DATE
+    })
+
+    await queryInterface.createTable('Menjabat', {
+      nip: {
         type: Sequelize.STRING,
+        allowNull: false,
+        references: {
+          model: 'Dosen',
+          key: 'nip'
+        }
+      },
+      id_jabatan: {
+        type: Sequelize.INTEGER,
         allowNull: true,
         references: {
           model: 'Jabatan',
@@ -53,7 +71,7 @@ module.exports = {
         primaryKey: true
       },
       nip: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: 'Dosen',
@@ -70,7 +88,7 @@ module.exports = {
         primaryKey: true
       },
       nip: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: 'Dosen',
@@ -90,7 +108,7 @@ module.exports = {
     })
     await queryInterface.createTable('Mata_Kuliah', {
       id: {
-        type: Sequelize.STRING(8),
+        type: Sequelize.STRING(12),
         allowNull: false,
         primaryKey: true,
       },
@@ -101,7 +119,6 @@ module.exports = {
       nama_mata_kuliah: {
         type: Sequelize.STRING(50),
         allowNull: false,
-        unique: true
       },
       sks_teori: {
         type: Sequelize.INTEGER,
@@ -141,7 +158,7 @@ module.exports = {
         }
       },
       nip: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: 'Dosen',
@@ -163,7 +180,7 @@ module.exports = {
         allowNull: false
       },
       id_mata_kuliah: {
-        type: Sequelize.STRING(8),
+        type: Sequelize.STRING(12),
         references: {
           model: 'Mata_Kuliah',
           key: 'id'
@@ -183,7 +200,7 @@ module.exports = {
 
     await queryInterface.createTable('Mahasiswa', {
       nim: {
-        type: Sequelize.STRING(15),
+        type: Sequelize.STRING,
         allowNull: false,
         primaryKey: true
       },
@@ -230,7 +247,7 @@ module.exports = {
         },
       },
       id_mahasiswa: {
-        type: Sequelize.STRING(15),
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: 'Mahasiswa',
@@ -243,7 +260,7 @@ module.exports = {
 
     await queryInterface.createTable('Pengajar', {
       nip: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING,
         allowNull: false,
         references: {
           model: 'Dosen',
@@ -267,16 +284,16 @@ module.exports = {
       type: 'Unique',
       name: 'c_unique0_studi'
     })
-    // await queryInterface.addConstraint('Perkuliahan', {
-    //   fields: ['id_mata_kuliah', 'kode_kelas'],
-    //   type: 'Unique',
-    //   name: 'c_unique0_perkuliahan'
-    // })
+    await queryInterface.addConstraint('Perkuliahan', {
+      fields: ['id_mata_kuliah', 'kode_kelas'],
+      type: 'Unique',
+      name: 'c_unique0_perkuliahan'
+    })
 
   },
 
   down: async (queryInterface, Sequelize) => {
-    // await queryInterface.removeConstraint('Perkuliahan', 'c_unique0_perkuliahan')
+    await queryInterface.removeConstraint('Perkuliahan', 'c_unique0_perkuliahan')
     await queryInterface.removeConstraint('Studi', 'c_unique0_studi')
     await queryInterface.dropTable('Pengajar')
     await queryInterface.dropTable('Studi')
@@ -286,6 +303,7 @@ module.exports = {
     await queryInterface.dropTable('Mata_Kuliah')
     await queryInterface.dropTable('Program_Studi')
     await queryInterface.dropTable('Jurusan')
+    await queryInterface.dropTable('Menjabat')
     await queryInterface.dropTable('Dosen')
     await queryInterface.dropTable('Tata_Usaha')
     await queryInterface.dropTable('Jabatan')
