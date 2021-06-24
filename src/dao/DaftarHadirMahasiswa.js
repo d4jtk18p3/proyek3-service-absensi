@@ -68,7 +68,6 @@ export const bikinDaftarHadirSeluruhMhsHariIni = async () => {
     // console.log("MAHASISWA SAYANG", allMhs);
     allMhs.forEach(async (mhs) => {
       const matkulHariIni = await JadwalDAO.getJadwalMhsHrTertentu(mhs.nim, date.getDay())
-      console.log("MATKUL HARI INI SAYANG", matkulHariIni)
       await Promise.all(matkulHariIni.map(async (matkul) => {
         const isPunya = await isSudahPunyaDaftarHadir(matkul.id_studi, tglHariIni, matkul.ja, matkul.jb)
         if (!isPunya) {

@@ -35,7 +35,7 @@ export const getByNim = async (nim) => {
       INNER JOIN "daftar_hadir_mahasiswa" dhm ON dhm.id_keterangan = ket.id_keterangan
       WHERE mhs.nim='${nim}';
     `)
-    if(result[0].length === 0){
+    if (result[0].length === 0) {
       // mhs belum pernah mengajukan izin
       return
     }
@@ -44,10 +44,8 @@ export const getByNim = async (nim) => {
     const rows = result[0]
     const mhsKetMap = new Map()
     rows.forEach(mhsKet => {
-
       const nim = `${mhsKet.nim}`
-
-      if(mhsKetMap.has(nim)){
+      if (mhsKetMap.has(nim)) {
         // keterangan sudah ada pemiliknya
         // get, lalu tambahkan dengan ket yg baru
         const allKet = mhsKetMap.get(nim)
@@ -59,7 +57,7 @@ export const getByNim = async (nim) => {
         }
         allKet.push(newKet)
         mhsKetMap.set(nim, allKet)
-      }else{
+      } else {
         // keterangan belum punya pemiliknya
         const firstKet = [{
           id_keterangan: mhsKet.id_keterangan,
@@ -83,27 +81,26 @@ export const getByNim = async (nim) => {
 }
 
 export const getByKelas = async (kodeKelas) => {
- try {
-  const result = await db.query(`
-  SELECT mhs.nim, mhs.nama FROM "Mahasiswa" mhs
-  INNER JOIN "Kelas" kls ON kls.kode_kelas = mhs.kode_kelas
-  WHERE kls.kode_kelas=${kodeKelas};
-  `)
-  const rows = result[0]
-  const keteranganMhsKelas = {
-    kode_kelas: kodeKelas,
-    mhs_izin : []
-  }
-  await Promise.all (rows.map(async (mhs) => {
-    const ketMilikMhs = await getByNim(mhs.nim)
-    if(ketMilikMhs){
-      // punya izin yg diajukan
-      keteranganMhsKelas.mhs_izin.push(ketMilikMhs)
+  try {
+    const result = await db.query(`
+      SELECT mhs.nim, mhs.nama FROM "Mahasiswa" mhs
+      INNER JOIN "Kelas" kls ON kls.kode_kelas = mhs.kode_kelas
+      WHERE kls.kode_kelas=${kodeKelas};
+    `)
+    const rows = result[0]
+    const keteranganMhsKelas = {
+      kode_kelas: kodeKelas,
+      mhs_izin: []
     }
-  }))
-  console.log("KETERANGAN KELAS AKHIR ", keteranganMhsKelas)
-  return keteranganMhsKelas
- } catch (error) {
-   return Promise.reject(error)
- } 
+    await Promise.all(rows.map(async (mhs) => {
+      const ketMilikMhs = await getByNim(mhs.nim)
+      if (ketMilikMhs) {
+      // punya izin yg diajukan
+        keteranganMhsKelas.mhs_izin.push(ketMilikMhs)
+      }
+    }))
+    return keteranganMhsKelas
+  } catch (error) {
+    return Promise.reject(error)
+  }
 }

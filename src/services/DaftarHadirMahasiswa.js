@@ -54,7 +54,7 @@ export const getDashboardNim = async (nim) => {
 export const getMahasiswaKelasIzin = async (kodeKelas) => {
   try {
     const result = await KeteranganDAO.getByKelas(kodeKelas)
-    return result  
+    return result
   } catch (error) {
     return Promise.reject(error)
   }
