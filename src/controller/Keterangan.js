@@ -2,6 +2,7 @@ import path from 'path'
 import upload from '../middleware/upload'
 import * as MahasiswaServices from '../services/Mahasiswa'
 import * as DosenServices from '../services/Dosen'
+import * as DaftarHadirMahasiwaServices from '../services/DaftarHadirMahasiswa'
 
 export const getSuratIzin = (req, res) => {
   const { filename } = req.params
@@ -63,5 +64,18 @@ export const validasiKetidakhadiran = async (req, res, next) => {
     })
   } catch (error) {
 
+  }
+}
+
+export const mhsKelasIzin = async (req, res, next) => {
+  const { KodeKelas } = req.query
+  try {
+    const result = await DaftarHadirMahasiwaServices.getMahasiswaKelasIzin(KodeKelas)
+    res.json({
+      message: `list mahasiswa izin pada kelas ${KodeKelas}`,
+      data: result
+    })
+  } catch (error) {
+    next(error)
   }
 }
