@@ -10,11 +10,11 @@ const Dosen = db.define('Dosen', {
   nama_dosen: {
     type: Sequelize.STRING(30),
     allowNull: false
-  },
-  id_jabatan: {
-    type: Sequelize.STRING,
-    allowNull: true
   }
+  // id_jabatan: {
+  //   type: Sequelize.STRING,
+  //   allowNull: true
+  // }
 })
 
 export default Dosen

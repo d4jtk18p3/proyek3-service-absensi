@@ -110,3 +110,29 @@ export const getByNipJadwalTgl = async (nip, idJadwal, tanggal) => {
     return Promise.reject(error)
   }
 }
+
+export const getPersentaseMengajarByNip = async (nip) => {
+  try {
+    const queryResult1 = await db.query(`
+    SELECT * FROM public.daftar_hadir_dosen
+WHERE nip='${nip}' AND "isHadir"='true'
+ORDER BY id_daftar_hadir_dosen ASC 
+    `)
+
+    const queryResult2 = await db.query(`
+    SELECT * FROM public.daftar_hadir_dosen
+WHERE nip='${nip}'
+ORDER BY id_daftar_hadir_dosen ASC
+    `)
+    const result1 = queryResult1[0].length
+    const result2 = queryResult2[0].length
+    const persentaseMengajarDosen = (result1 / result2) * 100
+    const result = {
+      persentaseMengajarDosen: persentaseMengajarDosen
+    }
+
+    return result
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
