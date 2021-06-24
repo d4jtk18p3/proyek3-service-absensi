@@ -1,4 +1,5 @@
 import * as DaftarHadirMahasiswaDAO from '../dao/DaftarHadirMahasiswa'
+import * as KeteranganDAO from '../dao/Keterangan'
 
 export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) => {
   // author : hafizmfadli
@@ -44,6 +45,15 @@ export const getDashboardNim = async (nim) => {
       totalJamTidakMasuk: totalJamTidakMasuk,
       jamTersisaUntukSP: jamTersisaUntukSP
     }
+    return result
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const getMahasiswaKelasIzin = async (kodeKelas) => {
+  try {
+    const result = await KeteranganDAO.getByKelas(kodeKelas)
     return result
   } catch (error) {
     return Promise.reject(error)

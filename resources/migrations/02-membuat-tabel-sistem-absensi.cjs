@@ -23,7 +23,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       isAccepted: {
-        type: Sequelize.BOOLEAN
+        type: Sequelize.INTEGER
       },
       createdAt: {
         type: Sequelize.DATE

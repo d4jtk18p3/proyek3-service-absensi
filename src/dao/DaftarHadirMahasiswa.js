@@ -65,6 +65,7 @@ export const bikinDaftarHadirSeluruhMhsHariIni = async () => {
     const date = new Date()
     const tglHariIni = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
     const allMhs = await MahasiswaDAO.findAllMahasiswa()
+    // console.log("MAHASISWA SAYANG", allMhs);
     allMhs.forEach(async (mhs) => {
       const matkulHariIni = await JadwalDAO.getJadwalMhsHrTertentu(mhs.nim, date.getDay())
       await Promise.all(matkulHariIni.map(async (matkul) => {
@@ -107,7 +108,8 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) =>
     INNER JOIN "Mata_Kuliah" mk ON mk.id = p.id_mata_kuliah
     INNER JOIN "Dosen" d ON d.nip = j.nip
     LEFT JOIN "Keterangan" ket ON ket.id_keterangan = dhm.id_keterangan
-    WHERE j.hari=${hari} AND p.kode_kelas=${kodeKelas} AND j.id_jadwal=${idJadwal} AND dhm.tanggal='${tanggal}';
+    WHERE j.hari=${hari} AND p.kode_kelas=${kodeKelas} AND j.id_jadwal=${idJadwal} AND dhm.tanggal='${tanggal}'
+    ORDER BY mhs.nim ASC;
     `)
     const resultRow = result[0]
     const mahasiswa = resultRow.map(mhs => {
