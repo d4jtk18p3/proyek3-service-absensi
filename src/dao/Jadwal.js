@@ -31,7 +31,7 @@ export const getJadwalMhsHrTertentu = async (nim, hari) => {
 
     const jadwalMap = new Map()
     const jadwals = result[0]
-    console.log(jadwals)
+    // console.log(jadwals)
     jadwals.forEach(jadwal => {
       // jadwal dianggap sama jika id_studi, hari, ja, dan jb nya sama
       const jadwalIdentifier = `${jadwal.id_studi}${jadwal.hari}${jadwal.ja}${jadwal.jb}`
