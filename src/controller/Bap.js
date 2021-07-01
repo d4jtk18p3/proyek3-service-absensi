@@ -50,17 +50,17 @@ export const uploadBAP = async (req, res, next) => {
 }
 
 export const findBap = async (req, res, next) => {
-  const { idJadwal, tanggal } = req.query;
+  const { idJadwal, tanggal } = req.query
   try {
     const bap = await BapDAO.findOne(idJadwal, tanggal)
     const result = bap[0]
     res.json({
       message: `BAP idJadwal ${idJadwal} pada tanggal ${tanggal}`,
       data: {
-        bap : result
+        bap: result
       }
-    })  
+    })
   } catch (error) {
-    next(error)    
+    next(error)
   }
 }
