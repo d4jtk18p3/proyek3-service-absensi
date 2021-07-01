@@ -12,3 +12,18 @@ export const insertOne = async (materi, kegiatan, minggu, bukti, jumlahMhsHadir,
     return Promise.reject(error)
   }
 }
+
+export const findOne = async (idJadwal, tanggal) => {
+  try {
+    console.log("JANCUKK")
+    const result = await db.query(
+      `SELECT * FROM "Bap" bap
+      INNER JOIN "Jadwal" j ON j.id_jadwal = bap.id_jadwal
+      WHERE j.id_jadwal = ${idJadwal} AND bap.tanggal = '${tanggal}';`
+    )
+    const row = result[0];
+    return row;
+  } catch (error) {
+    return Promise.reject(error);    
+  }
+}
