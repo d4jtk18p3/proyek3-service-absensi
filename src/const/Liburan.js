@@ -12,7 +12,7 @@ const getHolidays = () => {
       keterangan: holiday.name
     }
   })
-  console.log(holidays)
+  // console.log(holidays)
 }
 getHolidays()
 export default holidays
