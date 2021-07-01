@@ -1,5 +1,6 @@
 import * as DosenService from '../services/Dosen'
 import upload from '../middleware/upload'
+import * as BapDAO from '../dao/Bap'
 
 export const getDataBAP = async (req, res, next) => {
   const { idPerkuliahan, idJadwal, tanggal } = req.query
@@ -46,4 +47,20 @@ export const uploadBAP = async (req, res, next) => {
       res.status(500).json({ error })
     }
   })
+}
+
+export const findBap = async (req, res, next) => {
+  const { idJadwal, tanggal } = req.query
+  try {
+    const bap = await BapDAO.findOne(idJadwal, tanggal)
+    const result = bap[0]
+    res.json({
+      message: `BAP idJadwal ${idJadwal} pada tanggal ${tanggal}`,
+      data: {
+        bap: result
+      }
+    })
+  } catch (error) {
+    next(error)
+  }
 }

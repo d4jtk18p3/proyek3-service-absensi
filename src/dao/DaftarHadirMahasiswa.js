@@ -63,7 +63,7 @@ export const bikinDaftarHadirSeluruhMhsHariIni = async () => {
   // Bikin daftar hadirnya jadngan berdasarkan matkul, tapi berdasarkan jadwal ngab
   try {
     const date = new Date()
-    const tglHariIni = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    const tglHariIni = `${date.getFullYear()}-${(date.getMonth() + 1) <= 9 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1)}-${date.getDate() <= 9 ? ('0' + date.getDate()) : date.getDate()}`
     const allMhs = await MahasiswaDAO.findAllMahasiswa()
     // console.log("MAHASISWA SAYANG", allMhs);
     allMhs.forEach(async (mhs) => {
@@ -72,8 +72,8 @@ export const bikinDaftarHadirSeluruhMhsHariIni = async () => {
         const isPunya = await isSudahPunyaDaftarHadir(matkul.id_studi, tglHariIni, matkul.ja, matkul.jb)
         if (!isPunya) {
           // bikin daftar hadir untuk setiap matkul hari ini
-          const result = await insertOne(matkul.id_studi, null, 0, tglHariIni, false, calculateWeekOfMonth(date.getDate()), date.getMonth() + 1, matkul.ja, matkul.jb)
-          console.log(result)
+          await insertOne(matkul.id_studi, null, 0, tglHariIni, false, calculateWeekOfMonth(date.getDate()), date.getMonth() + 1, matkul.ja, matkul.jb)
+          // console.log(result)
         }
       })
       )

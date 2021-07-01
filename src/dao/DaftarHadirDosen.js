@@ -70,7 +70,7 @@ export const bikinDaftarHadirSeluruhDosenHariIni = async () => {
   // Bikin daftar hadirnya jadngan berdasarkan matkul, tapi berdasarkan jadwal ngab
   try {
     const date = new Date()
-    const tglHariIni = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    const tglHariIni = `${date.getFullYear()}-${(date.getMonth() + 1) <= 9 ? ('0' + (date.getMonth() + 1)) : (date.getMonth() + 1)}-${date.getDate() <= 9 ? ('0' + date.getDate()) : date.getDate()}`
     const allDosen = await DosenDAO.findAllDosen()
     allDosen.forEach(async (dosen) => {
       const jadwalHariIni = await JadwalDAO.getJadwalDosenHrTertentu(dosen.nip, date.getDay())
@@ -78,8 +78,8 @@ export const bikinDaftarHadirSeluruhDosenHariIni = async () => {
         const isPunya = await isSudahPunyaDaftarHadir(dosen.nip, tglHariIni, jadwal.id_jadwal)
         if (!isPunya) {
           // bikin daftar hadir untuk setiap jadwal hari ini
-          const result = await insertOne(dosen.nip, jadwal.id_studi, tglHariIni, false, jadwal.id_jadwal)
-          console.log(result)
+          await insertOne(dosen.nip, jadwal.id_studi, tglHariIni, false, jadwal.id_jadwal)
+          // console.log(result)
         }
       })
       )
