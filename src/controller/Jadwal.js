@@ -23,7 +23,13 @@ export const getJadwalDosenHrTertentuHandler = async (req, res) => {
     const result = await JadwalDAO.getJadwalDosenHrTertentu(nip, hari)
     const d = new Date()
     const tanggalHariIni = `${d.getFullYear()}:${d.getMonth() + 1}:${d.getDate()}`
-    res.json({ result, tanggalHariIni })
+    res.json({
+      message: `Jadwal dosen nip ${nip} pada hari ${hari}`,
+      data: {
+        jadwal: result,
+        tanggalHariIni: tanggalHariIni
+      }
+    })
   } catch (error) {
     res.status(error.status).json({ error })
   }
