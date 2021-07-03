@@ -33,17 +33,14 @@ export const getDashboardNim = async (nim) => {
     const kehadiran = await DaftarHadirMahasiswaDAO.getPersentaseKehadiranByNim(nim)
     const persentaseKehadiran = kehadiran.persentaseKehadiran
     const jumlahJamHadir = kehadiran.jumlahJamHadir
-    const totalJamSP = await DaftarHadirMahasiswaDAO.getTotalJamSPbyNim(nim)
-    const totalJamTidakMasuk = totalJamSP.totalJamTidakMasuk
-    const jamTersisaUntukSP = totalJamSP.jamTersisaUntukSP
+    const keteranganSP = await DaftarHadirMahasiswaDAO.getTotalJamSPbyNim(nim)
     const result = {
       jumlahJamSakit: jumlahJamSakit,
       jumlahJamIzin: jumlahJamIzin,
       jumlahJamAlfa: jumlahJamAlfa,
       persentaseKehadiran: persentaseKehadiran,
       jumlahJamHadir: jumlahJamHadir,
-      totalJamTidakMasuk: totalJamTidakMasuk,
-      jamTersisaUntukSP: jamTersisaUntukSP
+      keteranganSP: keteranganSP
     }
     return result
   } catch (error) {

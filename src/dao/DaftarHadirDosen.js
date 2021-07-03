@@ -97,12 +97,9 @@ export const getByNipJadwalTgl = async (nip, idJadwal, tanggal) => {
 
   try {
     const result = await db.query(`
-    SELECT dosen.nip, dosen.nama_dosen, dhd.* FROM "daftar_hadir_dosen" dhd
-    INNER JOIN "Studi" s ON s.id = dhd.id_studi
-    INNER JOIN "Perkuliahan" p ON p.id= s.id_perkuliahan
-    INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
-    INNER JOIN "Dosen" dosen ON dosen.nip = j.nip
-    WHERE dhd.tanggal='${tanggal}' AND dosen.nip='${nip}' AND j.id_jadwal=${idJadwal} ORDER BY id_daftar_hadir_dosen ASC
+    SELECT DISTINCT dosen.nip, dosen.nama_dosen, dhd.* FROM "daftar_hadir_dosen" dhd
+    INNER JOIN "Dosen" dosen ON dosen.nip = dhd.nip
+    WHERE dhd.tanggal='${tanggal}' AND dhd.nip='${nip}' AND dhd."idJadwal"=${idJadwal} ORDER BY id_daftar_hadir_dosen ASC
     `)
     const rows = result[0]
     return rows
@@ -129,6 +126,63 @@ ORDER BY id_daftar_hadir_dosen ASC
     const persentaseMengajarDosen = (result1 / result2) * 100
     const result = {
       persentaseMengajarDosen: persentaseMengajarDosen
+    }
+
+    return result
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
+export const getTotalJamMengajarByNip = async (nip) => {
+  try {
+    const queryResult1 = await db.query(`
+    SELECT dhd.*, jadwal.ja, jadwal.jb FROM "daftar_hadir_dosen" dhd
+INNER JOIN "Jadwal" jadwal ON jadwal.id_jadwal = dhd."idJadwal"
+WHERE dhd.nip='${nip}'
+ORDER BY id_daftar_hadir_dosen ASC
+    `)
+
+    const queryResult2 = await db.query(`
+    SELECT dhd.*, jadwal.ja, jadwal.jb FROM "daftar_hadir_dosen" dhd
+INNER JOIN "Jadwal" jadwal ON jadwal.id_jadwal = dhd."idJadwal"
+WHERE dhd.nip='${nip}' AND dhd."isHadir"='true'
+ORDER BY id_daftar_hadir_dosen ASC
+    `)
+
+    const queryResult3 = await db.query(`
+    SELECT dhd.*, jadwal.ja, jadwal.jb FROM "daftar_hadir_dosen" dhd
+INNER JOIN "Jadwal" jadwal ON jadwal.id_jadwal = dhd."idJadwal"
+WHERE dhd.nip='${nip}' AND dhd."isHadir"='false'
+ORDER BY id_daftar_hadir_dosen ASC
+    `)
+
+    // Hitung total seluruh jam
+    let i
+    let totalSeluruhJam = 0
+    for (i = 0; i < queryResult1[0].length; i++) {
+      totalSeluruhJam += queryResult1[0][i].jb - queryResult1[0][i].ja
+    }
+
+    // Hitung total jam mengajar
+    let totalJamMengajar = 0
+    for (i = 0; i < queryResult2[0].length; i++) {
+      totalJamMengajar += queryResult2[0][i].jb - queryResult2[0][i].ja
+    }
+
+    // Hitung total jam tidak mengajar
+    let totalJamTidakMengajar = 0
+    for (i = 0; i < queryResult3[0].length; i++) {
+      totalJamTidakMengajar += queryResult3[0][i].jb - queryResult3[0][i].ja
+    }
+
+    // Hitung persentase jam mengajar
+    const persentaseJamMengajarDosen = (totalJamMengajar / totalSeluruhJam) * 100
+    const result = {
+      totalSeluruhJam: totalSeluruhJam,
+      totalJamMengajar: totalJamMengajar,
+      totalJamTidakMengajar: totalJamTidakMengajar,
+      persentaseJamMengajarDosen: persentaseJamMengajarDosen
     }
 
     return result

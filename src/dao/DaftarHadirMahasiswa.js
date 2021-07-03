@@ -356,11 +356,46 @@ export const getTotalJamSPbyNim = async (nim) => {
   try {
     const queryResult1 = await getKeteranganAlfaByNim(nim)
     const totalJamTidakMasuk = queryResult1
-    const totalJamUntukSP1 = 35
-    const jamTersisaUntukSP = totalJamUntukSP1 - totalJamTidakMasuk
-    const result = {
-      totalJamTidakMasuk: totalJamTidakMasuk,
-      jamTersisaUntukSP: jamTersisaUntukSP
+    const totalJamUntukSP1 = 10
+    const totalJamUntukSP2 = 20
+    const totalJamUntukSP3 = 30
+    const totalJamUntukSuratPemberhentian = 38
+    let result
+    if (totalJamTidakMasuk <= 10) {
+      const jamTersisaUntukSP1 = totalJamUntukSP1 - totalJamTidakMasuk
+      result = {
+        totalJamTidakMasuk: totalJamTidakMasuk,
+        jamTersisaUntukSP1: jamTersisaUntukSP1,
+        status: 'Tidak ada SP'
+      }
+    } else if (totalJamTidakMasuk <= 20) {
+      const jamTersisaUntukSP2 = totalJamUntukSP2 - totalJamTidakMasuk
+      result = {
+        totalJamTidakMasuk: totalJamTidakMasuk,
+        jamTersisaUntukSP2: jamTersisaUntukSP2,
+        status: 'SP 1'
+      }
+    } else if (totalJamTidakMasuk <= 30) {
+      const jamTersisaUntukSP3 = totalJamUntukSP3 - totalJamTidakMasuk
+      result = {
+        totalJamTidakMasuk: totalJamTidakMasuk,
+        jamTersisaUntukSP3: jamTersisaUntukSP3,
+        status: 'SP 2'
+      }
+    } else if (totalJamTidakMasuk <= 38) {
+      const jamTersisaUntukSuratPemberhentian = totalJamUntukSuratPemberhentian - totalJamTidakMasuk
+      result = {
+        totalJamTidakMasuk: totalJamTidakMasuk,
+        jamTersisaUntukSuratPemberhentian: jamTersisaUntukSuratPemberhentian,
+        status: 'SP 3'
+      }
+    } else {
+      const jamTersisaUntukSuratPemberhentian = 0
+      result = {
+        totalJamTidakMasuk: totalJamTidakMasuk,
+        jamTersisaUntukSuratPemberhentian: jamTersisaUntukSuratPemberhentian,
+        status: 'Dikenakan surat pemberhentian dari Polban'
+      }
     }
 
     return result
