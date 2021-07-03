@@ -97,12 +97,9 @@ export const getByNipJadwalTgl = async (nip, idJadwal, tanggal) => {
 
   try {
     const result = await db.query(`
-    SELECT dosen.nip, dosen.nama_dosen, dhd.* FROM "daftar_hadir_dosen" dhd
-    INNER JOIN "Studi" s ON s.id = dhd.id_studi
-    INNER JOIN "Perkuliahan" p ON p.id= s.id_perkuliahan
-    INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id
-    INNER JOIN "Dosen" dosen ON dosen.nip = j.nip
-    WHERE dhd.tanggal='${tanggal}' AND dosen.nip='${nip}' AND j.id_jadwal=${idJadwal} ORDER BY id_daftar_hadir_dosen ASC
+    SELECT DISTINCT dosen.nip, dosen.nama_dosen, dhd.* FROM "daftar_hadir_dosen" dhd
+    INNER JOIN "Dosen" dosen ON dosen.nip = dhd.nip
+    WHERE dhd.tanggal='${tanggal}' AND dhd.nip='${nip}' AND dhd."idJadwal"=${idJadwal} ORDER BY id_daftar_hadir_dosen ASC
     `)
     const rows = result[0]
     return rows
