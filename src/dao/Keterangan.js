@@ -53,7 +53,8 @@ export const getByNim = async (nim) => {
           id_keterangan: mhsKet.id_keterangan,
           status: mhsKet.status,
           tanggal: mhsKet.tanggal,
-          isAccepted: mhsKet.isAccepted
+          isAccepted: mhsKet.isAccepted,
+          url: mhsKet.url
         }
         allKet.push(newKet)
         mhsKetMap.set(nim, allKet)
@@ -63,7 +64,8 @@ export const getByNim = async (nim) => {
           id_keterangan: mhsKet.id_keterangan,
           status: mhsKet.status,
           tanggal: mhsKet.tanggal,
-          isAccepted: mhsKet.isAccepted
+          isAccepted: mhsKet.isAccepted,
+          url: mhsKet.url
         }
         ]
         mhsKetMap.set(nim, firstKet)
