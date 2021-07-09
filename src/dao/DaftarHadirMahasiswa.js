@@ -114,7 +114,7 @@ export const getDaftarHadirKelasJadwal = async (kodeKelas, idJadwal, tanggal) =>
     const resultRow = result[0]
     const mahasiswa = resultRow.map(mhs => {
       // ambil informasti ttg status hadir mahasiswa saja
-      let status = mhs.isHadir == true ? 'Sudah Absen' : 'Belum absen';
+      let status = mhs.isHadir === true ? 'Sudah Absen' : 'Belum absen'
 
       // sudah mengajukan izin namun belum di acc
       if (!mhs.isHadir && mhs.id_keterangan && mhs.isAccepted === -1) {
