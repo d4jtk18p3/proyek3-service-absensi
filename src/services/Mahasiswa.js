@@ -42,21 +42,37 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     // sampai batas akhir waktu perkuliahan
     const now = DateTime.now()
     const tglHariIni = now.toISODate()
-    const pembukaanPreseni = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_mulai}`).minus({ minutes: 30 })
-    const batasAkhirPresensi = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_selesai}`)
+    const pembukaanPreseni = DateTime.fromISO(
+      `${tglHariIni}T${jadwal[0].waktu_mulai}`
+    ).minus({ minutes: 30 })
+    const batasAkhirPresensi = DateTime.fromISO(
+      `${tglHariIni}T${jadwal[0].waktu_selesai}`
+    )
     let result
     if (now >= pembukaanPreseni) {
       // presensi sudah dibuka
       if (now <= batasAkhirPresensi) {
         let keterlambatan = 0
-        const toleransiKeterlambatan = DateTime.fromISO(`${tglHariIni}T${jadwal[0].batas_terakhir_absen}`)
+        const toleransiKeterlambatan = DateTime.fromISO(
+          `${tglHariIni}T${jadwal[0].batas_terakhir_absen}`
+        )
         if (now > toleransiKeterlambatan) {
           // terlambat melakukan presensi
-          const keterlambatanInMs = now.diff(toleransiKeterlambatan).toObject().milliseconds
-          keterlambatan = Math.round((keterlambatanInMs / 1000) / 60) // convert ke menit
+          const keterlambatanInMs = now
+            .diff(toleransiKeterlambatan)
+            .toObject().milliseconds
+          keterlambatan = Math.round(keterlambatanInMs / 1000 / 60) // convert ke menit
         }
         // update kehadiran
-        result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(idStudi, keterlambatan, tglHariIni, true, jadwal[0].ja, jadwal[0].jb, null)
+        result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(
+          idStudi,
+          keterlambatan,
+          tglHariIni,
+          true,
+          jadwal[0].ja,
+          jadwal[0].jb,
+          null
+        )
       } else {
         // sudah melewati jam matkul
         const error = new Error('Presensi sudah ditutup')
@@ -87,7 +103,7 @@ const isLiburan = (tgl) => {
     return true
   }
 
-  const liburgaknih = holiday.filter(date => {
+  const liburgaknih = holiday.filter((date) => {
     return date.tanggal === tgl
   })
   return liburgaknih.length > 0
@@ -103,7 +119,7 @@ const keteranganLibur = (tgl) => {
     return 'hari libur kuliah'
   }
 
-  const liburgaknih = holiday.filter(date => {
+  const liburgaknih = holiday.filter((date) => {
     return date.tanggal === tgl
   })
   return liburgaknih[0].keterangan
@@ -133,33 +149,67 @@ export const ajukanIzin = async (idJadwals, status, url, nim, tglIzin) => {
       throw error
     }
 
-    const keterangan = await KeteranganDAO.insertKeterangan(nim, status, url, -1)
+    const keterangan = await KeteranganDAO.insertKeterangan(
+      nim,
+      status,
+      url,
+      -1
+    )
     const tglIzinDate = new Date(tglIzin)
-    const minggu = DaftarHadirMahasiswaDAO.calculateWeekOfMonth(tglIzinDate.getDate())
+    const minggu = DaftarHadirMahasiswaDAO.calculateWeekOfMonth(
+      tglIzinDate.getDate()
+    )
     const bulan = tglIzinDate.getMonth() + 1
 
     // get seluruh jadwal pada hari yang diajukan izin
-    const jadwals = await JadwalDAO.getJadwalMhsHrTertentu(nim, tglIzinDate.getDay())
+    const jadwals = await JadwalDAO.getJadwalMhsHrTertentu(
+      nim,
+      tglIzinDate.getDay()
+    )
 
     const results = []
-    await Promise.all(jadwals.map(async (jadwal) => {
-      if (idJadwals.includes(`${jadwal.id_jadwal}`)) {
-        // cek apakah sudah punya daftar hadir
-        const isPunya = await DaftarHadirMahasiswaDAO.isSudahPunyaDaftarHadir(jadwal.id_studi, tglIzin, jadwal.ja, jadwal.jb)
+    await Promise.all(
+      jadwals.map(async (jadwal) => {
+        if (idJadwals.includes(`${jadwal.id_jadwal}`)) {
+          // cek apakah sudah punya daftar hadir
+          const isPunya = await DaftarHadirMahasiswaDAO.isSudahPunyaDaftarHadir(
+            jadwal.id_studi,
+            tglIzin,
+            jadwal.ja,
+            jadwal.jb
+          )
 
-        let result
-        if (isPunya) {
-          // kalo udah punya artinya dia izin untuk hari ini, cukup update yg sudah ada
-          result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(jadwal.id_studi, 0, tglIzin, false, jadwal.ja, jadwal.jb, keterangan.dataValues.id_keterangan)
-        } else {
-          // kalo belum punya artinya dia izin dihari yg akan datang, insert row baru
-          result = await DaftarHadirMahasiswaDAO.insertOne(jadwal.id_studi, keterangan.dataValues.id_keterangan, 0, tglIzin, false, minggu, bulan, jadwal.ja, jadwal.jb)
-          result = [result.dataValues]
+          let result
+          if (isPunya) {
+            // kalo udah punya artinya dia izin untuk hari ini, cukup update yg sudah ada
+            result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(
+              jadwal.id_studi,
+              0,
+              tglIzin,
+              false,
+              jadwal.ja,
+              jadwal.jb,
+              keterangan.dataValues.id_keterangan
+            )
+          } else {
+            // kalo belum punya artinya dia izin dihari yg akan datang, insert row baru
+            result = await DaftarHadirMahasiswaDAO.insertOne(
+              jadwal.id_studi,
+              keterangan.dataValues.id_keterangan,
+              0,
+              tglIzin,
+              false,
+              minggu,
+              bulan,
+              jadwal.ja,
+              jadwal.jb
+            )
+            result = [result.dataValues]
+          }
+          results.push(result[0])
+          return result
         }
-        results.push(result[0])
-        return result
-      }
-    })
+      })
     )
     return results
   } catch (error) {
