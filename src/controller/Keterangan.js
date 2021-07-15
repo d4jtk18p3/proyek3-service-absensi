@@ -164,12 +164,6 @@ export const uploadSuratIzin = (req, res) => {
                                           Pemberitahuan mahasiswa dengan NIM ${nim} telah mengunggah surat izin perkuliahan. Silahkan periksa surat izin tersebut.
                                           <br>
                                           <br>
-                                          <div align="center">
-                                            <a
-                                              class="button" href="https://www.google.com/" target="_blank">
-                                            BUTTON
-                                            </a>
-                                          </div>
                                         </td>
                                       </tr>
                                     </table>
