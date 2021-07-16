@@ -56,10 +56,10 @@ export const uploadSuratIzin = (req, res) => {
 
       const nipBulk = []
       // get mhs buat dapetin id kelas
-      const { kode_kelas } = await modelMhs.findByPk(nim)
+      const objMhs = await modelMhs.findByPk(nim)
 
       // get nip dosen wali dari model kelas get by id kelas
-      const nipWalDos = await modelKelas.findByPk(kode_kelas)
+      const nipWalDos = await modelKelas.findByPk(objMhs.kode_kelas)
       nipBulk.push(nipWalDos.nip)
 
       // get nip dosen pengampu dari model jadwal by id jadwal
