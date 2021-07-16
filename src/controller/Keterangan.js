@@ -82,100 +82,92 @@ export const uploadSuratIzin = (req, res) => {
             idUser: el,
             subject: `UPLOAD SURAT IZIN MAHASISWA NIM ${nim}`,
             bodyEmail: `<!DOCTYPE html>
-          <html>
-            <head>
-              <meta charset="utf-8">
-              <title>Politeknik Negeri Bandung</title>
-              <style>
-                @media only screen and (max-width: 400px) {
-                  #paragraph {
-                    font-size: 10px;
-                  }
-                }
-              </style>
-              <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-              <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@600&display=swap" rel="stylesheet">
-            </head>
-            <body style="background-color: #e4e4e4; margin: 0;">
-              <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                <!-- <tbody style="background-color: #000000;"> -->
-                <!-- START HEADER -->
-                <table id="header" width="100%" height="100" align="center" cellpadding="0" cellspacing="0" style="border: 1px #C9C9C9 solid;background-color: #FFFFFF;">
-                  <tr>
-                    <td align="center" width="50" style="padding: 5px 10px 0px;">
-                      <img alt="Logo Politeknik Negeri Bandung" src="https://i.ibb.co/Nyb735s/logo-polban.png" width="35">
-                    </td>
-                    <td style="font-family: 'Montserrat', sans-serif; font-size:14px; color:#242424; line-height:24px; font-weight: 600;">
-                      Politeknik Negeri Bandung
-                    </td>
-                  </tr>
-                </table>
-                <!-- END HEADER -->
-                <table id="content" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="max-width: 800px;background-color: #FFFFFF;">
-                  <tr>
-                    <td height="50"></td>
-                  </tr>
-                  <tr>
-                    <td align="center" valign="top">
-                      <table bgcolor="#FFFFFF" class="col-652" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
-                        <tbody>
-                          <tr>
-                            <td align="center" valign="top"
-                              style="background-size:cover; background-position:top;">
-                              <table class="col-652" width="100%" border="0" align="center"
-                                cellpadding="0" cellspacing="0">
-                                <tbody>
-                                  <tr id="content" style="background-color: #FFFFFF;">
-                                    <table class="col-652" width="80%" order="0" cellpadding="0" cellspacing="0">
-                                      <tr>
-                                        <td align="center"
-                                          style="font-family: 'Montserrat', sans-serif; font-size:32px; color:#242424; line-height:24px; font-weight: bold;">
-                                          Pemberitahuan Mahasiswa Telah Mengunggah Surat Izin Perkuliahan
-                                        </td>
-                                      </tr>
-                                      <tr>
-                                        <td height="50"></td>
-                                      </tr>
-                                      <tr>
-                                        <td id="paragraph" style="font-family: 'Montserrat', sans-serif; color:#242424; line-height:24px; font-weight: 400; padding:0 50px; background-color: #FFFFFF;">
+            <html>
+              <head>
+                <meta charset="utf-8">
+                <title>Politeknik Negeri Bandung</title>
+              </head>
+              <body style="background-color: #eeeeee; margin: 0;">
+                <table width="100%" height="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                  <!-- <tbody style="background-color: #000000;"> -->
+                  <!-- START HEADER -->
+                  <table id="header" width="100%" height="60" align="center" cellpadding="0" cellspacing="0" style="border: 1px #C9C9C9 solid;background-color: #FFFFFF;">
+                    <tr>
+                      <td align="center" width="50" style="padding: 5px 10px 0px;">
+                        <img alt="Logo Politeknik Negeri Bandung" src="https://i.ibb.co/Nyb735s/logo-polban.png" width="20">
+                      </td>
+                      <td style="font-family: Arial, sans-serif; font-size:11px; color:#242424; line-height:24px; font-weight: 600;"> Politeknik Negeri Bandung </td>
+                    </tr>
+                  </table>
+                  <!-- END HEADER -->
+                  <table id="content" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="max-width: 800px;background-color: #FFFFFF;">
+                    <tr>
+                      <td height="50"></td>
+                    </tr>
+                    <tr>
+                      <td align="center" valign="top">
+                        <table bgcolor="#FFFFFF" class="col-652" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                          <tbody>
+                            <tr>
+                              <td align="center" valign="top" style="background-size:cover; background-position:top;">
+                                <table class="col-652" width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+                                  <tbody>
+                                    <tr id="content">
+                                      <table class="col-652" order="0" cellpadding="0" cellspacing="0" style="padding: 10px 80px">
+                                        <tr>
+                                          <td align="center" style="font-family: Arial, Helvetica, sans-serif; font-size:20px; color:#242424; line-height:24px; font-weight: bold;"> Pemberitahuan Mahasiswa Telah Mengunggah Surat Izin Perkuliahan </td>
+                                        </tr>
+                                        <tr>
+                                          <td height="50"></td>
+                                        </tr>
+                                        <tr>
+                                          <td id="paragraph" style="font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#242424; line-height:24px; font-weight: 300; padding: 10px 40px;">
                                           Pemberitahuan mahasiswa dengan NIM ${nim} telah mengunggah surat izin untuk tidak mengikuti perkuliahan. Silahkan periksa surat izin tersebut di laman Sistem Absensi.
-                                          <br>
-                                          <br>
-                                        </td>
-                                      </tr>
-                                    </table>
-                                  </tr>
-                                  <tr>
-                                    <td height="50"></td>
-                                  </tr>
-                                </tbody>
-                              </table>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </td>
-                  </tr>
+                                            <br>
+                                            <br>
+                                            <div align="center">
+                                              <a class="button" href="https://www.google.com/" target="_blank" style="background-color: #59DCDC;
+                                              border: none;
+                                              color: white;
+                                              padding: 10px 10px;
+                                              text-align: center;
+                                              text-decoration: none;
+                                              display: inline-block;
+                                              font-family: Arial, Helvetica, sans-serif;
+                                              font-size: 12px;
+                                              margin: 2px;
+                                              cursor: pointer;
+                                              border-radius: 8px;
+                                              width: 100px;"> Periksa Surat</a>
+                                            </div>
+                                          </td>
+                                        </tr>
+                                      </table>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                  <table id="footer" width="100%" height="100" border="0" align="center" cellpadding="0" cellspacing="0" style="max-width: 800px;background-color: #FFFFFF;">
+                    <tr align="center">
+                      <td>
+                        <p>
+                          <hr>
+                        <div style="font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#272343; line-height:24px; font-weight: 600;"> Copyright Politeknik Negeri Bandung. All right reserved. </div>
+                        <div style="font-family: Arial, Helvetica, sans-serif; font-size:12px; color:#242424; line-height:24px; font-weight: 400;"> Jl. Gegerkalong Hilir, Ciwaruga, Kec. Parongpong, <br> Kabupaten Bandung Barat, Jawa Barat 40559 </div>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                  <!-- </tbody> -->
                 </table>
-                <table id="footer" width="100%" height="100" border="0" align="center" cellpadding="0" cellspacing="0" style="max-width: 800px;background-color: #FFFFFF;">
-                  <tr align="center">
-                    <td>
-                      <p>
-                      <hr>
-                      <div style="font-family: 'Montserrat', sans-serif; font-size:12px; color:#272343; line-height:24px; font-weight: 600;">
-                        Copyright Politeknik Negeri Bandung. All right reserved.
-                      </div>
-                      <div style="font-family: 'Montserrat', sans-serif; font-size:12px; color:#242424; line-height:24px; font-weight: 400;">
-                        Jl. Gegerkalong Hilir, Ciwaruga, Kec. Parongpong, <br> Kabupaten Bandung Barat, Jawa Barat 40559
-                      </div>
-                      </p>
-                    </td>
-                  </tr>
-                </table>
-                <!-- </tbody> -->
-              </table>
-            </body>
-          </html>`
+              </body>
+            </html>`
           }
         )
         console.log(resultSendEmail)
