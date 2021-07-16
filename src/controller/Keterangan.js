@@ -86,44 +86,21 @@ export const uploadSuratIzin = (req, res) => {
             <head>
               <meta charset="utf-8">
               <title>Politeknik Negeri Bandung</title>
-              <link rel="preconnect" href="https://fonts.googleapis.com">
-              <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-              <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-              <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@600&display=swap" rel="stylesheet">
               <style>
-                .button {
-                background-color: #59DCDC;
-                border: none;
-                color: white;
-                padding: 20px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-family: 'Work Sans', sans-serif;
-                font-size: 16px;
-                margin: 4px 2px;
-                cursor: pointer;
-                border-radius: 8px;
-                width: 120px;
-                }
-                #header, #content, #footer {
-                background-color: #FFFFFF;
-                }
-                #paragraph {
-                font-size: 16px;
-                }
                 @media only screen and (max-width: 400px) {
-                #paragraph {
-                font-size: 10px;
-                }
+                  #paragraph {
+                    font-size: 10px;
+                  }
                 }
               </style>
+              <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+              <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@600&display=swap" rel="stylesheet">
             </head>
             <body style="background-color: #e4e4e4; margin: 0;">
               <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
                 <!-- <tbody style="background-color: #000000;"> -->
                 <!-- START HEADER -->
-                <table id="header" width="100%" height="100" align="center" cellpadding="0" cellspacing="0" style="border: 1px #C9C9C9 solid;">
+                <table id="header" width="100%" height="100" align="center" cellpadding="0" cellspacing="0" style="border: 1px #C9C9C9 solid;background-color: #FFFFFF;">
                   <tr>
                     <td align="center" width="50" style="padding: 5px 10px 0px;">
                       <img alt="Logo Politeknik Negeri Bandung" src="https://i.ibb.co/Nyb735s/logo-polban.png" width="35">
@@ -134,7 +111,7 @@ export const uploadSuratIzin = (req, res) => {
                   </tr>
                 </table>
                 <!-- END HEADER -->
-                <table id="content" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="max-width: 800px;">
+                <table id="content" width="100%" border="0" align="center" cellpadding="0" cellspacing="0" style="max-width: 800px;background-color: #FFFFFF;">
                   <tr>
                     <td height="50"></td>
                   </tr>
@@ -148,7 +125,7 @@ export const uploadSuratIzin = (req, res) => {
                               <table class="col-652" width="100%" border="0" align="center"
                                 cellpadding="0" cellspacing="0">
                                 <tbody>
-                                  <tr id="content">
+                                  <tr id="content" style="background-color: #FFFFFF;">
                                     <table class="col-652" width="80%" order="0" cellpadding="0" cellspacing="0">
                                       <tr>
                                         <td align="center"
@@ -160,8 +137,8 @@ export const uploadSuratIzin = (req, res) => {
                                         <td height="50"></td>
                                       </tr>
                                       <tr>
-                                        <td id="paragraph" style="font-family: 'Montserrat', sans-serif; color:#242424; line-height:24px; font-weight: 400; padding:0 50px;">
-                                          Pemberitahuan mahasiswa dengan NIM ${nim} telah mengunggah surat izin perkuliahan. Silahkan periksa surat izin tersebut.
+                                        <td id="paragraph" style="font-family: 'Montserrat', sans-serif; color:#242424; line-height:24px; font-weight: 400; padding:0 50px; background-color: #FFFFFF;">
+                                          Pemberitahuan mahasiswa dengan NIM ${nim} telah mengunggah surat izin untuk tidak mengikuti perkuliahan. Silahkan periksa surat izin tersebut di laman Sistem Absensi.
                                           <br>
                                           <br>
                                         </td>
@@ -180,7 +157,7 @@ export const uploadSuratIzin = (req, res) => {
                     </td>
                   </tr>
                 </table>
-                <table id="footer" width="100%" height="100" border="0" align="center" cellpadding="0" cellspacing="0" style="max-width: 800px;">
+                <table id="footer" width="100%" height="100" border="0" align="center" cellpadding="0" cellspacing="0" style="max-width: 800px;background-color: #FFFFFF;">
                   <tr align="center">
                     <td>
                       <p>
