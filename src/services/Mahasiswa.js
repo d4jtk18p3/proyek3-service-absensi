@@ -42,10 +42,10 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     // sampai batas akhir waktu perkuliahan
     const now = DateTime.now()
     const tglHariIni = now.toISODate()
-    const pembukaanPreseni = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_mulai}`).minus({ minutes: 30 })
+    // const pembukaanPreseni = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_mulai}`).minus({ minutes: 30 })
     const batasAkhirPresensi = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_selesai}`)
     let result
-    if (now >= pembukaanPreseni) {
+    // if (now >= pembukaanPreseni) {
       // presensi sudah dibuka
       if (now <= batasAkhirPresensi) {
         let keterlambatan = 0
@@ -64,13 +64,15 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
         error.cause = 'Perkuliahan telah selesai'
         throw error
       }
-    } else {
-      // presensi belum boleh dilakukan
-      const error = new Error('Presensi belum bisa dilakukan')
-      error.statusCode = 400
-      error.cause = 'Presensi dibuka 30 menit sebelum perkuliahan dimulai'
-      throw error
-    }
+    // }
+    // Ilangin constraint 
+    // else {
+    //   // presensi belum boleh dilakukan
+    //   const error = new Error('Presensi belum bisa dilakukan')
+    //   error.statusCode = 400
+    //   error.cause = 'Presensi dibuka 30 menit sebelum perkuliahan dimulai'
+    //   throw error
+    // }
 
     return result
   } catch (error) {
