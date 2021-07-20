@@ -48,6 +48,20 @@ export const getDaftarHadirNimJadwalTgl = async (req, res, next) => {
   }
 }
 
+export const getDaftarHadirNimTgl = async (req, res, next) => {
+  const { nim, tanggal } = req.query
+
+  try {
+    const result = await DaftarHadirMahasiswaService.getDaftarHadirNimTanggal(nim, tanggal)
+    res.json({
+      message: `daftar hadir ${nim} pada pada tanggal ${tanggal}`,
+      data: result
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const updateStatusKehadiran = async (req, res, next) => {
   const { idStudi, idJadwal, tanggal, isHadir } = req.query
   try {

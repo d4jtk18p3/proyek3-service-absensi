@@ -23,6 +23,15 @@ export const getDaftarHadirNimJadwalTanggal = async (nim, idJadwal, tanggal) => 
   }
 }
 
+export const getDaftarHadirNimTanggal = async (nim, tanggal) => {
+  try {
+    const result = await DaftarHadirMahasiswaDAO.getByNimTgl(nim, tanggal)
+    return result
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 export const getDashboardNim = async (nim) => {
   // author : hafizmfadli
   // return : daftar hadri suatu mahasiswa dengan nim, idJadwal pada tanggal tertentu

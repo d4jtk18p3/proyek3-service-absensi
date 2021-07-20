@@ -219,6 +219,23 @@ export const getByNimJadwalTgl = async (nim, idJadwal, tanggal) => {
   }
 }
 
+export const getByNimTgl = async (nim, tanggal) => {
+  try {
+    const result = await db.query(`
+    SELECT DISTINCT dhm.* FROM "daftar_hadir_mahasiswa" dhm
+    INNER JOIN "Studi" s ON s.id = dhm.id_studi
+    INNER JOIN "Perkuliahan" p ON p.id= s.id_perkuliahan
+    INNER JOIN "Jadwal" j ON j.id_perkuliahan = p.id AND dhm.ja = j.ja AND dhm.jb = j.jb
+    INNER JOIN "Mahasiswa" mhs ON mhs.nim = s.id_mahasiswa
+    WHERE dhm.tanggal='${tanggal}' AND mhs.nim='${nim}'
+    `)
+    const rows = result[0]
+    return rows
+  } catch (error) {
+    return Promise.reject(error)
+  }
+}
+
 // export const updateKehadiranDanKeterlambatan = async (isHadir, keterlambatan, idStudi, tanggal) => {
 
 //   // Author : hafizmfadli
