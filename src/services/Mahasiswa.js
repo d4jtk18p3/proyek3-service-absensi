@@ -43,41 +43,42 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     const now = DateTime.now()
     const tglHariIni = now.toISODate()
     // const pembukaanPreseni = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_mulai}`).minus({ minutes: 30 })
-    const batasAkhirPresensi = DateTime.fromISO(
-      `${tglHariIni}T${jadwal[0].waktu_selesai}`
-    )
+    // const batasAkhirPresensi = DateTime.fromISO(
+    //   `${tglHariIni}T${jadwal[0].waktu_selesai}`
+    // )
     let result
     // if (now >= pembukaanPreseni) {
     // presensi sudah dibuka
-    if (now <= batasAkhirPresensi) {
-      let keterlambatan = 0
-      const toleransiKeterlambatan = DateTime.fromISO(
-        `${tglHariIni}T${jadwal[0].batas_terakhir_absen}`
-      )
-      if (now > toleransiKeterlambatan) {
-        // terlambat melakukan presensi
-        const keterlambatanInMs = now
-          .diff(toleransiKeterlambatan)
-          .toObject().milliseconds
-        keterlambatan = Math.round(keterlambatanInMs / 1000 / 60) // convert ke menit
-      }
-      // update kehadiran
-      result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(
-        idStudi,
-        keterlambatan,
-        tglHariIni,
-        true,
-        jadwal[0].ja,
-        jadwal[0].jb,
-        null
-      )
-    } else {
-      // sudah melewati jam matkul
-      const error = new Error('Presensi sudah ditutup')
-      error.statusCode = 400
-      error.cause = 'Perkuliahan telah selesai'
-      throw error
+
+    // if (now <= batasAkhirPresensi) {
+    let keterlambatan = 0
+    const toleransiKeterlambatan = DateTime.fromISO(
+      `${tglHariIni}T${jadwal[0].batas_terakhir_absen}`
+    )
+    if (now > toleransiKeterlambatan) {
+      // terlambat melakukan presensi
+      const keterlambatanInMs = now
+        .diff(toleransiKeterlambatan)
+        .toObject().milliseconds
+      keterlambatan = Math.round(keterlambatanInMs / 1000 / 60) // convert ke menit
     }
+    // update kehadiran
+    result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(
+      idStudi,
+      keterlambatan,
+      tglHariIni,
+      true,
+      jadwal[0].ja,
+      jadwal[0].jb,
+      null
+    )
+    // } else {
+    //   // sudah melewati jam matkul
+    //   const error = new Error('Presensi sudah ditutup')
+    //   error.statusCode = 400
+    //   error.cause = 'Perkuliahan telah selesai'
+    //   throw error
+    // }
     // }
     // Ilangin constraint
     // else {
