@@ -43,11 +43,7 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     const now = DateTime.now()
     const tglHariIni = now.toISODate()
 
-<<<<<<< HEAD
     const result
-=======
-    const result = null
->>>>>>> e816366c7b5529b5de2ea5a87c302a073e751058
     let keterlambatan = 0
     const toleransiKeterlambatan = DateTime.fromISO(
       `${tglHariIni}T${jadwal[0].batas_terakhir_absen}`
