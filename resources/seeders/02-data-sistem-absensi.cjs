@@ -34,6 +34,13 @@ module.exports = {
       (4,11,'09:50:00','16:40:00','09:10:00',5,'PR','199112182019032000',12);      
       ;`
     )
+
+    const jumlahData = parseInt((await queryInterface.sequelize.query(`
+      SELECT COUNT(*) FROM "Jadwal"
+    `))[0][0].count);
+    await queryInterface.sequelize.query(`ALTER SEQUENCE "Jadwal_id_jadwal_seq" RESTART WITH ${jumlahData + 1}`)
+    
+    
   },
 
   down: async (queryInterface, Sequelize) => {
