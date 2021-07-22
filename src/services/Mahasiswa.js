@@ -43,7 +43,7 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     const now = DateTime.now()
     const tglHariIni = now.toISODate()
 
-    const result
+    // const result
     let keterlambatan = 0
     const toleransiKeterlambatan = DateTime.fromISO(
       `${tglHariIni}T${jadwal[0].batas_terakhir_absen}`
@@ -56,7 +56,7 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
       keterlambatan = Math.round(keterlambatanInMs / 1000 / 60) // convert ke menit
     }
     // update kehadiran
-    result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(
+    const result = await DaftarHadirMahasiswaDAO.updateStatusKehadiranMhs(
       idStudi,
       keterlambatan,
       tglHariIni,
