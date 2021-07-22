@@ -42,15 +42,8 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     // sampai batas akhir waktu perkuliahan
     const now = DateTime.now()
     const tglHariIni = now.toISODate()
-    // const pembukaanPreseni = DateTime.fromISO(`${tglHariIni}T${jadwal[0].waktu_mulai}`).minus({ minutes: 30 })
-    // const batasAkhirPresensi = DateTime.fromISO(
-    //   `${tglHariIni}T${jadwal[0].waktu_selesai}`
-    // )
-    let result
-    // if (now >= pembukaanPreseni) {
-    // presensi sudah dibuka
 
-    // if (now <= batasAkhirPresensi) {
+    const result = null
     let keterlambatan = 0
     const toleransiKeterlambatan = DateTime.fromISO(
       `${tglHariIni}T${jadwal[0].batas_terakhir_absen}`
@@ -72,6 +65,8 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
       jadwal[0].jb,
       null
     )
+<<<<<<< HEAD
+=======
     // } else {
     //   // sudah melewati jam matkul
     //   const error = new Error('Presensi sudah ditutup')
@@ -88,6 +83,7 @@ export const melakukanAbsensi = async (idStudi, idJadwal) => {
     //   error.cause = 'Presensi dibuka 30 menit sebelum perkuliahan dimulai'
     //   throw error
     // }
+>>>>>>> a5956c589d7a3d5d1110ce26965c83981892d2d0
 
     return result
   } catch (error) {
